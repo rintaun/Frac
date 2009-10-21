@@ -29,7 +29,7 @@ class Staff extends Doctrine_Record
 	{
 		$this->setTableName("staff");
 		
-		$this->hasColumn("id", "integer", 11, array(
+		$this->hasColumn("id", "integer", 10, array(
 				"primary" => true,
 				"autoincrement" => true,
 				"unsigned" => true,
@@ -37,13 +37,13 @@ class Staff extends Doctrine_Record
 			)
 		);
 		
-		$this->hasColumn("nickname", "varchar", 32, array(
+		$this->hasColumn("nickname", "string", 32, array(
 				"unique" => true,
 				"notnull" => true
 			)
 		);
 		
-		$this->hasColumn("password", "varchar", 64, array(
+		$this->hasColumn("password", "string", 64, array(
 				"regexp" => "/^[0-9a-f]{60}\$/i",
 				"notnull" => true,
 				"fixed" => true
@@ -52,16 +52,34 @@ class Staff extends Doctrine_Record
 		
 		$this->hasColumn("comment", "string", 1000);
 		
-		$this->hasColumn("email", "varchar", 255, array(
+		$this->hasColumn("email", "string", 255, array(
 				"regexp" => "/^[0-9a-f_-.+]+@[0-9a-z_-]+.[0-9a-z_-.]+\$/i"
 			)
 		);
 		
-		$this->hasColumn("cell", "varchar", 32, array(
+		$this->hasColumn("cell", "string", 32, array(
 				"regexp" => "/^[0-9]*\$/"
 			)
 		);
 		
 		$this->hasColumn("auth", "integer", 10);
+	}
+	public function setUp()
+	{
+		$this->hasMany("Project as ProjectsLeading", array(
+				"local" => "id",
+				"foreign" => "leader"
+			)
+		);
+		$this->hasMany("Permissions as Permission", array(
+				"local" => "id",
+				"foreign" => "staff"
+			)
+		);
+		$this->hasMany("Task as Tasks", array(
+				"local" => "id",
+				"foreign" => "staff"
+			)
+		);
 	}
 }
