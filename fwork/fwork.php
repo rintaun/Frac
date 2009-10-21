@@ -9,8 +9,9 @@
 
 if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 
-require_once(dirname(__FILE__) . "../config.php");
 require_once(dirname(__FILE__) . "../lib/Doctrine/Doctrine.php");
+
+spl_autoload_register(array("Doctrine", "autoload"));
 
 /**
  * Fwork core class.
@@ -19,29 +20,37 @@ require_once(dirname(__FILE__) . "../lib/Doctrine/Doctrine.php");
  */
 class Fwork
 {
-    
-    /**
-     * Singleton manager for Doctrine.
-     */
-    private $doctrine_manager;    
-    
-    /**
-     * Constructor for Fwork.
-     *
-     * Initialises connections.
-     */
-    public function __construct()
-    {
-        spl_autoload_register(array("Doctrine", "autoload"));
-        
-        // we should now connect to the database
-        $this->dbconnection = Doctrine_Manager::connection($config["database"])
-    }
-    
-    /**
-     * Destructor for Fwork.
-     *
-     * Currently also does nothing.
-     */
-    public function __destruct() { }
+	
+	/**
+	 * Singleton manager for Doctrine.
+	 */
+	private $doctrine_manager;	
+	
+	/**
+	 * Constructor for Fwork.
+	 * Prepares everything.
+	 *
+	 * @param $config Configuration data, obtained from config.php
+	 */
+	public function __construct($config)
+	{   
+		// we should now connect to the database
+		$this->dbconnection = Doctrine_Manager::connection($config["database"])
+	}
+	
+	/**
+	 * Serve a page with Fwork.
+	 *
+	 * @param $path An array of path data, obtained by explode("/", $_SERVER["PATH_INFO"])
+	 */
+	public function serve($path)
+	{
+	}
+	
+	/**
+	 * Destructor for Fwork.
+	 *
+	 * Currently also does nothing.
+	 */
+	public function __destruct() { }
 }
