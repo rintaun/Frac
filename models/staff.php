@@ -31,21 +31,26 @@ class Staff extends Doctrine_Record
 		
 		$this->hasColumn("id", "integer", 11, array(
 				"primary" => true,
-				"autoincrement" => true
+				"autoincrement" => true,
+				"unsigned" => true,
+				"notnull" => true
 			)
 		);
 		
 		$this->hasColumn("nickname", "varchar", 32, array(
-				"unique" => true
+				"unique" => true,
+				"notnull" => true
 			)
 		);
 		
 		$this->hasColumn("password", "varchar", 64, array(
-				"regexp" => "/^[0-9a-f]{60}\$/i"
+				"regexp" => "/^[0-9a-f]{60}\$/i",
+				"notnull" => true,
+				"fixed" => true
 			)
 		);
 		
-		$this->hasColumn("comment", "varchar", 255);
+		$this->hasColumn("comment", "string", 1000);
 		
 		$this->hasColumn("email", "varchar", 255, array(
 				"regexp" => "/^[0-9a-f_-.+]+@[0-9a-z_-]+.[0-9a-z_-.]+\$/i"
