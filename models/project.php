@@ -27,7 +27,7 @@ class Project extends Doctrine_Record
 	 */
 	public function setTableDefinition()
 	{
-		$this->setTableName($config["database"]["prefix"] . "projects");
+		$this->setTableName("projects");
 		
 		$this->hasColumn("id", "integer", 10, array(
 				"primary" => true,

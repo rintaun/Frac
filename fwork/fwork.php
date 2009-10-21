@@ -34,6 +34,8 @@ class Fwork
 	 */
 	public function __construct($config)
 	{   
+		Doctrine_Manager::getInstance()->setAttribute(Doctrine::Doctrine::ATTR_TBLNAME_FORMAT, $config["database"]["prefix"] . "%s");
+	    
 		// we should now connect to the database
 		$this->dbconnection = Doctrine_Manager::connection($config["database"]["dsn"]);
 	}

@@ -4,7 +4,7 @@ class TaskTree extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
-		$this->setTableName($config["database"]["prefix"] . "tasktrees");
+		$this->setTableName("tasktrees");
 		
 		$this->hasColumn("task", "integer", 10, array(
 				"unsigned" => true,

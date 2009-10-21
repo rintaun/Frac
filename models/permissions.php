@@ -23,7 +23,7 @@ class Permissions extends Doctrine_Record
 	 */
 	public function setTableDefinition()
 	{
-		$this->setTableName($config["database"]["prefix"] . "permissions");
+		$this->setTableName("permissions");
 		
 		$this->hasColumn("project", "integer", 10, array(
 				"notnull" => true,

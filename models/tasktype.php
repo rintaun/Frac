@@ -3,7 +3,7 @@ class TaskType extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
-	    $this->setTableName($config["database"]["prefix"] . "tasktypes");
+	    $this->setTableName("tasktypes");
 		$this->hasColumn("id", "integer", 10, array(
 				"unsigned" => true,
 				"notnull" => true,
