@@ -3,7 +3,7 @@ class Task extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
-		$this->setTableName("tasktypes");
+		$this->setTableName("tasks");
 		$this->hasColumn("id", "integer", 10, array(
 				"notnull" => true,
 				"unsigned" => true,
