@@ -29,7 +29,7 @@ class Staff extends Doctrine_Record
 	{
 		$this->setTableName($config["database"]["prefix"] . "staff");
 		
-		$this->hasColumn("id", "integer", 11, array(
+		$this->hasColumn("id", "integer", 10, array(
 				"primary" => true,
 				"autoincrement" => true,
 				"unsigned" => true,
@@ -63,5 +63,23 @@ class Staff extends Doctrine_Record
 		);
 		
 		$this->hasColumn("auth", "integer", 10);
+	}
+	public function setUp()
+	{
+		$this->hasMany("Project as ProjectsLeading", array(
+				"local" => "id",
+				"foreign" => "leader"
+			)
+		);
+		$this->hasMany("Permissions as Permission", array(
+				"local" => "id",
+				"foreign" => "staff"
+			)
+		);
+		$this->hasMany("Task as Tasks", array(
+				"local" => "id",
+				"foreign" => "staff"
+			)
+		);
 	}
 }
