@@ -1,4 +1,4 @@
-<?
+<?php
 /*
  * Fwork
  * Copyright (c) 2009 Matthew Lanigan
