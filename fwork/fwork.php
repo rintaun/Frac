@@ -9,6 +9,9 @@
 
 if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 
+require_once(dirname(__FILE__) . "../config.php");
+require_once(dirname(__FILE__) . "../lib/Doctrine/Doctrine.php");
+
 /**
  * Fwork core class.
  *
@@ -16,12 +19,24 @@ if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
  */
 class Fwork
 {
+    
+    /**
+     * Singleton manager for Doctrine.
+     */
+    private $doctrine_manager;    
+    
     /**
      * Constructor for Fwork.
      *
-     * Currently does nothing.
+     * Initialises connections.
      */
-    public function __construct() { }
+    public function __construct()
+    {
+        spl_autoload_register(array("Doctrine", "autoload"));
+        
+        // we should now connect to the database
+        $this->dbconnection = Doctrine_Manager::connection($config["database"])
+    }
     
     /**
      * Destructor for Fwork.
