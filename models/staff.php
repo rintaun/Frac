@@ -27,7 +27,7 @@ class Staff extends Doctrine_Record
 	 */
 	public function setTableDefinition()
 	{
-		$this->setTableName("staff");
+		$this->setTableName($config["database"]["prefix"] . "staff");
 		
 		$this->hasColumn("id", "integer", 11, array(
 				"primary" => true,

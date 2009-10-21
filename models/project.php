@@ -16,7 +16,7 @@ class Project extends Doctrine_Record
 {
 
 	/**
-	 * Columns for a staff member.
+	 * Columns for a project.
 	 *
 	 * id        -  integer(11)   -  Auto-incremeting ID primary key.
 	 * name      -  varchar(128)  -  Name of the project; generally the anime title.
@@ -27,7 +27,8 @@ class Project extends Doctrine_Record
 	 */
 	public function setTableDefinition()
 	{
-		$this->setTableName('projects');
+		$this->setTableName($config["database"]["prefix"] . "projects");
+		
 		$this->hasColumn("id", "integer", 10, array(
 				"primary" => true,
 				"autoincrement" => true,

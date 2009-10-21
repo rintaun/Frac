@@ -3,7 +3,8 @@ class Task extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
-		$this->setTableName("tasktypes");
+		$this->setTableName($config["database"]["prefix"] . "tasks");
+		
 		$this->hasColumn("id", "integer", 10, array(
 				"notnull" => true,
 				"unsigned" => true,
@@ -40,7 +41,7 @@ class Task extends Doctrine_Record
 		);
 		$this->hasOne("TaskType as TaskType", array(
 				"local" => "tasktype",
-				"foreign" => "id
+				"foreign" => "id"
 			)
 		);
 		$this->hasOne("Staff as AssignedStaff", array(
@@ -56,7 +57,7 @@ class Task extends Doctrine_Record
 			)
 		);
 		$this->hasMany("Task as NextTask", array(
-				"local" => "id,
+				"local" => "id",
 				"foreign" => "task",
 				"RefClass" => "TaskTree"
 			)
