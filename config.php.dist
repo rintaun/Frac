@@ -1,0 +1,42 @@
+<?
+
+$config = array(
+	'group_name' => 'My Group Name',
+	'db' => array(
+		'host' => 'localhost',
+		'username' => '',
+		'password' => '',
+		'dbname' => 'frac',
+	),
+);
+
+/////////////////////////////////
+// DO NOT EDIT BELOW THIS LINE //
+/////////////////////////////////
+
+define('AUTH_ADD_PROJECT',	0x0001);
+define('AUTH_DEL_PROJECT',	0x0002);
+define('AUTH_ADD_EPISODE',	0x0004);
+define('AUTH_DEL_EPISODE',	0x0008);
+define('AUTH_CHANGE_ASSIGN',	0x001);
+define('AUTH_ADD_STAFF',	0x0020);
+define('AUTH_DEL_STAFF',	0x0040);
+define('AUTH_ADD_TASK',		0x0080);
+define('AUTH_FINISH_TASK',	0x0100);
+define('AUTH_DEL_TASK',		0x0200);
+define('AUTH_NORMAL',		0x0184);
+define('AUTH_ADMIN',		0xFFFF);
+
+define('TASK_RAWCAP',		1);
+define('TASK_TRANSLATE',	2);
+define('TASK_TIMING',		3);
+define('TASK_TRANSCHECK',	4);
+define('TASK_TYPESET',		5);
+define('TASK_EDIT',		6);
+define('TASK_ENCODE',		7);
+define('TASK_QUALCHECK',	8);
+define('TASK_KARAOKE',		9);
+define('TASK_MISC',		10);
+define('TASK_RELEASE',		99);
+
+?>
