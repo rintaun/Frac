@@ -15,5 +15,5 @@ if(!file_exists(dirname(__FILE__) . "/config.php")) die("Unable to find config.p
 require_once(dirname(__FILE__) . "/config.php");
 
 $fwork = new Fwork($config);
-$fwork->serve(explode("/", $_SERVER['PATH_INFO']);
+$fwork->serve(array_slice(explode("/", $_SERVER['PATH_INFO']), 1));
 unset($fwork);

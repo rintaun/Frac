@@ -22,9 +22,9 @@ class Fwork
 {
 	
 	/**
-	 * Singleton manager for Doctrine.
+	 * Doctrine connection to the database.
 	 */
-	private $doctrine_manager;	
+	private $dbconnection;
 	
 	/**
 	 * Constructor for Fwork.
@@ -43,9 +43,7 @@ class Fwork
 	 *
 	 * @param $path An array of path data, obtained by explode("/", $_SERVER["PATH_INFO"])
 	 */
-	public function serve($path)
-	{
-	}
+	public function serve($path) { }
 	
 	/**
 	 * Destructor for Fwork.
