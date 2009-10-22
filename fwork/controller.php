@@ -10,7 +10,7 @@
 if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 
 /**
- * Controller interface. All controllers must implement this
+ * Abstract Controller class. All controllers must extend this.
  */
 abstract class Controller
 {

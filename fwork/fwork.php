@@ -7,7 +7,7 @@
  * See COPYING for license conditions.
  */
 
-if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
+if(!defined("IN_FWORK_")) $this->error("This file cannot be invoked directly.");
 
 require_once(dirname(__FILE__) . "/controller.php");
 require_once(dirname(__FILE__) . "/../lib/Doctrine/Doctrine.php");
@@ -40,7 +40,7 @@ class Fwork
 	 * @param $config Configuration data, obtained from config.php
 	 */
 	public function __construct($config)
-	{
+	{	
 		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE, true);
 		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_TBLNAME_FORMAT, $config["database"]["prefix"] . "%s");
 		Doctrine::loadModels(dirname(__FILE__) . "/../models");
@@ -63,6 +63,23 @@ class Fwork
 	}
 	
 	/**
+	 * Serve an error with Fwork.
+	 *
+	 * This is internal ONLY. There is no reason a Controller should/would throw an Error like this.
+	 *
+	 * @param $error Error thrown.
+	 */
+	private function error($error)
+	{
+		// do not use controllers for this, doing so is inefficient
+		header("HTTP/1.1 404 Not Found");
+		$this->savant->error = $error;
+		$this->savant->pagename = "Error";
+		$this->savant->view = "error.php";
+		$this->savant->display("layout.php");
+	}
+	
+	/**
 	 * Serve a page with Fwork.
 	 *
 	 * A few notes about this:
@@ -79,19 +96,22 @@ class Fwork
 		$controllername = ucfirst($path[0]) . "Controller";
 		if(!file_exists(dirname(__FILE__) . "/../controllers/" . $controllerprovider . ".php"))
 		{
-			die("Cannot find controller file"); // handle this properly later
+			$this->error("Cannot find controller file");
+			goto end;
 		} else {
 			require_once(dirname(__FILE__) . "/../controllers/" . $controllerprovider . ".php");
 		}
 		
 		if(!class_exists($controllername))
 		{
-			die("Cannot find controller class"); // handle this properly later
+			$this->error("Cannot find controller class");
+			goto end;
 		}
 		
 		if(!in_array("Controller", class_parents($controllername)))
 		{
-			die("Controller class does not extend Controller"); // not very good! D:
+			$this->error("Controller class does not extend Controller");
+			goto end;
 		}
 
 		$controller = new $controllername();
@@ -100,12 +120,12 @@ class Fwork
 		
 		$controller->{$action}(isset($path[2]) ? array_slice($path, 2) : array());
 		
-		// load the view		
+		// load the view
 		if(!file_exists(dirname(__FILE__) . "/../themes/" . "fraculous" . "/" . $controllerprovider . "/" . $action . ".php"))
 		{
-			die("View not found"); // handle this properly later
+			$this->error("View not found");
+			goto end;
 		} else {
-			$vars = isset($controller->vars) ? $controller->vars : array();
 			$vars["pagename"] = isset($vars["pagename"]) ? $vars["pagename"] : ucfirst($controllerprovider);
 			foreach($vars as $key => $value)
 			{
@@ -114,6 +134,8 @@ class Fwork
 			$this->savant->view = $controllerprovider . "/" . $action . ".php";
 			$this->savant->display("layout.php");
 		}
+		
+		end: // goto is nasty, but exit is nastier.
 	}
 	
 	/**
