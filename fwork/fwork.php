@@ -51,7 +51,7 @@ class Fwork
 	 * - $args is an array of the path data sans controller name and action.
 	 * - Models will be autoloaded by Doctrine, i.e. $staff = new Staff(); inside a controller is fine, providing that a Staff model exists.
 	 *
-	 * @param $path An array of path data, obtained by array_slice(explode("/", $_SERVER["PATH_INFO"]), 1)
+	 * @param $path An array of path data, obtained by explode("/", $_GET["q"])
 	 */
 	public function serve($path)
 	{
