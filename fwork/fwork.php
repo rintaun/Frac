@@ -97,7 +97,7 @@ class Fwork
 		if(!file_exists(dirname(__FILE__) . "/../controllers/" . $controllerprovider . ".php"))
 		{
 			$this->error("Cannot find controller file");
-			goto end;
+			return;
 		} else {
 			require_once(dirname(__FILE__) . "/../controllers/" . $controllerprovider . ".php");
 		}
@@ -105,13 +105,13 @@ class Fwork
 		if(!class_exists($controllername))
 		{
 			$this->error("Cannot find controller class");
-			goto end;
+			return;
 		}
 		
 		if(!in_array("Controller", class_parents($controllername)))
 		{
 			$this->error("Controller class does not extend Controller");
-			goto end;
+			return;
 		}
 
 		$controller = new $controllername();
@@ -124,7 +124,7 @@ class Fwork
 		if(!file_exists(dirname(__FILE__) . "/../themes/" . "fraculous" . "/" . $controllerprovider . "/" . $action . ".php"))
 		{
 			$this->error("View not found");
-			goto end;
+			return;
 		} else {
 			$vars["pagename"] = isset($vars["pagename"]) ? $vars["pagename"] : ucfirst($controllerprovider);
 			foreach($vars as $key => $value)
@@ -134,8 +134,6 @@ class Fwork
 			$this->savant->view = $controllerprovider . "/" . $action . ".php";
 			$this->savant->display("layout.php");
 		}
-		
-		end: // goto is nasty, but exit is nastier.
 	}
 	
 	/**
