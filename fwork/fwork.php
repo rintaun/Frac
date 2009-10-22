@@ -9,7 +9,7 @@
 
 if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 
-require_once(dirname(__FILE__) . "/icontroller.php");
+require_once(dirname(__FILE__) . "/controller.php");
 require_once(dirname(__FILE__) . "/../lib/Doctrine/Doctrine.php");
 require_once(dirname(__FILE__) . "/../lib/Savant3/Savant3.php");
 
@@ -89,9 +89,9 @@ class Fwork
 			die("Cannot find controller class"); // handle this properly later
 		}
 		
-		if(!in_array("IController", class_implements($controllername)))
+		if(!in_array("Controller", class_parents($controllername)))
 		{
-			die("Controller class does not implement IController"); // not very good! D:
+			die("Controller class does not extend Controller"); // not very good! D:
 		}
 
 		$controller = new $controllername();

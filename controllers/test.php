@@ -1,5 +1,5 @@
 <?php
-class TestController implements IController
+class TestController extends Controller
 {   
 	public function index($args)
 	{
