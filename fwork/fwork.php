@@ -35,7 +35,8 @@ class Fwork
 	 * @param $config Configuration data, obtained from config.php
 	 */
 	public function __construct($config)
-	{   
+	{
+		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE, true);
 		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_TBLNAME_FORMAT, $config["database"]["prefix"] . "%s");
 		Doctrine::loadModels(dirname(__FILE__) . "/../models");
 	    
