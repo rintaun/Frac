@@ -75,6 +75,9 @@ class Fwork
 		{
 			die("Controller class does not implement IController"); // not very good! D:
 		}
+
+		// create an instance of Savant so that the controller can assign variables and such.
+		$tpl = new Savant3();
 		
 		$controller = new $controllername();
 		
@@ -87,7 +90,12 @@ class Fwork
 		{
 			die("View not found"); // handle this properly later
 		} else {
-			require_once(dirname(__FILE__) . "/../themes/" . "fraculous" . "/" . $controllerprovider . "/" . $action . ".php");
+			// Savant's Path prefix defaults to ./ so we have to first
+			// change it to the theme folder.
+			$tpl->setPath('template', dirname(__FILE__) . "/../themes/" . "fraculous" . "/");
+
+			// tell Savant to display the view.
+			$tpl->display($controllerprovider . "/" . $action . ".php");
 		}
 	}
 	
