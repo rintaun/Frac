@@ -9,12 +9,16 @@
 </head>
 <body>
 	<div id="topbar">
-	<a href="#">Home</a> <a href="#">My Tasks</a> <a href="#">Help</a>
-	<span id="login">Login stuff</span>
+		<span id="login">Login stuff</span>
+		<a href="#">Home</a> <a href="#">My Tasks</a> <a href="#">Help</a>
 	</div>
 	<div id="mainnav">
+		<span class="navtab">Projects</span> <span class="navtab">Staff</span> <span class="navtab">Administration</span>
+		<br />
+		<img src="<?php echo $this->eprint($this->logo); ?>" alt="Frac" id="logo" />
 	</div>
 	<div id="content">
+Lorem ipsum dolor sit amet consectetur quid e piscing something something something.
 	</div>
 </body>
 </html>

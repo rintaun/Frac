@@ -4,5 +4,7 @@ body { font-family: sans-serif; padding: 0; margin: 0; height: 100%; background-
 #topbar a { color: #aaaaaa; text-decoration: none; margin: 0px 10px 0px 10px; }
 #topbar a:hover { color: #ffffff; }
 #login { float: right; }
-#mainnav { background: #555555; height: 150px; color: #ffffff; }
-#content { background: #EEEEEE; min-height: 100%; color: #000000; }
+#mainnav { background: #555555; height: 75px; color: #ffffff; padding: 0px 10px 5px 10px; }
+#mainnav span.navtab { background: #333333; border: 1px solid #000000; border-top: 0; padding: 2px 5px 2px 5px; margin: 0px 5px 0px 5px; float: right; }
+#mainnav span.navtab:hover { background: #000000; }
+#content { background: #EEEEEE; min-height: 300px; color: #000000; }

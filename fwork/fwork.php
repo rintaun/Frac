@@ -78,7 +78,10 @@ class Fwork
 
 		// create an instance of Savant so that the controller can assign variables and such.
 		$tpl = new Savant3();
-		
+
+		// there must be a better way to do this. we want to assign the logo here so that the theme
+		// knows where to find it... but how do we find the prefix again? I forget...
+		$tpl->logo = "/frac/themes/" . "fraculous" . "/images/logo.png";
 		$controller = new $controllername();
 		
 		$action = isset($path[1]) ? $path[1] : "index";
