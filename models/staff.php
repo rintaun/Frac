@@ -44,11 +44,11 @@ class Staff extends Doctrine_Record
 		);
 		
 		$this->hasColumn("password", "string", 64, array(
-				"regexp" => "/^[0-9a-f]{60}\$/i",
+				"regexp" => "/^[0-9a-f]{64}\$/i",
 				"notnull" => true,
 				"fixed" => true
 			)
-		);
+		);		
 		
 		$this->hasColumn("comment", "string", 1000);
 		
@@ -64,6 +64,7 @@ class Staff extends Doctrine_Record
 		
 		$this->hasColumn("auth", "integer", 10);
 	}
+	
 	public function setUp()
 	{
 		$this->hasMany("Project as ProjectsLeading", array(
@@ -81,5 +82,15 @@ class Staff extends Doctrine_Record
 				"foreign" => "staff"
 			)
 		);
+	}
+	
+	/**
+	 * Custom password setter - salts a password with $id and $username, and proceeds to hash it with SHA256.
+	 *
+	 * @param $password Plain-text password.
+	 */
+	public function setPassword($password)
+	{
+		$this->_set("password", hash("sha256", $this["id"] . $this["username"] . $password));
 	}
 }
