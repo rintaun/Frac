@@ -3,9 +3,9 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<title>Frac <?php echo $this->eprint($this->version); ?> :: Index</title>
+	<title>Frac :: Index</title>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<link rel="stylesheet" href="fraculous.css" type="text/css" />
+	<link rel="stylesheet" href="<?php print($this->eprint($this->themepath)); ?>/stylesheet.css" type="text/css" />
 </head>
 <body>
 	<div id="topbar">
@@ -15,7 +15,7 @@
 	<div id="mainnav">
 		<span class="navtab">Projects</span> <span class="navtab">Staff</span> <span class="navtab">Administration</span>
 		<br />
-		<img src="<?php echo $this->eprint($this->logo); ?>" alt="Frac" id="logo" />
+		<img src="<?php print($this->eprint($this->themepath)); ?>/images/logo.png" alt="Frac" id="logo" />
 	</div>
 	<div id="content">
 Lorem ipsum dolor sit amet consectetur quid e piscing something something something.

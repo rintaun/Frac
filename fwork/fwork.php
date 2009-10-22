@@ -29,6 +29,11 @@ class Fwork
 	private $dbconnection;
 	
 	/**
+	 * Provider for Savant.
+	 */
+	private $savant;
+	
+	/**
 	 * Constructor for Fwork.
 	 * Prepares everything.
 	 *
@@ -42,6 +47,19 @@ class Fwork
 	    
 		// we should now connect to the database
 		$this->dbconnection = Doctrine_Manager::connection($config["database"]["dsn"]);
+		
+		// Create an instance of Savant3
+		$this->savant = new Savant3();
+		
+		// Savant's Path prefix defaults to ./ so we have to first
+		// change it to the theme folder.
+		$this->savant->setPath("template", dirname(__FILE__) . "/../themes/" . "fraculous" . "/");
+		
+		// Give Savant our basepath
+		$this->savant->basepath = dirname($_SERVER["SCRIPT_NAME"]);
+		
+		// Give Savant our themepath
+		$this->savant->themepath = $this->savant->basepath . "/themes/" . "fraculous";
 	}
 	
 	/**
@@ -76,12 +94,6 @@ class Fwork
 			die("Controller class does not implement IController"); // not very good! D:
 		}
 
-		// create an instance of Savant so that the controller can assign variables and such.
-		$tpl = new Savant3();
-
-		// there must be a better way to do this. we want to assign the logo here so that the theme
-		// knows where to find it... but how do we find the prefix again? I forget...
-		$tpl->logo = "/frac/themes/" . "fraculous" . "/images/logo.png";
 		$controller = new $controllername();
 		
 		$action = isset($path[1]) ? $path[1] : "index";
@@ -93,12 +105,7 @@ class Fwork
 		{
 			die("View not found"); // handle this properly later
 		} else {
-			// Savant's Path prefix defaults to ./ so we have to first
-			// change it to the theme folder.
-			$tpl->setPath('template', dirname(__FILE__) . "/../themes/" . "fraculous" . "/");
-
-			// tell Savant to display the view.
-			$tpl->display($controllerprovider . "/" . $action . ".php");
+			$this->savant->display($controllerprovider . "/" . $action . ".php");
 		}
 	}
 	
