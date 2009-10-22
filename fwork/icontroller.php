@@ -10,7 +10,7 @@
 if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 
 /**
- * Controller interface. All controllers must implement this.
+ * Controller interface. All controllers must implement this
  */
 interface IController
 {

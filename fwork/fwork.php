@@ -105,7 +105,14 @@ class Fwork
 		{
 			die("View not found"); // handle this properly later
 		} else {
-			$this->savant->display($controllerprovider . "/" . $action . ".php");
+			$vars = isset($controller->vars) ? $controller->vars : array();
+			$vars["pagename"] = isset($vars["pagename"]) ? $vars["pagename"] : ucfirst($controllerprovider);
+			foreach($vars as $key => $value)
+			{
+				$this->savant->{$key} = $value;
+			}
+			$this->savant->view = $controllerprovider . "/" . $action . ".php";
+			$this->savant->display("layout.php");
 		}
 	}
 	
