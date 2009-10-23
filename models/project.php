@@ -56,8 +56,7 @@ class Project extends Doctrine_Record
 		);
 
 		$this->hasColumn("leader", "integer", 10, array(
-				"unsigned" => true,
-				"notnull" => true
+				"unsigned" => true
 			)
 		);
 
@@ -78,6 +77,11 @@ class Project extends Doctrine_Record
 		$this->hasMany("Task as Tasks", array(
 				"local" => "id",
 				"foreign" => "project"
+			)
+		);
+		$this->hasMany("Episode as Episodes", array(
+				"local" => "id",
+				"foreign" => "project",
 			)
 		);
 	}

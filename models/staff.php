@@ -91,6 +91,6 @@ class Staff extends Doctrine_Record
 	 */
 	public function setPassword($password)
 	{
-		$this->_set("password", hash("sha256", $this["id"] . $this["username"] . $password));
+		$this->_set("password", hash("sha256", $this["id"] . $this["nickname"] . $password));
 	}
 }

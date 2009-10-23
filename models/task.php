@@ -11,12 +11,11 @@ class Task extends Doctrine_Record
 				"autoincrement" => true
 			)
 		);
-		$this->hasColumn("project", "integer", 10, array(
+		$this->hasColumn("episode", "integer", 10, array(
 				"unsigned" => true,
 				"notnull" => true
 			)
 		);
-		$this->hasColumn("episode", "integer");
 		$this->hasColumn("tasktype", "integer", 10, array(
 				"unsigned" => true,
 				"notnull" => true
@@ -24,8 +23,7 @@ class Task extends Doctrine_Record
 		);
 		$this->hasColumn("description", "string", 1000);
 		$this->hasColumn("assignedto", "integer", 10, array(
-				"unsigned" => true,
-				"notnull" => true
+				"unsigned" => true
 			)
 		);
 		$this->hasColumn("active", "boolean");
@@ -33,8 +31,8 @@ class Task extends Doctrine_Record
 	}
 	public function setUp()
 	{
-		$this->hasOne("Project as Project", array(
-				"local" => "project",
+		$this->hasOne("Episode as Episode", array(
+				"local" => "episode",
 				"foreign" => "id"
 			)
 		);
