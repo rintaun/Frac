@@ -17,6 +17,9 @@ abstract class Controller
 	/** The variable that stores template variables, which are passed onto Savant. */
 	public $vars = array(); 
 
+	/** This variable allows an action in a controller to change what View is used to display it. */
+	public $useView = '';
+
 	/**
 	 * A controller MUST implement an index() function.
 	 *

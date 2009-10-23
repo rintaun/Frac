@@ -91,6 +91,9 @@ class Staff extends Doctrine_Record
 	 */
 	public function setPassword($password)
 	{
-		$this->_set("password", hash("sha256", $this["id"] . $this["nickname"] . $password));
+		// we can't use $this["id"] as a salt because it's not set yet when we're creating a new user.
+		// find a workaround?
+		//$this->_set("password", hash("sha256", $this["id"] . $this["nickname"] . $password));
+		$this->_set("password", hash("sha256", $this["nickname"] . $password));
 	}
 }

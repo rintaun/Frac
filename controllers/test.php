@@ -7,7 +7,7 @@ class TestController extends Controller
 		$this->vars['action'] = "index";
 	}
 
-	function insertDummyData()
+	function insertDummyData($args)
 	{
 		$this->vars['action'] = "insertDummyData";
 		$staff = array(

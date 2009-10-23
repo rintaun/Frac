@@ -119,6 +119,9 @@ class Fwork
 		$action = isset($path[1]) && !empty($path[1]) ? $path[1] : "index";
 		
 		$controller->{$action}(isset($path[2]) ? array_slice($path, 2) : array());
+
+		// if the controller has changed the view that it needs to use, use it.
+		if (!empty($controller->useView)) $action = $controller->useView;
 		
 		// load the view
 		if(!file_exists(dirname(__FILE__) . "/../themes/" . "fraculous" . "/" . $controllerprovider . "/" . $action . ".php"))
@@ -126,6 +129,10 @@ class Fwork
 			$this->error("View not found");
 			return;
 		} else {
+			// check if we're logged in; this could have changed in the controller
+			if ($_SESSION['loggedin'] === true) $this->savant->loggedin = true;
+			else $this->savant->loggedin = false;
+
 			$vars = $controller->vars;
 			$vars["pagename"] = isset($vars["pagename"]) ? $vars["pagename"] : ucfirst($controllerprovider);
 			foreach($vars as $key => $value)
