@@ -126,6 +126,7 @@ class Fwork
 			$this->error("View not found");
 			return;
 		} else {
+			$vars = $controller->vars;
 			$vars["pagename"] = isset($vars["pagename"]) ? $vars["pagename"] : ucfirst($controllerprovider);
 			foreach($vars as $key => $value)
 			{
