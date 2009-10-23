@@ -41,6 +41,9 @@ class Fwork
 	 */
 	public function __construct($config)
 	{	
+		// LOL start the session
+		session_start();
+
 		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE, true);
 		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_TBLNAME_FORMAT, $config["database"]["prefix"] . "%s");
 		Doctrine::loadModels(dirname(__FILE__) . "/../models");
