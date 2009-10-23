@@ -14,8 +14,8 @@ if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
  */
 abstract class Controller
 {
-
-	public $vars = array(); // the variable that store template variables.
+	/** The variable that stores template variables, which are passed onto Savant. */
+	public $vars = array(); 
 
 	/**
 	 * A controller MUST implement an index() function.
