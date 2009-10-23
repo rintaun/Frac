@@ -63,6 +63,10 @@ class Fwork
 		
 		// Give Savant our themepath
 		$this->savant->themepath = $this->savant->basepath . "/themes/" . "fraculous";
+
+		// check if we're logged in; relevant before error messages.
+		if ($_SESSION['loggedin'] === true) $this->savant->loggedin = true;
+		else $this->savant->loggedin = false;
 	}
 	
 	/**
@@ -97,6 +101,10 @@ class Fwork
 		// load the controller
 		$controllerprovider = $path[0];
 		$controllername = ucfirst($path[0]) . "Controller";
+
+		// send the name of the controller to savant
+		$this->savant->controller = $controllerprovider;
+
 		if(!file_exists(dirname(__FILE__) . "/../controllers/" . $controllerprovider . ".php"))
 		{
 			$this->error("Cannot find controller file");
@@ -132,7 +140,7 @@ class Fwork
 			$this->error("View not found");
 			return;
 		} else {
-			// check if we're logged in; this could have changed in the controller
+			// check if we're logged in again, just to make sure; this could have changed in the controller.
 			if ($_SESSION['loggedin'] === true) $this->savant->loggedin = true;
 			else $this->savant->loggedin = false;
 
