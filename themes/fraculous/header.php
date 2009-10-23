@@ -8,7 +8,11 @@
 <? endif; ?>
 </div>
 <div id="mainnav">
-	<span class="navtab">Administration</span> <span class="navtab">Staff</span> <span class="navtab">Projects</span>
+	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/admin">Administration</a></span>
+	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/staff">Staff</a></span>
+	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/project">Projects</a></span>
 	<br />
-	<img src="<?php print($this->eprint($this->themepath)); ?>/images/logo.png" alt="Frac" id="logo" />
+	<a href="<?php echo $this->eprint($this->basepath); ?>">
+		<img src="<?php print($this->eprint($this->themepath)); ?>/images/logo.png" alt="Frac" id="logo" />
+	</a>
 </div>
