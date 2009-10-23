@@ -116,7 +116,7 @@ class Fwork
 
 		$controller = new $controllername();
 		
-		$action = isset($path[1]) ? $path[1] : "index";
+		$action = isset($path[1]) && !empty($path[1]) ? $path[1] : "index";
 		
 		$controller->{$action}(isset($path[2]) ? array_slice($path, 2) : array());
 		
