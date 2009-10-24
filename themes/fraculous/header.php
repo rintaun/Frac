@@ -1,6 +1,10 @@
 <div id="topbar">
 <? if ($this->loggedin === true): ?>
-	<span id="login">Login stuff</span>
+	<span id="login">
+		Logged in as <strong><?php echo $this->eprint($this->nickname); ?></strong>
+		<a href="#">My account</a>
+		<a href="<?php echo $this->eprint($this->basepath); ?>/account/logout">Logout</a>
+	</span>
 	<a href="#">Home</a> <a href="#">My Tasks</a> <a href="#">Help</a>
 <? else: ?>
 <?	// show a minilogin or something. ?>

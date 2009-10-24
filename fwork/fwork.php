@@ -71,7 +71,10 @@ class Fwork
 			// since we're logged in, let's get and store the logged in user's Staff object for reference.
 			// this should be set in the session at login. ...but make sure because rofflwaffls ;A;
 			if (isset($_SESSION['staffid']))
+			{
 				$this->user = Doctrine::getTable('Staff')->find($_SESSION['staffid']);
+				$this->savant->nickname = $this->user->nickname;
+			}
 			// if it's not set, something went wrong. make them login again.
 			else
 			{
@@ -155,7 +158,12 @@ class Fwork
 			return;
 		} else {
 			// check if we're logged in again, just to make sure; this could have changed in the controller.
-			if ($_SESSION['loggedin'] === true) $this->savant->loggedin = true;
+			if ($_SESSION['loggedin'] === true)
+			{
+				$this->savant->loggedin = true;
+				if ((!isset($this->user)) && (isset($_SESSION['staffid']))) $this->user = Doctrine::getTable('Staff')->find($_SESSION['staffid']);
+				$this->savant->nickname = $this->user->nickname;				
+			}
 			else $this->savant->loggedin = false;
 
 			$vars = $controller->vars;
