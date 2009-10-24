@@ -65,8 +65,22 @@ class Fwork
 		$this->savant->themepath = $this->savant->basepath . "/themes/" . "fraculous";
 
 		// check if we're logged in; relevant before error messages.
-		if ($_SESSION['loggedin'] === true) $this->savant->loggedin = true;
+		if ($_SESSION['loggedin'] === true)
+		{
+			$this->savant->loggedin = true;
+			// since we're logged in, let's get and store the logged in user's Staff object for reference.
+			// this should be set in the session at login. ...but make sure because rofflwaffls ;A;
+			if (isset($_SESSION['staffid']))
+				$this->user = Doctrine::getTable('Staff')->find($_SESSION['staffid']);
+			// if it's not set, something went wrong. make them login again.
+			else
+			{
+				unset($_SESSION['loggedin']);
+				$this->savant->loggedin = false;
+			}
+		}
 		else $this->savant->loggedin = false;
+		
 	}
 	
 	/**
