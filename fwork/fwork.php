@@ -55,9 +55,6 @@ class Fwork
 		// Create an instance of Savant3
 		$this->savant = new Savant3();
 		
-		// Get our plugin, because savant is retarded.
-		$this->savant->frac = $this->savant->plugin("frac");
-		
 		// Savant's Path prefix defaults to ./ so we have to first
 		// change it to the theme folder.
 		$this->savant->setPath("template", dirname(__FILE__) . "/../themes/" . "fraculous" . "/");
@@ -70,6 +67,9 @@ class Fwork
 		
 		// Give Savant our themepath
 		$this->savant->themepath = $this->savant->basepath . "/themes/" . "fraculous";
+
+		// Get our plugin, because savant is retarded.
+		$this->savant->frac = $this->savant->plugin("frac");		
 	}
 	
 	/**

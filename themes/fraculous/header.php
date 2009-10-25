@@ -5,7 +5,7 @@
 		<a href="<?php echo $this->eprint($this->basepath); ?>/account/logout">Logout</a>
 	</span>
 	<span id="topleft">
-		Hey there, <strong><?php echo $this->plugin("frac")->idtouser($this->session["staffid"]); ?></strong>!
+		Hey there, <strong><?php echo $this->frac->idtouser($this->session["staffid"]); ?></strong>!
 	</span>
 	<span id="topmiddle">
 <? if ($this->controller == "admin"): ?>
