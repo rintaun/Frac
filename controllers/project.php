@@ -10,11 +10,12 @@ class ProjectController extends Controller
 			->leftJoin('p.Episodes e');
 		$projects = $q->execute();
 
-		for ($i = 0; $i <= $projects->count; $i++)
+		for ($i = 0; $i < count($projects); $i++)
 		{
 			$project = $projects->get($i);
 			$arrProject = array(
 				'name' => $project->name,
+				'description' => $project->description,
 				'totaleps' => $project->episodes,
 				'trackedeps' => count($project->Episodes->getData())
 			);

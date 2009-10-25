@@ -49,14 +49,19 @@ class TestController extends Controller
 				'shortname' => 'bsmith',
 				'episodes' => 12,
 				'leader' => $users['Lefty'],
-				'description' => "We'll fill this in later."
+				'description' => "As the newest head of the prestigious Campbell household, young Cecily Campbell is following family tradition by " .
+"becoming a Knight Guard of the Independent Trade City of Housman and taking up the family sword. While being attacked by a crazed veteran knight, she was saved by " .
+"Luke, the Sacred Blacksmith. Alongside Lisa, his assistant, Luke has the power to forge powerful katanas capable of defeating the so feared demons. Demons which could " .
+"once again bring the world close to an end."
 			),
 			array(
 				'name' => 'Bakemonogatari',
 				'shortname' => 'bake',
 				'episodes' => 15,
 				'leader' => $users['rintaun'],
-				'description' => "We'll fill this in later."
+				'description' => "Although there are still traces of the brief period he became a vampire, third year high school student Koyomi " .
+"Araragi is human again. He happens upon others with their own supernatural problems and finds that he can empathize. Koyomi becomes involved in their lives, seeking " .
+"to help them and occasionally asking for advice from Meme Oshino, the homeless man who helped him become human again."
 			)
 		);
 		foreach ($projects AS $cur_project)
