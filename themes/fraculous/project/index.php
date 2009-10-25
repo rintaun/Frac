@@ -4,7 +4,7 @@
 <div class="project">
 	<strong>
 		<a href="<?php echo $this->eprint($this->basepath); ?>/project/display/<?php echo $this->eprint($id); ?>"><?php echo $this->eprint($project['name']); ?></a>
-		<p class="desc"><?php echo $this->frac->shorten($this->eprint($project['description']), 150); ?></p>
+		<p class="desc"><?php echo $this->eprint($this->frac->shorten($project['description'], 100)); ?></p>
 	</strong>
 </div>
 <div class="project">
