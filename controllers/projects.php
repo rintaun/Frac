@@ -1,5 +1,5 @@
 <?php
-class ProjectController extends Controller
+class ProjectsController extends Controller
 {   
 	public function index($args)
 	{

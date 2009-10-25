@@ -18,10 +18,10 @@
 <? else: ?>
 	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/staff">Staff</a></span>
 <? endif; ?>
-<? if ($this->controller == "project"): ?>
+<? if ($this->controller == "projects"): ?>
 	<span class="navtabsel">Projects</span>
 <? else: ?>
-	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/project">Projects</a></span>
+	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/projects">Projects</a></span>
 <? endif; ?>
 	</span>
 <? //	<a href="#">Home</a> <a href="#">My Tasks</a> <a href="#">Help</a> ?>
