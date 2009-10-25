@@ -1,34 +1,28 @@
 <?php
-// NOTE: we probably need site-wide session management of some sort so that we're not checking $_SESSION constantly.
-// it should only be necessary to use $_SESSION 1) to check if the user is logged in, and then 2) to set login variables.
+// NOTE: we probably need site-wide session management of some sort so that we're not checking $this->session constantly.
+// it should only be necessary to use $this->session 1) to check if the user is logged in, and then 2) to set login variables.
 
 class AccountController extends Controller
 {   
 	public function index($args)
 	{
+		$this->useView = null;
+		
 	        // check if we're logged in; if not, default to login.
 		// it may be necessary to alter this session management mechanism a bit,
 		// but for now, it works.
-		if ($_SESSION['loggedin'] != true)
+		if (!isset($this->session["staffid"]))
 		{
-			$this->useView = 'login';
-			$this->login($args);
+			Utils::redirect("account/login");
 			return;
 		}
 
 		// if we are logged in, show the My Account page instead.
 		else
 		{
-			$this->useView = 'myAccount';
-			$this->myAccount($args);
+			Utils::redirect("staff/display/" . $this->session["staffid"]);
 			return;
 		}
-	}
-
-	public function myAccount($args)
-	{
-		// do nothing
-		// ...yet.
 	}
 
 	public function login($args)
@@ -38,7 +32,6 @@ class AccountController extends Controller
 		{
 			// there aren't any variables to set just yet.
 		}
-
 		// if there ARE postvars, however, then we have a login attempt. process it.
 		else if (isset($_POST['nickname']))
 		{
@@ -82,15 +75,12 @@ class AccountController extends Controller
 
 				// if we've gotten this far, then the password must be right! log the user in.
 
-				$_SESSION['loggedin'] = true;
-				$_SESSION['staffid'] = $accounts[0]['id'];
-
+				$this->session['staffid'] = $accounts[0]['id'];
 				// and make sure we display the correct view
-				$this->useView = 'myAccount'; // or do we want to go to the index of the entire site?
+				Utils::redirect("index");
 
 				// we probably want to redirect so that these postvars aren't sitting around...
 			}
-
 		}
 	}
 

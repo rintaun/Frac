@@ -17,7 +17,7 @@ abstract class Controller
 	/** The variable that stores template variables, which are passed onto Savant. */
 	public $vars = array(); 
 
-	/** This variable allows an action in a controller to change what View is used to display it. */
+	/** This variable allows an action in a controller to change what View is used to display it. A value of null means no view will be displayed. */
 	public $useView = '';
 
 	/**

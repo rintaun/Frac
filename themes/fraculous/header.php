@@ -1,11 +1,11 @@
 <div id="topbar">
-<? if ($this->loggedin === true): ?>
+<? if (isset($this->session["staffid"])): ?>
 	<span id="topright">
 		<a href="#">My account</a>
 		<a href="<?php echo $this->eprint($this->basepath); ?>/account/logout">Logout</a>
 	</span>
 	<span id="topleft">
-		You are logged in as <strong><?php echo $this->eprint($this->nickname); ?></strong>.	
+		Hey there, <strong><?php echo $this->plugin("frac")->idtouser($this->session["staffid"]); ?></strong>!
 	</span>
 	<span id="topmiddle">
 <? if ($this->controller == "admin"): ?>
