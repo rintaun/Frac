@@ -24,12 +24,6 @@ spl_autoload_register(array("Doctrine", "autoload"));
  */
 class Fwork
 {
-	
-	/**
-	 * Doctrine connection to the database.
-	 */
-	private $dbconnection;
-	
 	/**
 	 * Provider for Savant.
 	 */
@@ -50,7 +44,7 @@ class Fwork
 		Doctrine::loadModels(dirname(__FILE__) . "/../models");
 	    
 		// we should now connect to the database
-		$this->dbconnection = Doctrine_Manager::connection($config["database"]["dsn"]);
+		Doctrine_Manager::connection($config["database"]["dsn"]);
 		
 		// Create an instance of Savant3
 		$this->savant = new Savant3();
@@ -164,12 +158,11 @@ class Fwork
 	
 	/**
 	 * Destructor for Fwork.
-	 * Cleans up things.
+	 * Cleans up things and destroys singletons.
 	 */
 	public function __destruct()
 	{
 		$dm = Doctrine_Manager::getInstance();
-		$dm->closeConnection($this->dbconnection);
 		unset($dm);
 		
 		$session = &SesMan::getInstance();
