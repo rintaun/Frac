@@ -4,32 +4,9 @@
 <div class="project">
 	<strong>
 		<a href="<?php echo $this->eprint($this->basepath); ?>/project/display/<?php echo $this->eprint($id); ?>"><?php echo $this->eprint($project['name']); ?></a>
-		<p class="desc"><?php echo $this->frac->shorten($this->eprint($project['description']), 150); ?></p>
-	</strong>
-</div>
-<div class="project">
-	<strong>
-		<a href="<?php echo $this->eprint($this->basepath); ?>/project/display/<?php echo $this->eprint($id); ?>"><?php echo $this->eprint($project['name']); ?></a>
-	</strong>
-</div>
-<div class="project">
-	<strong>
-		<a href="<?php echo $this->eprint($this->basepath); ?>/project/display/<?php echo $this->eprint($id); ?>"><?php echo $this->eprint($project['name']); ?></a>
-	</strong>
-</div>
-<div class="project">
-	<strong>
-		<a href="<?php echo $this->eprint($this->basepath); ?>/project/display/<?php echo $this->eprint($id); ?>"><?php echo $this->eprint($project['name']); ?></a>
-	</strong>
-</div>
-<div class="project">
-	<strong>
-		<a href="<?php echo $this->eprint($this->basepath); ?>/project/display/<?php echo $this->eprint($id); ?>"><?php echo $this->eprint($project['name']); ?></a>
-	</strong>
-</div>
-<div class="project">
-	<strong>
-		<a href="<?php echo $this->eprint($this->basepath); ?>/project/display/<?php echo $this->eprint($id); ?>"><?php echo $this->eprint($project['name']); ?></a>
+		<br />
+		<span class="eps">Episodes Tracking: <?php echo $this->eprint($project['trackedeps']); ?> / Total Episodes: <?php echo $this->eprint($project['totaleps']); ?><br /></span>
+		<p class="desc"><?php echo $this->eprint($this->frac->shorten($project['description'], 150)); ?></p>
 	</strong>
 </div>
 <?php endforeach; ?>

@@ -26,10 +26,11 @@ class Savant3_Plugin_frac extends Savant3_Plugin
 
 	public function shorten($text, $len, $post="...", $mode=SHORTEN_SHORTER)
 	{
-		if (is_array($text)) $text = implode(" ",$text);
-		if (!is_numeric($len)) $len = 100;
+		if (!is_numeric($len)) $len = 10;
 //		if ($post == null) $post = "...";
 //		if ($mode == null) $mode = SHORTEN_SHORTER;
+
+		if (strlen($text) < $len) return $text;
 
 		switch ($mode)
 		{
