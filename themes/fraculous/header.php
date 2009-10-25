@@ -2,32 +2,32 @@
 <? if (isset($this->session["staffid"])): ?>
 	<span id="topright">
 		<a href="#">My account</a>
-		<a href="<?php echo $this->eprint($this->basepath); ?>/account/logout">Logout</a>
+		<a href="<?php echo $this->eprint($this->basepath); ?>/staff/logout">Logout</a>
 	</span>
 	<span id="topleft">
 		Hey there, <strong><?php echo $this->frac->idtouser($this->session["staffid"]); ?></strong>!
 	</span>
 	<span id="topmiddle">
-<? if ($this->controller == "admin"): ?>
-	<span class="navtabsel">Administration</span>
+<? if ($this->controller == "projects"): ?>
+	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/projects">Projects</a></span>
 <? else: ?>
-	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/admin">Administration</a></span>
+	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/projects">Projects</a></span>
 <? endif; ?>
 <? if ($this->controller == "staff"): ?>
-	<span class="navtabsel">Staff</span>
+	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/staff">Staff</a></span>
 <? else: ?>
 	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/staff">Staff</a></span>
 <? endif; ?>
-<? if ($this->controller == "projects"): ?>
-	<span class="navtabsel">Projects</span>
+<? if ($this->controller == "admin"): ?>
+	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/admin">Administration</a></span>
 <? else: ?>
-	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/projects">Projects</a></span>
+	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/admin">Administration</a></span>
 <? endif; ?>
 	</span>
 <? //	<a href="#">Home</a> <a href="#">My Tasks</a> <a href="#">Help</a> ?>
 <? else: ?>
 <?	// show a minilogin or something. ?>
-	<span id="login"><a href="<?php echo $this->eprint($this->basepath); ?>/account/login">Login</a></span>
+	<span id="login"><a href="<?php echo $this->eprint($this->basepath); ?>/staff/login">Login</a></span>
 <? endif; ?>
 </div>
 <div id="mainnav">

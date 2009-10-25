@@ -1,7 +1,7 @@
 <?php
 class ProjectsController extends Controller
 {   
-	public function index($args)
+	public function index($args) // list projects
 	{
 		// well since we're here, that means we should be listing projects.
 		// or something.
@@ -25,7 +25,19 @@ class ProjectsController extends Controller
 	}
 
 	// $args is the Project ID. or at least, it should be O_o
-	public function display($args)
+	public function display($args) // display the episodes from a project
+	{
+	}
+
+	public function create($args) // create a new project
+	{
+	}
+
+	public function delete($args) // delete a project
+	{
+	}
+
+	public function edit($args) // edit a project's settings
 	{
 	}
 }

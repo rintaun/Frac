@@ -1,31 +1,27 @@
 <?php
-// NOTE: we probably need site-wide session management of some sort so that we're not checking $this->session constantly.
-// it should only be necessary to use $this->session 1) to check if the user is logged in, and then 2) to set login variables.
-
-class AccountController extends Controller
+class ProjectsController extends Controller
 {   
-	public function index($args)
+	public function index($args) // list staff members
 	{
-		$this->useView = null;
-		
-	        // check if we're logged in; if not, default to login.
-		// it may be necessary to alter this session management mechanism a bit,
-		// but for now, it works.
-		if (!isset($this->session["staffid"]))
-		{
-			Utils::redirect("account/login");
-			return;
-		}
-
-		// if we are logged in, show the My Account page instead.
-		else
-		{
-			Utils::redirect("staff/display/" . $this->session["staffid"]);
-			return;
-		}
 	}
 
-	public function login($args)
+	public function display($args) // display a staff member profile
+	{
+	}
+
+	public function create($args) // create a new staff member
+	{
+	}
+
+	public function delete($args) // delete a staff member
+	{
+	}
+
+	public function edit($args) // edit a staff member profile
+	{
+	}
+
+	public function login($args) // login a staff member
 	{
 		// if there aren't postvars, nobody has tried to login. set variables and exit.
 		if (!isset($_POST['nickname']))
@@ -84,7 +80,7 @@ class AccountController extends Controller
 		}
 	}
 
-	public function logout($args)
+	public function logout($args) // logout a staff member
 	{
 	}
 }
