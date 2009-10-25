@@ -30,18 +30,30 @@ final class SesMan implements arrayaccess
 	 */
 	private function __clone() { }
 	
+	/**
+	 * Part of arrayaccess, see www.php.net/arrayaccess.
+	 */
 	public function offsetSet($offset, $value) {
 		$_SESSION[$offset] = $value;
     }
     
+	/**
+	 * Part of arrayaccess, see www.php.net/arrayaccess.
+	 */    
     public function offsetExists($offset) {
 		return isset($_SESSION[$offset]);
 	}
-	
+
+	/**
+	 * Part of arrayaccess, see www.php.net/arrayaccess.
+	 */
 	public function offsetUnset($offset) {
 		unset($_SESSION[$offset]);
 	}
 	
+	/**
+	 * Part of arrayaccess, see www.php.net/arrayaccess.
+	 */
 	public function offsetGet($offset)
 	{
 		return $_SESSION[$offset];
