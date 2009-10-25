@@ -5,9 +5,9 @@
 	<strong>
 		<a href="<?php echo $this->eprint($this->basepath); ?>/project/display/<?php echo $this->eprint($id); ?>"><?php echo $this->eprint($project['name']); ?></a>
 	</strong>
-	<p class="desc"><?php echo $this->eprint($this->frac->shorten($project['description'], 100)); ?></p>
 	<br />
-	<span class="eps">Episodes Tracking: <?php echo $this->eprint($project['trackedeps']); ?> / Total Episodes: <?php echo $this->eprint($project['totaleps']); ?><br /></span>
+	<span class="eps">Episodes Tracking: <?php echo $this->eprint($project['trackedeps']); ?> / Total Episodes: <?php echo $this->eprint($project['totaleps']); ?></span>
+	<br />
 	<p class="desc"><?php echo $this->eprint($this->frac->shorten($project['description'], 150)); ?></p>
 </div>
 <?php endforeach; ?>
