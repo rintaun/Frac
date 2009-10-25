@@ -7,9 +7,11 @@
  * See COPYING for license conditions.
  */
 
-if(!defined("IN_FWORK_")) $this->error("This file cannot be invoked directly.");
+if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 
+require_once(dirname(__FILE__) . "/utils.php");
 require_once(dirname(__FILE__) . "/controller.php");
+require_once(dirname(__FILE__) . "/sesman.php");
 require_once(dirname(__FILE__) . "/../lib/Doctrine/Doctrine.php");
 require_once(dirname(__FILE__) . "/../lib/Savant3/Savant3.php");
 
@@ -41,8 +43,7 @@ class Fwork
 	 */
 	public function __construct($config)
 	{	
-		// LOL start the session
-		session_start();
+		$session = SesMan::getInstance();
 
 		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE, true);
 		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_TBLNAME_FORMAT, $config["database"]["prefix"] . "%s");
@@ -61,32 +62,14 @@ class Fwork
 		// change it to the theme folder.
 		$this->savant->setPath("template", dirname(__FILE__) . "/../themes/" . "fraculous" . "/");
 		
+		// Savant resources etc.
+		$this->savant->setPath("resource", dirname(__FILE__) . "/savant");
+		
 		// Give Savant our basepath
-		$this->savant->basepath = dirname($_SERVER["SCRIPT_NAME"]);
+		$this->savant->basepath = Utils::basepath();
 		
 		// Give Savant our themepath
 		$this->savant->themepath = $this->savant->basepath . "/themes/" . "fraculous";
-
-		// check if we're logged in; relevant before error messages.
-		if ($_SESSION['loggedin'] === true)
-		{
-			$this->savant->loggedin = true;
-			// since we're logged in, let's get and store the logged in user's Staff object for reference.
-			// this should be set in the session at login. ...but make sure because rofflwaffls ;A;
-			if (isset($_SESSION['staffid']))
-			{
-				$this->user = Doctrine::getTable('Staff')->find($_SESSION['staffid']);
-				$this->savant->nickname = $this->user->nickname;
-			}
-			// if it's not set, something went wrong. make them login again.
-			else
-			{
-				unset($_SESSION['loggedin']);
-				$this->savant->loggedin = false;
-			}
-		}
-		else $this->savant->loggedin = false;
-		
 	}
 	
 	/**
@@ -98,16 +81,18 @@ class Fwork
 	 */
 	private function error($error)
 	{
+		$session = SesMan::getInstance();
 		// do not use controllers for this, doing so is inefficient
 		header("HTTP/1.1 404 Not Found");
-		$this->savant->error = $error;
+		$this->savant->session = $session;
+		$this->savant->error = $error; // disregard this I suck cock for production mode
 		$this->savant->pagename = "Error";
 		$this->savant->view = "error.php";
 		$this->savant->display("layout.php");
 	}
 	
 	/**
-	 * Serve a page with Fwork.
+	 * Serve a page with Fwork (to serve man~).
 	 *
 	 * A few notes about this:
 	 * - If no action is explicitly specified, $controller->index($args) will be called.
@@ -118,6 +103,8 @@ class Fwork
 	 */
 	public function serve($path)
 	{
+		$session = SesMan::getInstance();
+		
 		// load the controller
 		$controllerprovider = $path[0];
 		$controllername = ucfirst($path[0]) . "Controller";
@@ -146,37 +133,32 @@ class Fwork
 		}
 
 		$controller = new $controllername();
+		$controller->session = $this->savant->session = $session;
 		
 		$action = isset($path[1]) && !empty($path[1]) ? $path[1] : "index";
 		
-		$controller->{$action}(isset($path[2]) ? array_slice($path, 2) : array());
-
-		// if the controller has changed the view that it needs to use, use it.
-		if (!empty($controller->useView)) $action = $controller->useView;
-		
-		// load the view
-		if(!file_exists(dirname(__FILE__) . "/../themes/" . "fraculous" . "/" . $controllerprovider . "/" . $action . ".php"))
+		if(!method_exists($controller, $action) || $action[0] == "_") // we require you to be sensible and not have private/protected methods that are not prefixed with _
 		{
-			$this->error("View not found");
+			$this->error("Controller does not provide a behaviour for the provided action");
 			return;
-		} else {
-			// check if we're logged in again, just to make sure; this could have changed in the controller.
-			if ($_SESSION['loggedin'] === true)
+		}
+		
+		$controller->{$action}(isset($path[2]) ? array_slice($path, 2) : array());
+		
+		if($controller->useView !== null)
+		{
+			// load the view
+			if(!file_exists(dirname(__FILE__) . "/../themes/" . "fraculous" . "/" . $controllerprovider . "/" . $action . ".php"))
 			{
-				$this->savant->loggedin = true;
-				if ((!isset($this->user)) && (isset($_SESSION['staffid']))) $this->user = Doctrine::getTable('Staff')->find($_SESSION['staffid']);
-				$this->savant->nickname = $this->user->nickname;				
+				$this->error("View not found");
+				return;
+			} else {
+				$vars = $controller->vars;
+				$vars["pagename"] = isset($vars["pagename"]) ? $vars["pagename"] : ucfirst($controllerprovider);
+				$this->savant->assign($vars);
+				$this->savant->view = $controllerprovider . "/" . $action . ".php";
+				$this->savant->display("layout.php");
 			}
-			else $this->savant->loggedin = false;
-
-			$vars = $controller->vars;
-			$vars["pagename"] = isset($vars["pagename"]) ? $vars["pagename"] : ucfirst($controllerprovider);
-			foreach($vars as $key => $value)
-			{
-				$this->savant->{$key} = $value;
-			}
-			$this->savant->view = $controllerprovider . "/" . $action . ".php";
-			$this->savant->display("layout.php");
 		}
 	}
 	
@@ -186,6 +168,11 @@ class Fwork
 	 */
 	public function __destruct()
 	{
-		Doctrine_Manager::getInstance()->closeConnection($this->dbconnection);
+		$dm = Doctrine_Manager::getInstance();
+		$dm->closeConnection($this->dbconnection);
+		unset($dm);
+		
+		$session = &SesMan::getInstance();
+		unset($session);
 	}
 }

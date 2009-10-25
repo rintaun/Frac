@@ -17,6 +17,6 @@ $config = array(
 	
 	"site" => array(
 		"gzip"		=>	true, // enable gzip compression
-		"gentime"	=>	true, // enable generation time shown as a comment at the end of the page
+		"gentime"	=>	true // enable generation time shown as a comment at the end of the page
 	)
 );
