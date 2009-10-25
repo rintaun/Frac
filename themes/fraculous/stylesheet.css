@@ -1,9 +1,29 @@
 html { height: 100%; } 
-body { font-family: sans-serif; padding: 0; margin: 0; height: 100%; background-color: #EEEEEE; }
-#topbar { background: #000000; height: 16px; color: #ffffff; font-size: 12px; padding: 5px 10px 5px 10px; }
-#topbar a { color: #aaaaaa; text-decoration: none; margin: 0px 10px 0px 10px; }
-#topbar a:hover { color: #ffffff; }
-#login { float: right; }
+body { font-family: Arial, sans-serif; padding: 0; margin: 0; height: 100%; background: url(/frac/themes/fraculous/images/bg.png) no-repeat 50% 0%; }
+#topbar {
+	width: 980px;
+	color: #ffffff;
+	height: 20px;
+	margin-top: 0px; 
+	padding: 5px 22px 0px 22px;
+	background: url(/frac/themes/fraculous/images/topbarbg.png) repeat-y 50%;
+	font-size: 12px; 
+	margin: 0 auto;
+}
+#topbar strong { text-decoration: underline; }
+#topbar a { color: #ffffff; text-decoration: none; }
+#topright { float: right; display: block; z-index: 100; }
+#topleft { float: left; display: block; z-index: 100; }
+#topmiddle { text-align: center; display: block; font-size: 14px; position: relative; top: 0; width: 50%; margin: 0 auto; }
+span.navtab { background: url(/frac/themes/fraculous/images/buttonbg.png); height: 100%; padding: 0; margin: -5px 10px -5px 10px; padding: 0px 5px 0px 5px; }
+span.navtab:hover { background: url(/frac/themes/fraculous/images/buttondarkbg.png); color: #ff0000; }
+span.navtabsel{ background: url(/frac/themes/fraculous/images/buttondarkbg.png); margin: -5px 10px -5px 10px; padding: 0px 5px 0px 5px; }
+#mainnav { margin: 0 auto; width: 980px; margin-top: -20px; padding: 0px 22px 50px 22px; }
+#content { margin: 0 auto; width: 880px; padding: 5px 22px 10px 22px; background-color: #ffffff; min-height: 200px;}
+img { border: 0; }
+
+/*
+topbar { background: #000000; height: 16px; color: #ffffff; font-size: 12px; padding: 5px 10px 5px 10px; }
 #mainnav { background: #555555; height: 75px; color: #ffffff; padding: 0px 10px 5px 10px; }
 #mainnav span.navtab { background: #333333; border: 1px solid #000000; border-top: 0; padding: 2px 5px 2px 5px; margin: 0px 5px 0px 5px; float: right; }
 #mainnav span.navtab:hover { background: #000000; }
@@ -12,3 +32,4 @@ body { font-family: sans-serif; padding: 0; margin: 0; height: 100%; background-
 #mainnav a { color: #ffffff; text-decoration: none; }
 #content { background: #EEEEEE; min-height: 300px; color: #000000; padding: 10px 10px 10px 10px; }
 #fulllogin { background: #FFFFFF; display: table-cell; padding: 5px 5px 5px 5px; border: 1px solid #666666; margin: 0 auto; }
+*/
