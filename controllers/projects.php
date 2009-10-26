@@ -35,9 +35,47 @@ class ProjectsController extends Controller
 		// do we have an error thing?
 		if (!$p->allowedto(PERM_CREATE_PROJECT))
 		{
-			Utils::error("You don't have permission to create projects.");
+			$this->error("You don't have permission to create projects.");
 			return;
 		}
+		print_r($_POST);
+
+		
+		if (isset($_POST['go']))
+		{
+			// ok, if the user has selected to do automatic lookup
+			// of the series or automatic adding of episodes,
+			// then we need to confirm that we're looking up the right
+			// series.
+			// scratch that. we should confirm no matter what, but if they chose
+			// automatic lookup, do it here.
+			if (!isset($_POST['confirm']))
+			{
+				// implement automatic lookup
+
+				$this->vars['confirm'] = $_POST; // LOL LAZY
+				// display a confirmation
+				$this->useView = "confirm";
+				return;
+			}
+
+			// if they've already confirmed, then go ahead and create the project
+			$project = new Project();
+			
+			// blah blah blah
+
+			$project->save();
+
+			// if the user has chosen to automatically add episodes, do so now
+			
+
+			// display a confirmation
+			redirect("projects/display/" . $project->id);
+			$this->useView = null;
+			return;
+		}
+
+		// otherwise, i don't think we actually need to do anything... right?
 	}
 
 	public function delete($args) // delete a project

@@ -4,6 +4,7 @@ class Log extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
+		$this->setTableName('logs');
 		$this->hasColumn('id', 'integer', 10, array(
 				'primary' => true,
 				'unsigned' => true

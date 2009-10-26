@@ -61,6 +61,12 @@ class Project extends Doctrine_Record
 		);
 
 		$this->hasColumn("description", "clob");
+
+		$this->hasColumn("template", "integer", 10, array(
+				"unsigned" => true
+			)
+		);
+		$this->hasColumn("episode_auto", "boolean");
 	}
 	public function setUp()
 	{

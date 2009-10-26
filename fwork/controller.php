@@ -26,4 +26,13 @@ abstract class Controller
 	 * @param $args Arguments from the path.
 	 */
 	abstract public function index($args);
+
+	public function error($message)
+	{
+		// this should be changed.
+		// it is just so that error messages work at all for right now.
+
+		$this->useView=array("","error");
+		$this->vars['error'] = $message;
+	}
 }

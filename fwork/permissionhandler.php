@@ -55,7 +55,6 @@ final class PermissionHandler
 	// accept a user id as input. with this, we'll pull permissions from all over the database.
 	public function __construct($id)
 	{
-		$id = 2;
 		// if $id is not a number of some sort, then gtfo
 		if ((!is_numeric($id)) && (!is_int($id))) return null;
 
@@ -92,7 +91,7 @@ final class PermissionHandler
 		if ($this->local[$project] & $type) return true;
 
 		// if we got this far it means the flag wasn't set in local or global, so return false
-		else return false;
+		return false;
 	}
 
 	// we might want to add things like set() and unset(), but for the moment they are essentially irrelevant.
