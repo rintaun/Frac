@@ -1,11 +1,12 @@
 <div id="topbar">
 <? if (isset($this->session["staffid"])): ?>
 	<span id="topright">
-		<a href="#">My account</a>
+		<a href="<?php echo $this->eprint($this->basepath); ?>/staff/edit/<?php echo $this->eprint($this->staffid); ?>">My account</a>
 		<a href="<?php echo $this->eprint($this->basepath); ?>/staff/logout">Logout</a>
 	</span>
 	<span id="topleft">
-		Hey there, <strong><?php echo $this->frac->idtouser($this->session["staffid"]); ?></strong>!
+		Hey there, <a href="<?php echo $this->eprint($this->basepath); ?>/staff/display/<?php echo $this->eprint($this->staffid); ?>">
+<strong><?php echo $this->frac->idtouser($this->session["staffid"]); ?></strong></a>!
 	</span>
 	<span id="topmiddle">
 <? if ($this->controller == "projects"): ?>

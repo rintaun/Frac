@@ -109,6 +109,8 @@ class Fwork
 			return; 
 		}
 
+		$this->savant->staffid = $session['staffid'];
+
 		// they're logged in, so start the permissionhandler
 		$permissions = PermissionHandler::getInstance($session['staffid']);
 		
@@ -161,7 +163,8 @@ class Fwork
 				$controllerprovider = $controller->useView[0];
 				$action = $controller->useView[1];
 			}
-			else	$action = $controller->useView;
+			elseif (!empty($controller->useView))
+				$action = $controller->useView;
 		
 			// load the view
 			if(!file_exists(dirname(__FILE__) . "/../themes/" . "fraculous" . "/" . $controllerprovider . "/" . $action . ".php"))
