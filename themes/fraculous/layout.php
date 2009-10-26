@@ -10,7 +10,9 @@
 <body>
 	<?php $this->display("header.php"); ?>
 	<div id="content">
-	<?php $this->display($this->view); ?>
+		<div id="container">
+		<?php $this->display($this->view); ?>
+		</div
 	</div>
 	<?php $this->display("footer.php"); ?>
 </body>
