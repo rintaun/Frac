@@ -30,11 +30,11 @@ final class Utils
 	/**
 	 * Redirect a page internally.
 	 *
-	 * @param $path Path, usually controller/action/arguments.
+	 * @param $path Path, usually controller/action/arguments, or even an array.
 	 */
 	public static function redirect($path)
 	{
-		header("Location: " . self::basepath() . "/" . $path);
+		header("Location: " . self::basepath() . "/" . (is_array($path) ? implode("/", $path) : $path));
 	}
 
 	/**

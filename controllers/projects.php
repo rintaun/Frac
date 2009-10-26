@@ -55,7 +55,7 @@ class ProjectsController extends Controller
 
 				$this->vars['confirm'] = $_POST; // LOL LAZY
 				// display a confirmation
-				$this->useView = "confirm";
+				$this->view = "confirm";
 				return;
 			}
 
@@ -71,7 +71,7 @@ class ProjectsController extends Controller
 
 			// display a confirmation
 			redirect("projects/display/" . $project->id);
-			$this->useView = null;
+			$this->view = null;
 			return;
 		}
 

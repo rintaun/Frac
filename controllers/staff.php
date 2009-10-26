@@ -109,7 +109,7 @@ class StaffController extends Controller
 	{
 		$session = SesMan::getInstance();
 		$session->flush();
-		$this->useView = null;
+		$this->view = null;
 		Utils::redirect("staff/login");
 	}
 }
