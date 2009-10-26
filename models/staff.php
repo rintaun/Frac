@@ -72,7 +72,7 @@ class Staff extends Doctrine_Record
 				"foreign" => "leader"
 			)
 		);
-		$this->hasMany("Permissions as Permission", array(
+		$this->hasMany("Permissions as Permissions", array(
 				"local" => "id",
 				"foreign" => "staff"
 			)

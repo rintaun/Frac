@@ -14,6 +14,7 @@ require_once(dirname(__FILE__) . "/controller.php");
 require_once(dirname(__FILE__) . "/sesman.php");
 require_once(dirname(__FILE__) . "/../lib/Doctrine/Doctrine.php");
 require_once(dirname(__FILE__) . "/../lib/Savant3/Savant3.php");
+require_once(dirname(__FILE__) . "/permissionhandler.php");
 
 spl_autoload_register(array("Doctrine", "autoload"));
 
@@ -100,6 +101,7 @@ class Fwork
 		$session = SesMan::getInstance();
 
 		if (!isset($session['staffid'])) $path = array('staff','login'); // if they're not logged in, send them to login, PERIOD.
+		$permissions = new PermissionHandler($session['staffid']);
 		
 		// load the controller
 		$controllerprovider = $path[0];
