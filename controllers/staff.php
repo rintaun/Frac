@@ -1,5 +1,5 @@
 <?php
-class ProjectsController extends Controller
+class StaffController extends Controller
 {   
 	public function index($args) // list staff members
 	{

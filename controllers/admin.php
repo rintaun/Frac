@@ -1,5 +1,5 @@
 <?php
-class IndexController extends Controller
+class AdminController extends Controller
 {   
 	public function index($args) // display settings, like phpinfo()
 	{	
