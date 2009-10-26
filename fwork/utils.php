@@ -36,6 +36,16 @@ final class Utils
 	{
 		header("Location: " . self::basepath() . "/" . $path);
 	}
+
+	/**
+	 * Display an error message.
+	 *
+	 * @param $message The error message to display.
+	 */
+	public static function error($message)
+	{
+		// what? D:
+	}
 	
 	/**
 	 * Get a username from a user ID.

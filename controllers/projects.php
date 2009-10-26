@@ -31,13 +31,40 @@ class ProjectsController extends Controller
 
 	public function create($args) // create a new project
 	{
+		$p = PermissionHandler::getInstance();
+		// do we have an error thing?
+		if (!$p->allowedto(PERM_CREATE_PROJECT))
+		{
+			Utils::error("You don't have permission to create projects.");
+			return;
+		}
 	}
 
 	public function delete($args) // delete a project
 	{
+		$project = $args[0];
+
+		$p = PermissionHandler::getInstance();
+		// do we have an error thing?
+		if (!$p->allowedto(PERM_PROJECT_DELETE, $project))
+		{
+			Utils::error("You don't have permission to delete this project.");
+			return;
+		}
+
 	}
 
 	public function edit($args) // edit a project's settings
 	{
+		$project = $args[0];
+
+		$p = PermissionHandler::getInstance();
+		// do we have an error thing?
+		if (!$p->allowedto(PERM_EDIT_SETTINGS, $project))
+		{
+			Utils::error("You don't have permission to edit this project.");
+			return;
+		}
+
 	}
 }

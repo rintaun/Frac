@@ -44,11 +44,13 @@ Who knows! For now,
 [12:40] Chibu: 8 - FUCKIN' RAPID!
 */
 
-class PermissionHandler
+final class PermissionHandler
 {
-	var $global = 0;
-	var $local = array();
-	var $id = -1;
+	public static $instance;
+
+	private $global = 0;
+	private $local = array();
+	private $id = -1;
 
 	// accept a user id as input. with this, we'll pull permissions from all over the database.
 	public function __construct($id)
@@ -94,6 +96,21 @@ class PermissionHandler
 	}
 
 	// we might want to add things like set() and unset(), but for the moment they are essentially irrelevant.
+
+
+	// get the instance or some crap.
+	public static function getInstance($id=null)
+	{
+		// this should only be called the first time, right?
+		// if so, then we should only use the $id the first time. i.e. in fwork
+		if(!self::$instance)
+		{
+			self::$instance = new self($id);
+		}
+
+		return self::$instance;
+	}
+
 }
 
 

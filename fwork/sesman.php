@@ -56,7 +56,9 @@ final class SesMan implements arrayaccess
 	 */
 	public function offsetGet($offset)
 	{
-		return $_SESSION[$offset];
+		if (isset($_SESSION[$offset]))
+			return $_SESSION[$offset];
+		else	return null;
 	}
 	
 	/**

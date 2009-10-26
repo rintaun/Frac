@@ -100,8 +100,17 @@ class Fwork
 	{
 		$session = SesMan::getInstance();
 
-		if (!isset($session['staffid'])) $path = array('staff','login'); // if they're not logged in, send them to login, PERIOD.
-		$permissions = new PermissionHandler($session['staffid']);
+		// we don't want to redirect them if they're already at login...
+		// ... is there some better way of checking for this? O_o
+		if ((!isset($session['staffid'])) && (($path[0] != "staff") || ($path[1] != "login")))
+		{
+			// if they're not logged in, send them to login, PERIOD.
+			Utils::redirect("staff/login");
+			return; 
+		}
+
+		// they're logged in, so start the permissionhandler
+		$permissions = PermissionHandler::getInstance($session['staffid']);
 		
 		// load the controller
 		$controllerprovider = $path[0];
@@ -145,6 +154,15 @@ class Fwork
 		
 		if($controller->useView !== null)
 		{
+			// two formats possible for useView: array(controller, action)
+			// or just action (if same controller)
+			if (is_array($controller->useView))
+			{
+				$controllerprovider = $controller->useView[0];
+				$action = $controller->useView[1];
+			}
+			else	$action = $controller->useView;
+		
 			// load the view
 			if(!file_exists(dirname(__FILE__) . "/../themes/" . "fraculous" . "/" . $controllerprovider . "/" . $action . ".php"))
 			{
