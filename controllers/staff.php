@@ -83,6 +83,6 @@ class StaffController extends Controller
 	public function logout($args) // logout a staff member
 	{
 		$session = SesMan::getInstance();
-		$session->unsetAll();
+		$session->flush();
 	}
 }

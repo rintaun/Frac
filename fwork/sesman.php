@@ -78,12 +78,9 @@ final class SesMan implements arrayaccess
 	 * Unset everything.
 	 * This is awesome and not dangerous at all!
 	 */
-	public function unsetAll()
+	public function flush()
 	{
-		foreach ($_SESSION as $key => $value)
-		{
-			unset($_SESSION[$key]);
-		}
+		session_unset();
 	}
 
 	/**
