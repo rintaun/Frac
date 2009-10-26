@@ -35,12 +35,12 @@ final class SesMan implements arrayaccess
 	 */
 	public function offsetSet($offset, $value) {
 		$_SESSION[$offset] = $value;
-    }
+	}
     
 	/**
 	 * Part of arrayaccess, see www.php.net/arrayaccess.
 	 */    
-    public function offsetExists($offset) {
+	public function offsetExists($offset) {
 		return isset($_SESSION[$offset]);
 	}
 
@@ -73,7 +73,19 @@ final class SesMan implements arrayaccess
 		
 		return self::$instance;
 	}
-	
+
+	/**
+	 * Unset everything.
+	 * This is awesome and not dangerous at all!
+	 */
+	public function unsetAll()
+	{
+		foreach ($_SESSION as $key => $value)
+		{
+			unset($_SESSION[$key]);
+		}
+	}
+
 	/**
 	 * Destroy the session manager.
 	 * Does nothing.

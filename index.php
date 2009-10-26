@@ -23,3 +23,4 @@ unset($fwork);
 if($config["site"]["gentime"]) printf("<!-- generated in %.2f seconds -->", array_sum(explode(" ", microtime())) - $time);
 // end the buffer
 ob_end_flush();
+?>

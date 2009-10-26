@@ -98,6 +98,8 @@ class Fwork
 	public function serve($path)
 	{
 		$session = SesMan::getInstance();
+
+		if (!isset($session['staffid'])) $path = array('staff','login'); // if they're not logged in, send them to login, PERIOD.
 		
 		// load the controller
 		$controllerprovider = $path[0];

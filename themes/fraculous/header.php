@@ -27,7 +27,7 @@
 <? //	<a href="#">Home</a> <a href="#">My Tasks</a> <a href="#">Help</a> ?>
 <? else: ?>
 <?	// show a minilogin or something. ?>
-	<span id="login"><a href="<?php echo $this->eprint($this->basepath); ?>/staff/login">Login</a></span>
+	<span id="topright"><a href="<?php echo $this->eprint($this->basepath); ?>/staff/login">Login</a></span>
 <? endif; ?>
 </div>
 <div id="mainnav">
