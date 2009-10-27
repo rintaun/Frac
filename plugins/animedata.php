@@ -1,5 +1,17 @@
 <?php
 
+if (!function_exists("gzdecode"))
+{
+	function gzdecode($data){
+		$g=tempnam('/tmp','ff');
+		@file_put_contents($g,$data);
+		ob_start();
+		readgzfile($g);
+		$d=ob_get_clean();
+		return $d;
+	}
+}
+
 // gets anime information and data via http://cal.syoboi.jp/
 class AnimeData
 {
@@ -11,7 +23,9 @@ class AnimeData
 	{
 		if (parse_url($url) === false) return false;
 		if (ini_get("allow_url_fopen") == 1) 		// if allow_url_fopen is on, then just get the contents and return them.
+		{
 			return file_get_contents($url);
+		}
 		else if (function_exists("curl_exec"))		// if not, try curl...
 		{
 			$ch = curl_init();
@@ -66,33 +80,43 @@ class AnimeData
 		// first we pull the official title out of the thing.
 		$title = $doc->getElementsByTagName('Title')->item(0)->nodeValue;
 
-		// this title should be in japanese, so lets look pull up the article on japanese wikipedia
-		$result = self::httpget("http://ja.wikipedia.org/wiki/".urlencode($title));
+		// ok, now we need to look it up on anidb... =_=
+		// if it redirects us to a project page, we'll get the description, but if it gives us a search result, then screw it.
+		$headers = get_headers("http://anidb.net/perl-bin/animedb.pl?show=animelist&adb.search=".urlencode($title)."&do.search=search",1);
+		if (!isset($headers['Location']))
+			return false;
+
+		// if it tries to redirect us, we can just get the same url and we'll get the right page
+		$result = self::httpget("http://anidb.net/perl-bin/animedb.pl?show=animelist&adb.search=".urlencode($title)."&do.search=search");
 		if ($result === false) return false;
-		
-		// now pull the ENGLISH wikipedia link out of the page
-		if (!preg_match("/interwiki-en\"><a href=\"(.*)\">/", $result, $matches))
-			return false;
 
-		// now pull up the english wikipedia article...
-		$result = self::httpget($matches[1]);
-		if ($result === false)
-			return false;
+		// FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF anidb LOVES gzip apparently. SO MUCH THAT I CANT MAKE IT STOP
+		// IT HURTS, ANIDB, IT HURTS!
+		if ($headers['Content-Encoding'][0] == "gzip")
+			$result = gzdecode($result);
 
-		// and pull the ANN link out of it. XD
-		if (!preg_match("/<a href=\"(.*animenewsnetwork.*encyclopedia.*)\" class/", $result, $matches))
-			return false;
+		// now pull the description out.
+		// for some reason regular expressions weren't working, but i would have to do most of this anyway.
+		$pos = strstr($result,"<div class=\"desc\">");
+		$pos = substr($pos,18);
+		$pos = explode("</div>",$pos);
+		$pos = trim($pos[0]);
+		// sometimes anidb puts crap in there that we don't care about... sort through it.
+		$pos = explode("<br/>",$pos);
+		$len = -1;
+		$dkey = -1;
+		foreach ($pos as $key => $text)
+		{
+			if (empty($text)) continue;
+			if (strlen($text) > $len)
+			{
+				$len = strlen($text);
+				$dkey = $key;
+			}
+		}
 
-		// and finally, pull up animenewsnetwork to get the description in english. WAY TOO COMPLICATED? LOLOLOL
-		$result = self::httpget($matches[1]);
-		if ($result === false)
-			return false;
-
-		//ok now pull out the description... lol.....
-		if (!preg_match("/Plot Summary:<\/STRONG>\s+<SPAN>(.*)<\/SPAN>/", $result, $matches))
-			return false;
-
-		return $matches[1];
+		// the longest one is probably the description ;p
+		return $pos[$dkey];
 	}
 	
 	public static function times($id)
@@ -121,9 +145,5 @@ class AnimeData
 		return $times;
 	}
 }
-
-if (($result = AnimeData::description(1718)) !== false)
-	echo $result;
-else	echo "false";
 
 ?>
