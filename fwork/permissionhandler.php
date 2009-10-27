@@ -44,16 +44,14 @@ Who knows! For now,
 [12:40] Chibu: 8 - FUCKIN' RAPID!
 */
 
-final class PermissionHandler
+final class PermissionHandler extends Singleton
 {
-	private static $instance;
-
-	private $global;
-	private $local;
+	protected $global;
+	protected $local;
 	
 	public $id;
 	
-	private function __construct()
+	protected function __construct()
 	{
 		$this->global = 0;
 		$this->local = array();
@@ -61,6 +59,12 @@ final class PermissionHandler
 		$this->id = -1;
 	}
 	
+	public static function getInstance()
+	{
+		if(!isset(self::$instance)) self::$instance = new self();
+		return self::$instance;
+	}
+		
 	// accept a user id as input. with this, we'll pull permissions from all over the database.
 	public function init()
 	{
@@ -109,19 +113,4 @@ final class PermissionHandler
 
 	// we might want to add things like set() and unset(), but for the moment they are essentially irrelevant.
 
-
-	// get the instance or some crap.
-	public static function getInstance()
-	{
-		if(!self::$instance)
-		{
-			self::$instance = new self();
-		}
-
-		return self::$instance;
-	}
-
 }
-
-
-?>

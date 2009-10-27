@@ -12,15 +12,18 @@ if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 /**
  * Session manager singleton. Basically a simplistic wrapper around PHP's session_*.
  */
-final class SesMan implements arrayaccess
+final class SesMan extends Singleton implements arrayaccess
 {
-	/** Instance of SesMan. */
-	private static $instance;
-	
+	public static function getInstance()
+	{
+		if(!isset(self::$instance)) self::$instance = new self();
+		return self::$instance;
+	}
+		
 	/**
 	 * Create a session manager class (duh :)).
 	 */
-	private function __construct()
+	protected function __construct()
 	{
 		session_start();
 	}
@@ -28,7 +31,7 @@ final class SesMan implements arrayaccess
 	/**
 	 * Do not allow cloning of the session manager.
 	 */
-	private function __clone() { }
+	protected function __clone() { }
 	
 	/**
 	 * Part of arrayaccess, see www.php.net/arrayaccess.
@@ -62,21 +65,6 @@ final class SesMan implements arrayaccess
 			return null;
 	}
 	
-	/**
-	 * Get the base path.
-	 *
-	 * @return Returns the base path.
-	 */
-	public static function getInstance()
-	{
-		if(!self::$instance)
-		{
-			self::$instance = new self();
-		}
-		
-		return self::$instance;
-	}
-
 	/**
 	 * Unset everything.
 	 * This is awesome and not dangerous at all!
