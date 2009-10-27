@@ -1,13 +1,20 @@
 <?php
+/*
+ * Frac
+ * Copyright (c) 2009 Frac Development Team
+ *
+ * See COPYING for license conditions.
+ */
 
 if (!function_exists("gzdecode"))
 {
-	function gzdecode($data){
-		$g=tempnam('/tmp','ff');
-		@file_put_contents($g,$data);
+	function gzdecode($data)
+	{
+		$g = tempnam('/tmp', 'ff');
+		@file_put_contents($g, $data);
 		ob_start();
 		readgzfile($g);
-		$d=ob_get_clean();
+		$d = ob_get_clean();
 		return $d;
 	}
 }
@@ -145,5 +152,3 @@ class AnimeData
 		return $times;
 	}
 }
-
-?>

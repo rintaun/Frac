@@ -1,8 +1,7 @@
 <?php
 /*
  * Fwork
- * Copyright (c) 2009 Matthew Lanigan
- *                    Tony Young
+ * Copyright (c) 2009 Frac Development Team
  *
  * See COPYING for license conditions.
  */

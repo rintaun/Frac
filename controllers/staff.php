@@ -1,4 +1,11 @@
 <?php
+/*
+ * Frac
+ * Copyright (c) 2009 Frac Development Team
+ *
+ * See COPYING for license conditions.
+ */
+
 class StaffController extends Controller
 {   
 	public function index($args) // list staff members

@@ -1,4 +1,10 @@
 <?php
+/*
+ * Frac
+ * Copyright (c) 2009 Frac Development Team
+ *
+ * See COPYING for license conditions.
+ */
 
 class Log extends Doctrine_Record
 {
@@ -18,5 +24,3 @@ class Log extends Doctrine_Record
 	{
 	}
 }
-
-?>

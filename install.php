@@ -1,9 +1,7 @@
 <?php
 /*
  * Frac
- * Copyright (c) 2009 Matthew Lanigan
- *                    Tony Young
- *                    Nolan Lum
+ * Copyright (c) 2009 Frac Development Team
  *
  * See COPYING for license conditions.
  */
@@ -19,8 +17,6 @@ if(!function_exists('session_start'))
 	die('Frac requires PHP Session support to be enabled.');
 if(!class_exists('PDO'))
 	die('Frac requires the PHP Data Objects extension to be loaded.');
-if((count(PDO::getAvailableDrivers()) == 1) && (in_array('sqlite', PDO::getAvailableDrivers())))
-	die('Frac requires a non-sqlite PDO driver to be loaded.');
 
 // Find an action.
 if(!isset($_GET['do']))
@@ -72,10 +68,8 @@ EOS;
 	_printInputField('sqlDb', 'Database Name:', 'The name of the SQL database. The user above must have read/write access.', 'text', array('size' => 30));
 	_printInputField('sqlPrefix', 'Database Prefix:', 'The database prefix. When in doubt, keep as default.', 'text', array('size' => 30, 'value' => 'frac_'));
 
-	$pdoDrivers = array();
-	foreach(PDO::getAvailableDrivers() as $value)
-		if($value !== 'sqlite')
-			$pdoDrivers[$value] = $value;
+	$pdoDrivers = PDO::getAvailableDrivers();
+	sort($pdoDrivers);
 	_printDropDown('sqlDriver', 'Database Driver:', 'The driver to use when connecting to the database.', $pdoDrivers);
 	
 	echo '<h3>Site Options</h3>';

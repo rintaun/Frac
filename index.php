@@ -1,8 +1,7 @@
 <?php
 /*
  * Frac
- * Copyright (c) 2009 Matthew Lanigan
- *                    Tony Young
+ * Copyright (c) 2009 Frac Development Team
  *
  * See COPYING for license conditions.
  */
@@ -18,8 +17,6 @@ if(!function_exists('session_start'))
 	die('Frac requires PHP Session support to be enabled.');
 if(!class_exists('PDO'))
 	die('Frac requires the PHP Data Objects extension to be loaded.');
-if((count(PDO::getAvailableDrivers()) == 1) && (in_array('sqlite', PDO::getAvailableDrivers())))
-	die('Frac requires a non-sqlite PDO driver to be loaded.');
 
 require_once("fwork/fwork.php");
 if(!file_exists("config.php"))
@@ -42,5 +39,3 @@ if($config["site"]["gentime"])
 	
 // end the buffer
 ob_end_flush();
-
-?>

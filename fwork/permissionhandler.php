@@ -1,4 +1,10 @@
 <?php
+/*
+ * Fwork
+ * Copyright (c) 2009 Frac Development Team
+ *
+ * See COPYING for license conditions.
+ */
 
 // define permissions. please discuss renaming before doing so.
 define('PERM_EDIT_SETTINGS',	0x00000001); // allowed to edit Frac admin settings
