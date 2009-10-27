@@ -1,5 +1,5 @@
 <div id="topbar">
-<? if (isset($this->session["staffid"])): ?>
+<?php if (isset($this->session["staffid"])): ?>
 	<span id="topright">
 		<a href="<?php echo $this->eprint($this->basepath); ?>/staff/edit/<?php echo $this->eprint($this->staffid); ?>">My account</a>
 		<a href="<?php echo $this->eprint($this->basepath); ?>/staff/logout">Logout</a>
@@ -9,27 +9,15 @@
 <strong><?php echo $this->frac->idtouser($this->session["staffid"]); ?></strong></a>!
 	</span>
 	<span id="topmiddle">
-<? if ($this->controller == "projects"): ?>
-	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/projects">Projects</a></span>
-<? else: ?>
-	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/projects">Projects</a></span>
-<? endif; ?>
-<? if ($this->controller == "staff"): ?>
-	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/staff">Staff</a></span>
-<? else: ?>
-	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/staff">Staff</a></span>
-<? endif; ?>
-<? if ($this->controller == "admin"): ?>
-	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/admin">Administration</a></span>
-<? else: ?>
-	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/admin">Administration</a></span>
-<? endif; ?>
+	<span class="navtab<?php echo $this->controller === 'projects' ? 'sel' : ''; ?>"><a href="<?php echo $this->eprint($this->basepath); ?>/projects">Projects</a></span>
+	<span class="navtab<?php echo $this->controller === 'staff' ? 'sel' : ''; ?>"><a href="<?php echo $this->eprint($this->basepath); ?>/staff">Staff</a></span>
+	<span class="navtab<?php echo $this->controller === 'admin' ? 'sel' : ''; ?>"><a href="<?php echo $this->eprint($this->basepath); ?>/admin">Administration</a></span>
 	</span>
-<? //	<a href="#">Home</a> <a href="#">My Tasks</a> <a href="#">Help</a> ?>
-<? else: ?>
-<?	// show a minilogin or something. ?>
+<?php //	<a href="#">Home</a> <a href="#">My Tasks</a> <a href="#">Help</a> ?>
+<?php else: ?>
+<?php // show a minilogin or something. ?>
 	<span id="topright"><a href="<?php echo $this->eprint($this->basepath); ?>/staff/login">Login</a></span>
-<? endif; ?>
+<?php endif; ?>
 </div>
 <div id="mainnav">
 	<br />

@@ -24,7 +24,8 @@ final class Utils
 	 */
 	public static function basepath()
 	{
-		return dirname($_SERVER["SCRIPT_NAME"]);
+		$dirname = str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME']));
+		return $dirname === '/' ? '' : $dirname;
 	}
 	
 	/**

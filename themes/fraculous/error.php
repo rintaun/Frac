@@ -1,1 +1,1 @@
-<?php print($this->eprint($this->error));
+<?php print($this->eprint($this->error)); ?>
