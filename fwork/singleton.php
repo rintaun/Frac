@@ -19,6 +19,11 @@ abstract class Singleton
 	protected static $instances = array();
 	
 	/**
+	 * Do not allow cloning of Singletons.
+	 */
+	protected function __clone() { }
+	
+	/**
 	 * Return an instance of the singleton.
 	 *
 	 * This must be implemented in child classes, due to a lack of LSB for PHP < 5.3.0, and it must be this:

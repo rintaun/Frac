@@ -29,11 +29,6 @@ final class SesMan extends Singleton implements arrayaccess
 	}
 	
 	/**
-	 * Do not allow cloning of the session manager.
-	 */
-	protected function __clone() { }
-	
-	/**
 	 * Part of arrayaccess, see www.php.net/arrayaccess.
 	 */
 	public function offsetSet($offset, $value) {

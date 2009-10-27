@@ -26,31 +26,52 @@ Who knows! For now,
 final class PermissionHandler extends Singleton
 {
 	// define permissions. please discuss renaming before doing so.
-	const PERM_EDIT_SETTINGS = 0x00000001; // allowed to edit Frac admin settings
-	const PERM_MANAGE_TASKTYPES = 0x00000002; // allowed to manage task type definitions
-			
-	const PERM_CREATE_STAFF = 0x00000004; // allowed to add new staff accounts
-	const PERM_EDIT_STAFF = 0x00000008; // allowed to edit staff accounts
-	const PERM_DELETE_STAFF = 0x00000010; // allowed to delete staff accounts
-			
-	const PERM_CREATE_PROJECT = 0x00000020; // allowed to add new projects
-	const PERM_EDIT_PROJECT = 0x00000040; // allowed to edit project settings
-	const PERM_DELETE_PROJECT = 0x00000080; // allowed to delete projects
-			
-	const PERM_CREATE_EPISODE = 0x00000100; // allowed to create new episodes
-	const PERM_EDIT_EPISODE = 0x00000200; // allowed to edit episode settings
-	const PERM_DELETE_EPISODE = 0x00000400; // allowed to delete projects
-			
-	const PERM_CREATE_TEMPLATE = 0x00000800; // allowed to create tasktree templates
-	const PERM_EDIT_TEMPLATE = 0x00001000; // allowed to edit tasktree templates
-	const PERM_DELETE_TEMPLATE = 0x00002000; // allowed to delete tasktree templates
-			
-	const PERM_CREATE_TASKS = 0x00004000; // allowed to add new tasks to an episode
-	const PERM_EDIT_TASKS = 0x00008000; // allowed to edit (e.g. change relationships of) tasks on an episode
-	const PERM_DELETE_TASKS = 0x00010000; // allowed to delete tasks from an episode
-	const PERM_ASSIGN_TASKS = 0x00020000; // allowed to assign tasks on an episode to a staff member
-	const PERM_REASSIGN_TASKS = 0x00040000; // allowed to reassign tasks on an episode to a staff member
-	const PERM_UNASSIGN_TASKS = 0x00040000; // alias for PERM_REASSIGN_TASKS simply for code semantics ;p
+	
+	/** allowed to edit Frac admin settings */
+	const PERM_EDIT_SETTINGS = 0x00000001;
+	/** allowed to manage task type definitions */
+	const PERM_MANAGE_TASKTYPES = 0x00000002; 
+	
+	/** allowed to add new staff accounts */
+	const PERM_CREATE_STAFF = 0x00000004; 
+	/** allowed to edit staff accounts */
+	const PERM_EDIT_STAFF = 0x00000008;
+	/** allowed to delete staff accounts */
+	const PERM_DELETE_STAFF = 0x00000010;
+	
+	/** allowed to add new projects */
+	const PERM_CREATE_PROJECT = 0x00000020;
+	/** allowed to edit project settings */
+	const PERM_EDIT_PROJECT = 0x00000040;
+	/** allowed to delete projects */
+	const PERM_DELETE_PROJECT = 0x00000080;
+	
+	/** allowed to create new episodes */
+	const PERM_CREATE_EPISODE = 0x00000100;
+	/** allowed to edit episode settings */
+	const PERM_EDIT_EPISODE = 0x00000200;
+	/** allowed to delete projects */
+	const PERM_DELETE_EPISODE = 0x00000400;
+	
+	/** allowed to create tasktree templates */
+	const PERM_CREATE_TEMPLATE = 0x00000800;
+	/** allowed to edit tasktree templates */
+	const PERM_EDIT_TEMPLATE = 0x00001000;
+	/** allowed to delete tasktree templates */
+	const PERM_DELETE_TEMPLATE = 0x00002000;
+	
+	/** allowed to add new tasks to an episode */
+	const PERM_CREATE_TASKS = 0x00004000;
+	/** allowed to edit (e.g. change relationships of) tasks on an episode */
+	const PERM_EDIT_TASKS = 0x00008000;
+	/** allowed to delete tasks from an episode */
+	const PERM_DELETE_TASKS = 0x00010000;
+	/** allowed to assign tasks on an episode to a staff member */
+	const PERM_ASSIGN_TASKS = 0x00020000;
+	/** allowed to reassign tasks on an episode to a staff member */
+	const PERM_REASSIGN_TASKS = 0x00040000;
+	/** alias for PERM_REASSIGN_TASKS simply for code semantics */
+	const PERM_UNASSIGN_TASKS = 0x00040000;
 	
 	protected $global;
 	protected $local;
