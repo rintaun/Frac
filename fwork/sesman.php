@@ -15,7 +15,7 @@ if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 final class SesMan implements arrayaccess
 {
 	/** Instance of SesMan. */
-	public static $instance;
+	private static $instance;
 	
 	/**
 	 * Create a session manager class (duh :)).
@@ -58,7 +58,8 @@ final class SesMan implements arrayaccess
 	{
 		if (isset($_SESSION[$offset]))
 			return $_SESSION[$offset];
-		else	return null;
+		else
+			return null;
 	}
 	
 	/**

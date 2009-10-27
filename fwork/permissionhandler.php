@@ -46,15 +46,26 @@ Who knows! For now,
 
 final class PermissionHandler
 {
-	public static $instance;
+	private static $instance;
 
-	private $global = 0;
-	private $local = array();
-	private $id = -1;
-
-	// accept a user id as input. with this, we'll pull permissions from all over the database.
-	public function __construct($id)
+	private $global;
+	private $local;
+	
+	public $id;
+	
+	private function __construct()
 	{
+		$this->global = 0;
+		$this->local = array();
+		
+		$this->id = -1;
+	}
+	
+	// accept a user id as input. with this, we'll pull permissions from all over the database.
+	public function init()
+	{
+		$id = $this->id; // too lazy to change $id to $this->id
+		
 		// if $id is not a number of some sort, then gtfo
 		if ((!is_numeric($id)) && (!is_int($id))) return null;
 
@@ -78,8 +89,10 @@ final class PermissionHandler
 		}
 	}
 
-	function allowedto($type, $project=null)
+	public function allowedto($type, $project=null)
 	{
+		if(empty($this->local)) $this->init();
+		
 		// if the flag is set in $this->global, return true, always.
 		if ($this->global & $type) return true;
 
@@ -98,13 +111,11 @@ final class PermissionHandler
 
 
 	// get the instance or some crap.
-	public static function getInstance($id=null)
+	public static function getInstance()
 	{
-		// this should only be called the first time, right?
-		// if so, then we should only use the $id the first time. i.e. in fwork
 		if(!self::$instance)
 		{
-			self::$instance = new self($id);
+			self::$instance = new self();
 		}
 
 		return self::$instance;
