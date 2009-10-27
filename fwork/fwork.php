@@ -98,21 +98,8 @@ class Fwork
 	 */
 	public function serve($path)
 	{
-		$session = SesMan::getInstance();
-
-		// we don't want to redirect them if they're already at login...
-		// ... is there some better way of checking for this? O_o
-		if ((!isset($session['staffid'])) && (($path[0] != "staff") || ($path[1] != "login")))
-		{
-			// if they're not logged in, send them to login, PERIOD.
-			Utils::redirect("staff/login");
-			return; 
-		}
-
-		$this->savant->staffid = $session['staffid'];
-
-		// they're logged in, so start the permissionhandler
-		$permissions = PermissionHandler::getInstance($session['staffid']);
+		// execute the hook if there is one
+		if(file_exists(dirname(__FILE__) . "/../hooks/preserve.php")) require_once(dirname(__FILE__) . "/../hooks/preserve.php");
 		
 		// load the controller
 		$controllerprovider = $path[0];
@@ -142,7 +129,7 @@ class Fwork
 		}
 
 		$controller = new $controllername();
-		$controller->session = $this->savant->session = $session;
+		$controller->session = $this->savant->session = SesMan::getInstance();
 		
 		$action = isset($path[1]) && !empty($path[1]) ? $path[1] : "index";
 		
@@ -154,17 +141,17 @@ class Fwork
 		
 		$controller->{$action}(isset($path[2]) ? array_slice($path, 2) : array());
 		
-		if($controller->useView !== null)
+		if($controller->view !== null)
 		{
-			// two formats possible for useView: array(controller, action)
+			// two formats possible for view: array(controller, action)
 			// or just action (if same controller)
-			if (is_array($controller->useView))
+			if (is_array($controller->view))
 			{
-				$controllerprovider = $controller->useView[0];
-				$action = $controller->useView[1];
+				$controllerprovider = $controller->view[0];
+				$action = $controller->view[1];
 			}
-			elseif (!empty($controller->useView))
-				$action = $controller->useView;
+			elseif (!empty($controller->view))
+				$action = $controller->view;
 		
 			// load the view
 			if(!file_exists(dirname(__FILE__) . "/../themes/" . "fraculous" . "/" . $controllerprovider . "/" . $action . ".php"))
@@ -187,7 +174,7 @@ class Fwork
 	 */
 	public function __destruct()
 	{
-		$dm = Doctrine_Manager::getInstance();
+		$dm = &Doctrine_Manager::getInstance();
 		unset($dm);
 		
 		$session = &SesMan::getInstance();

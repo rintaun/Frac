@@ -17,13 +17,13 @@ class Staff extends Doctrine_Record
 	/**
 	 * Columns for a staff member.
 	 *
-	 * id		-	integer(11)		-	Auto-incremeting ID primary key.
-	 * nickname	-	string(32)		-	Nickname for the staffer.
-	 * password	-	string(64)		-	SHA256 hash for the password (because MD5 is not safe :D)
-	 * comment	-	string(255)	-	Brief comment for the staffer.
-	 * email	-	string(255)	-	Email address of the staffer.
-	 * cell		-	string(32)		-	Cellphnoe number of the staffer.
-	 * auth		-	integer(10)		-	Auth flags for the staffer.
+	 * - id			-	integer(11)		-	Auto-incremeting ID primary key.
+	 * - nickname	-	string(32)		-	Nickname for the staffer.
+	 * - password	-	string(64)		-	SHA256 hash for the password (because MD5 is not safe :D)
+	 * - comment	-	string(255)		-	Brief comment for the staffer.
+	 * - email		-	string(255)		-	Email address of the staffer.
+	 * - cell		-	string(32)		-	Cellphone number of the staffer.
+	 * - auth		-	integer(10)		-	Auth flags for the staffer.
 	 */
 	public function setTableDefinition()
 	{
