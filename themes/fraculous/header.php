@@ -12,7 +12,7 @@
 <? if ($this->controller == "projects"): ?>
 	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/projects">Projects</a></span>
 <? else: ?>
-	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/projects">Projects</a></span>
+	<span class="navtab"><a href="<?php echo $this->eprint($this->basepath); ?>/projects">Projects</a></span>
 <? endif; ?>
 <? if ($this->controller == "staff"): ?>
 	<span class="navtabsel"><a href="<?php echo $this->eprint($this->basepath); ?>/staff">Staff</a></span>
