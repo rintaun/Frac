@@ -15,29 +15,19 @@ if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 abstract class Singleton
 {
 	/**
-	 * Instance of the singleton. This MUST be declared protected as all Singletons are final classes, and thus you cannot inherit $instance.
+	 * Instances of singletons. This MUST be declared protected as all Singletons are final classes, and thus you cannot inherit $instances.
 	 */
-	protected static $instance;
+	protected static $instances = array();
 	
 	/**
-	 * Constructor for the singleton.
+	 * Return an instance of the singleton.
 	 *
-	 * Override me!
+	 * TODO: Review this -- get_called_class() works only for PHP >= 5.3.0
 	 */
-	abstract protected function __construct();
-	
-	/**
-	 * Return an instance of the singleton. This MUST be implemented as follows:
-	 *
-	 * <code>
-	 * public static function getInstance()
-	 * {
-	 *     if(!isset(self::$instance)) self::$instance = new self();
-	 *     return self::$instance;
-	 * }
-	 * </code>
-	 *
-	 * It cannot be implemented here as self will refer to Singleton and not the class extended.
-	 */
-	abstract public static function getInstance();
+	final public static function getInstance()
+	{
+		$c = get_called_class();
+		if(!isset(self::$instances[$c])) self::$instances[$c] = new $c;
+		return self::$instances[$c];
+	}
 }

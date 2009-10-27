@@ -58,12 +58,6 @@ final class PermissionHandler extends Singleton
 		
 		$this->id = -1;
 	}
-	
-	public static function getInstance()
-	{
-		if(!isset(self::$instance)) self::$instance = new self();
-		return self::$instance;
-	}
 		
 	// accept a user id as input. with this, we'll pull permissions from all over the database.
 	public function init()
