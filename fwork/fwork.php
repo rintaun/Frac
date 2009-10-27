@@ -29,12 +29,12 @@ function __autoload($class_name)
  *
  * This class is the core of the Fwork framework.
  */
-class Fwork
+final class Fwork
 {
 	/**
 	 * Provider for Savant.
 	 */
-	private $savant;
+	protected $savant;
 	
 	/**
 	 * Constructor for Fwork.
@@ -43,9 +43,10 @@ class Fwork
 	 * @param $config Configuration data, obtained from config.php
 	 */
 	public function __construct($config)
-	{	
-		$session = SesMan::getInstance();
-
+	{
+		// execute the hook if there is one
+		if(file_exists(dirname(__FILE__) . "/../hooks/preconstruct.php")) require_once(dirname(__FILE__) . "/../hooks/preconstruct.php");
+		
 		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE, true);
 		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_TBLNAME_FORMAT, $config["database"]["prefix"] . "%s");
 		Doctrine::loadModels(dirname(__FILE__) . "/../models");
@@ -70,7 +71,10 @@ class Fwork
 		$this->savant->themepath = $this->savant->basepath . "/themes/" . "fraculous";
 
 		// Get our plugin, because savant is retarded.
-		$this->savant->frac = $this->savant->plugin("frac");		
+		$this->savant->frac = $this->savant->plugin("frac");
+		
+		// execute the hook if there is one
+		if(file_exists(dirname(__FILE__) . "/../hooks/preconstruct.php")) require_once(dirname(__FILE__) . "/../hooks/postconstruct.php");
 	}
 	
 	/**
@@ -80,7 +84,7 @@ class Fwork
 	 *
 	 * @param $error Error thrown.
 	 */
-	private function error($error)
+	protected function error($error)
 	{
 		$session = SesMan::getInstance();
 		// do not use controllers for this, doing so is inefficient
@@ -107,6 +111,17 @@ class Fwork
 		// execute the hook if there is one
 		if(file_exists(dirname(__FILE__) . "/../hooks/preserve.php")) require_once(dirname(__FILE__) . "/../hooks/preserve.php");
 		
+		$this->_serve($path); // invoke the super secret serve function! :O
+		
+		// execute the hook if there is one
+		if(file_exists(dirname(__FILE__) . "/../hooks/postserve.php")) require_once(dirname(__FILE__) . "/../hooks/postserve.php");
+	}
+	
+	/**
+	 * This is the REAL serve function, and should only be invoked INTERNALLY from Fwork::serve.
+	 */
+	protected function _serve($path)
+	{
 		// load the controller
 		$controllerprovider = $path[0];
 		$controllername = ucfirst($path[0]) . "Controller";
@@ -139,7 +154,7 @@ class Fwork
 		
 		$action = isset($path[1]) && !empty($path[1]) ? $path[1] : "index";
 		
-		if(!method_exists($controller, $action) || $action[0] == "_") // we require you to be sensible and not have private/protected methods that are not prefixed with _
+		if(!method_exists($controller, $action) || $action[0] == "_") // we require you to be sensible and not have protected/protected methods that are not prefixed with _
 		{
 			$this->error("Controller does not provide a behaviour for the provided action");
 			return;
@@ -180,10 +195,13 @@ class Fwork
 	 */
 	public function __destruct()
 	{
+		// execute the hook if there is one
+		if(file_exists(dirname(__FILE__) . "/../hooks/predestruct.php")) require_once(dirname(__FILE__) . "/../hooks/predestruct.php");
+		
 		$dm = &Doctrine_Manager::getInstance();
 		unset($dm);
 		
-		$session = &SesMan::getInstance();
-		unset($session);
+		// execute the hook if there is one
+		if(file_exists(dirname(__FILE__) . "/../hooks/postdestruct.php")) require_once(dirname(__FILE__) . "/../hooks/postdestruct.php");
 	}
 }

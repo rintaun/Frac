@@ -15,7 +15,7 @@ if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 final class Utils
 {
 	/** Disallow construction of a Utils class. */
-	private function __construct() { }
+	protected function __construct() { }
 	
 	/**
 	 * Get the base path.
