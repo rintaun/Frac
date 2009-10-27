@@ -43,7 +43,7 @@ class ProjectsController extends Controller
 	{
 		$p = PermissionHandler::getInstance();
 		// do we have an error thing?
-		if (!$p->allowedto(PERM_CREATE_PROJECT))
+		if (!$p->allowedto(PermissionHandler::PERM_CREATE_PROJECT))
 		{
 			$this->error("You don't have permission to create projects.");
 			return;
@@ -94,7 +94,7 @@ class ProjectsController extends Controller
 
 		$p = PermissionHandler::getInstance();
 		// do we have an error thing?
-		if (!$p->allowedto(PERM_PROJECT_DELETE, $project))
+		if (!$p->allowedto(PermissionHandler::PERM_PROJECT_DELETE, $project))
 		{
 			Utils::error("You don't have permission to delete this project.");
 			return;
@@ -108,7 +108,7 @@ class ProjectsController extends Controller
 
 		$p = PermissionHandler::getInstance();
 		// do we have an error thing?
-		if (!$p->allowedto(PERM_EDIT_SETTINGS, $project))
+		if (!$p->allowedto(PermissionHandler::PERM_EDIT_SETTINGS, $project))
 		{
 			Utils::error("You don't have permission to edit this project.");
 			return;

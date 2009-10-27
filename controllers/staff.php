@@ -20,7 +20,7 @@ class StaffController extends Controller
 	{
 		$p = PermissionHandler::getInstance();
 		// do we have an error thing?
-		if (!$p->allowedto(PERM_CREATE_STAFF))
+		if (!$p->allowedto(PermissionHandler::PERM_CREATE_STAFF))
 		{
 			Utils::error("You don't have permission to edit staff members.");
 			return;
@@ -31,7 +31,7 @@ class StaffController extends Controller
 	{
 		$p = PermissionHandler::getInstance();
 		// do we have an error thing?
-		if (!$p->allowedto(PERM_DELETE_STAFF))
+		if (!$p->allowedto(PermissionHandler::PERM_DELETE_STAFF))
 		{
 			Utils::error("You don't have permission to delete staff members.");
 			return;
@@ -45,8 +45,8 @@ class StaffController extends Controller
 		$p = PermissionHandler::getInstance();
 		$session = SesMan::getInstance();
 		// do we have an error thing?
-		// PERM_EDIT_STAFF is different slightly, since they are always allowed to edit their own profile.
-		if ((!$p->allowedto(PERM_EDIT_STAFF)) && ($staff != $session['staffid']))
+		// PermissionHandler::PERM_EDIT_STAFF is different slightly, since they are always allowed to edit their own profile.
+		if ((!$p->allowedto(PermissionHandler::PERM_EDIT_STAFF)) && ($staff != $session['staffid']))
 		{
 			Utils::error("You don't have permission to edit other staff members.");
 			return;
