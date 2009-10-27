@@ -3,6 +3,7 @@
  * Frac
  * Copyright (c) 2009 Matthew Lanigan
  *                    Tony Young
+ *                    Nolan Lum
  *
  * See COPYING for license conditions.
  */
@@ -45,6 +46,11 @@ switch($_GET['do'])
 
 function doCreateConfig()
 {
+	if(file_exists("config.php"))
+	{
+		header("Location: " . $_SERVER["SCRIPT_NAME"] . "?do=step3"); return;
+	}
+	
 	echo <<<EOS
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -89,7 +95,7 @@ function doWriteConfig()
 {
 	// Check to make sure an existing config doesn't exist.
 	if(file_exists('config.php'))
-		die('An existing configuration file exists, this script will not overwrite a previous configuration. If you wish to use this script, please remove the configuration file.');
+		die('An existing configuration file exists, this script will not overwrite a previous configuration. If you wish to use this script, please remove the configuration file.'); // this will only happen if you try to access install.php?do=step2 by hand. If you do, you sir, are an idiot.
 
 	$configTmpl = array(	
 							'sqlHost'		=>	'localhost',
@@ -180,8 +186,8 @@ function doPopulateDatabase()
 	// Check for a config file, if it doesn't exist go through the steps to create it.
 	if(!file_exists(dirname(__FILE__) . '/config.php'))
 	{
-		doCreateConfig();
-		die;
+		header("Location: " . $_SERVER["SCRIPT_NAME"] . "?do=step1");
+		return;
 	}
 
 	require_once(dirname(__FILE__) . "/config.php");
