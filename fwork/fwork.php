@@ -143,7 +143,7 @@ final class Fwork
 			return;
 		}
 		
-		if(!in_array("Controller", class_parents($controllername)))
+		if(!is_subclass_of($controllername, "Controller"))
 		{
 			$this->error("Controller class does not extend Controller");
 			return;

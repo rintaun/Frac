@@ -22,12 +22,18 @@ abstract class Singleton
 	/**
 	 * Return an instance of the singleton.
 	 *
-	 * TODO: Review this -- get_called_class() works only for PHP >= 5.3.0
+	 * This must be implemented in child classes, due to a lack of LSB for PHP < 5.3.0, and it must be this:
+	 *
+	 * <code>
+	 * public static function getInstance()
+	 * {
+	 *     $c = get_class();
+	 *     if(!isset(self::$instances[$c])) self::$instances[$c] = new $c;
+	 *     return self::$instances[$c];
+     * }
+     * </code>
+     *
+     * This will be fixed in the future when PHP 5.3.0 becomes widely used.
 	 */
-	final public static function getInstance()
-	{
-		$c = get_called_class();
-		if(!isset(self::$instances[$c])) self::$instances[$c] = new $c;
-		return self::$instances[$c];
-	}
+	abstract public static function getInstance();
 }

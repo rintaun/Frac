@@ -51,6 +51,13 @@ final class PermissionHandler extends Singleton
 	
 	public $id;
 	
+	public static function getInstance()
+	{
+		$c = get_class();
+		if(!isset(self::$instances[$c])) self::$instances[$c] = new $c;
+		return self::$instances[$c];
+	}
+	
 	protected function __construct()
 	{
 		$this->global = 0;

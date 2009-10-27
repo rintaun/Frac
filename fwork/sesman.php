@@ -14,7 +14,13 @@ if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
  */
 final class SesMan extends Singleton implements arrayaccess
 {
-		
+	public static function getInstance()
+	{
+		$c = get_class();
+		if(!isset(self::$instances[$c])) self::$instances[$c] = new $c;
+		return self::$instances[$c];
+	}	
+	
 	/**
 	 * Create a session manager class (duh :)).
 	 */
