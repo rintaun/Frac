@@ -12,11 +12,16 @@ if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 require_once(dirname(__FILE__) . "/utils.php");
 require_once(dirname(__FILE__) . "/controller.php");
 require_once(dirname(__FILE__) . "/sesman.php");
-require_once(dirname(__FILE__) . "/../lib/Doctrine/Doctrine.php");
-require_once(dirname(__FILE__) . "/../lib/Savant3/Savant3.php");
+require_once(dirname(__FILE__) . "/lib/Doctrine/Doctrine.php");
+require_once(dirname(__FILE__) . "/lib/Savant3/Savant3.php");
 require_once(dirname(__FILE__) . "/permissionhandler.php");
 
 spl_autoload_register(array("Doctrine", "autoload"));
+
+function __autoload($class_name)
+{
+	require_once(dirname(__FILE__) . "/../plugins/" . $class_name . ".php");
+}
 
 /**
  * Fwork core class.
