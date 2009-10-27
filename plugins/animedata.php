@@ -3,7 +3,7 @@
 // gets anime information and data via http://cal.syoboi.jp/
 class AnimeData
 {
-	public function __construct()
+	private function __construct()
 	{
 	}
 
