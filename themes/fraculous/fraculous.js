@@ -3,6 +3,7 @@ addEvent(window,'load',function(evt) {
 	// everything we want to do to the page goes here. EVERYTHING. lawl
 
 	var projectlist = $('.project'); // get all of our project listings
+
 	for (i=0;i<projectlist.length;i++){
 		projectlist[i].addEvent('click',function(evt) {
 			var caller=$e(evt).caller;

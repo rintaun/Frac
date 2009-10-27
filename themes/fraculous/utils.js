@@ -116,7 +116,7 @@ var $Element = function(t,o) {
 		ret.addEvent=function(e,f){return addEvent(this,e,f);};
 		ret.removeEvent=function(e,f){return removeEvent(this,e,f);};
 		ret.update=function(o){return $Element(this,o);};
-		ret.children=function(){var ch=$('*',this, true),c,i=0;while(c=ch[i++])if(c.parentNode==this)ret.push(c);return ret;};
+//		ret.children=function(){var ch=$('*',this, true),c,i=0;while(c=ch[i++])if(c.parentNode==this)ret.push(c);return ret;};
 		ret.allChildren=function(){return $('*',this, true);};
 		ret.ancestors=function(){var ret=[],a=this;while((a=a.parentNode)&&a.tagName)ret.push($Element(a));return ret;};
 		ret.descendsFrom=function(e){var a=this;while(a=a.parentNode)if(a==e)return true;return false;};
