@@ -197,7 +197,7 @@ final class Fwork
 		// execute the hook if there is one
 		if(file_exists(dirname(__FILE__) . "/../hooks/predestruct.php")) require_once(dirname(__FILE__) . "/../hooks/predestruct.php");
 		
-		$dm = &Doctrine_Manager::getInstance();
+		$dm = Doctrine_Manager::getInstance();
 		unset($dm);
 		
 		// execute the hook if there is one

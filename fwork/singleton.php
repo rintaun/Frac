@@ -9,20 +9,10 @@
 if(!defined("IN_FWORK_")) die("This file cannot be invoked directly.");
 
 /**
- * Singleton class. Provides automatic(-ish) creation of a singleton.
+ * Singleton interface. Used to amend "Static function Singleton::getInstance() should not be abstract".
  */
-abstract class Singleton
+interface ISingleton
 {
-	/**
-	 * Instances of singletons. This MUST be declared protected as all Singletons are final classes, and thus you cannot inherit $instances.
-	 */
-	protected static $instances = array();
-	
-	/**
-	 * Do not allow cloning of Singletons.
-	 */
-	protected function __clone() { }
-	
 	/**
 	 * Return an instance of the singleton.
 	 *
@@ -39,5 +29,21 @@ abstract class Singleton
      *
      * This will be fixed in the future when PHP 5.3.0 becomes widely used.
 	 */
-	abstract public static function getInstance();
+	public static function getInstance();
+}
+
+/**
+ * Singleton class. Provides automatic(-ish) creation of a singleton.
+ */
+abstract class Singleton implements ISingleton
+{
+	/**
+	 * Instances of singletons. This MUST be declared protected as all Singletons are final classes, and thus you cannot inherit $instances.
+	 */
+	protected static $instances = array();
+	
+	/**
+	 * Do not allow cloning of Singletons.
+	 */
+	protected function __clone() { }
 }
