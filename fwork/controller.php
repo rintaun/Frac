@@ -39,7 +39,7 @@ abstract class Controller
 		// this should be changed.
 		// it is just so that error messages work at all for right now.
 
-		$this->useView=array("","error");
+		$this->view=array("","error");
 		$this->vars['error'] = $message;
 	}
 }

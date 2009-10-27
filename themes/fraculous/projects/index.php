@@ -1,7 +1,7 @@
 <span class="title">Project Listing</span><br />
 <div class="projectlist">
 <?php foreach ($this->projects as $id => $project): ?>
-<div class="project">
+<div class="project" onclick="window.location='<?php echo $this->eprint($this->basepath); ?>/projects/display/<?php echo $this->eprint($id); ?>';">
 	<strong>
 		<a href="<?php echo $this->eprint($this->basepath); ?>/projects/display/<?php echo $this->eprint($id); ?>"><?php echo $this->eprint($project['name']); ?></a>
 	</strong>

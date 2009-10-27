@@ -27,6 +27,9 @@ class ProjectsController extends Controller
 	// $args is the Project ID. or at least, it should be O_o
 	public function display($args) // display the episodes from a project
 	{
+		$name = Doctrine::getTable("Project")->find($args[0])->name;
+		
+		$this->vars["pagename"] = "Projects :: " . $name;
 	}
 
 	public function create($args) // create a new project
