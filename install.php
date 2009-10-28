@@ -31,7 +31,8 @@ switch($_GET['do'])
 		doCreateConfig();
 		die;
 	case 'step2':
-		doWriteConfig();
+		if($errors = doWriteConfig())
+			doCreateConfig($errors);
 		die;
 	case 'step3':
 		doPopulateDatabase();
@@ -40,13 +41,24 @@ switch($_GET['do'])
 		die;
 }
 
-function doCreateConfig()
+function doCreateConfig($error = array())
 {
 	if(file_exists("config.php"))
 	{
-		header("Location: " . $_SERVER["SCRIPT_NAME"] . "?do=step3"); return;
+		header("Location: " . $_SERVER['SCRIPT_NAME'] . "?do=step3"); return;
 	}
 	
+	$flash = '';
+	if(is_array($error) && (count($error) > 0))
+	{
+		$flash = '<div style="border: 1px solid black; padding: 4px 4px 4px 4px;"><span style="color: red; font-size: 110%; font-weight: bold;">There were one or more errors with your configuration:</span><ul>';
+		foreach($error as $err)
+		{
+			$flash .= '<li>' . $err . '</li>';
+		}
+		$flash .= '</ul></div>';
+	}
+
 	echo <<<EOS
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -57,6 +69,7 @@ function doCreateConfig()
 </head>
 <body>
 	<h2>Frac Installer</h2>
+	$flash
 	<p>You have not yet created a configuration file. Please create one from <code>config.php.dist</code> or use the form below.</p>
 	<form action="install.php?do=step2" method="post">
 		<h3>Database Options</h3>
@@ -68,8 +81,10 @@ EOS;
 	_printInputField('sqlDb', 'Database Name:', 'The name of the SQL database. The user above must have read/write access.', 'text', array('size' => 30));
 	_printInputField('sqlPrefix', 'Database Prefix:', 'The database prefix. When in doubt, keep as default.', 'text', array('size' => 30, 'value' => 'frac_'));
 
-	$pdoDrivers = PDO::getAvailableDrivers();
-	sort($pdoDrivers);
+	$pdoDrivers = array();
+	foreach(PDO::getAvailableDrivers() as $driver)
+		$pdoDrivers[$driver] = $driver;
+	ksort($pdoDrivers);
 	_printDropDown('sqlDriver', 'Database Driver:', 'The driver to use when connecting to the database.', $pdoDrivers);
 	
 	echo '<h3>Site Options</h3>';
@@ -87,6 +102,9 @@ EOS;
 
 function doWriteConfig()
 {
+	// Initialize errors array.
+	$errors = array();
+
 	// Check to make sure an existing config doesn't exist.
 	if(file_exists('config.php'))
 		die('An existing configuration file exists, this script will not overwrite a previous configuration. If you wish to use this script, please remove the configuration file.'); // this will only happen if you try to access install.php?do=step2 by hand. If you do, you sir, are an idiot.
@@ -105,17 +123,24 @@ function doWriteConfig()
 
 	foreach($configTmpl as $key => &$value)
 	{
-		if(!isset($_POST[$key]))
+		if(!isset($_POST[$key]) || trim($_POST[$key]) === '')
 		{
 			if($value === null)
-				die('You left out a required field. Use your browser\'s back button to re-enter form information.');
+			{
+				$errors[] = 'You left out one or more required fields.';
+				break;
+			}
 		}
 		else
 		{
 			$value = urldecode($_POST[$key]);
 		}
 	}
-
+	
+	// First bad test. :\
+	if(count($errors) > 0)
+		return $errors;
+	
 	// Construct the config array.
 	$configArray = array(	'database'	=> array(	'dsn'		=> "{$configTmpl['sqlDriver']}://{$configTmpl['sqlUser']}:{$configTmpl['sqlPass']}@{$configTmpl['sqlHost']}/{$configTmpl['sqlDb']}",
 													'prefix'	=> $configTmpl['sqlPrefix']
@@ -124,6 +149,19 @@ function doWriteConfig()
 													'gentime'	=> $configTmpl['siteGentime']
 												)
 						);
+		
+	
+		
+	// Test various things.
+	try {
+		$pdoTest = @new PDO(sprintf('%s:host=%s;port=%s;dbname=%s', $configTmpl['sqlDriver'], $configTmpl['sqlHost'], 3306, $configTmpl['sqlDb']), $configTmpl['sqlUser'], $configTmpl['sqlPass']);
+	} catch (PDOException $e) {
+		$errors[] = 'Unable to connect to the database: ' . $e->getMessage();
+	}
+	
+	// Last chance for something to go wrong.
+	if(count($errors) > 0)
+		return $errors;
 	
 	// Dump to string.
 	$config = "<?php\n\nif(!defined('IN_FRAC_')) die('This file cannot be invoked directly.');\n\n\$config = ";
@@ -172,6 +210,8 @@ EOS;
 </html>
 EOS;
 	}
+	
+	return false;
 }
 
 
