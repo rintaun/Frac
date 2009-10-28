@@ -1,4 +1,7 @@
-<a href="<?php echo $this->eprint($this->basepath); ?>/projects">Project Listing</a> :: Project Name
+<span class="title">
+	Project Name
+</span>
+
 <br /><br />
 <table cellspacing="0" class="list">
 	<tr class="header">

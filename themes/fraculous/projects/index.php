@@ -1,5 +1,9 @@
-<span class="title">Project Listing</span><br />
-<div class="projectlist">
+<span class="title">
+	<img src="<?php $this->eprint($this->themepath);?>/images/icons/projects.png" alt="Projects" title="Projects" />
+	Projects
+</span><br />
+
+<div class="boxcontainer">
 <?php foreach ($this->projects as $id => $project): ?>
 <div id="project_<?php echo $this->eprint($id); ?>" class="project">
 	<strong>
@@ -12,4 +16,3 @@
 </div>
 <?php endforeach; ?>
 </div>
-</table>

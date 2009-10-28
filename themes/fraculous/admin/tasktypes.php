@@ -1,4 +1,8 @@
-<span class="title">Task Types</span><br />
+<span class="title">
+	<img src="<?php $this->eprint($this->themepath);?>/images/icons/admin/tasktypes.png" alt="Task Types" title="Task Types" />
+	Task Types
+</span><br />
+
 <form method="post" action="<?php $this->eprint($this->basepath); ?>/admin/tasktypes">
 <table>
 	<tr>

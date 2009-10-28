@@ -39,6 +39,9 @@ class AdminController extends Controller
 						$tasktype = new TaskType();
 						$tasktype->name = $_POST["tasktype"];
 						$tasktype->save();
+					} else {
+						Utils::error("No task type entered to create.");
+						return;
 					}
 					break;
 				
@@ -54,6 +57,8 @@ class AdminController extends Controller
 							}
 						}
 						$q->execute();
+					} else {
+						Utils::error("No task types selected to delete.");
 					}
 				
 				default:
