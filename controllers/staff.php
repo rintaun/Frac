@@ -10,17 +10,47 @@ class StaffController extends Controller
 {   
 	public function index($args) // list staff members
 	{
+		$q = Doctrine_Query::create()
+				->select('s.id, s.nickname')
+				->from('Staff s')
+				->orderby('s.id ASC');
+				
+		$staff = $q->execute();
+		$result = array();
+		for($i = 0; $i < count($staff); $i++)
+		{
+			$user = $staff->get($i);
+			$result[] = array($user->id, $user->nickname);
+		}
+		
+		$this->vars['staff'] = $result;
 	}
 
 	public function display($args) // display a staff member profile
-	{
+	{	
+		if(count($args) == 0)
+		{
+			$this->view = null;
+			Utils::redirect('staff/');
+			return;
+		}
+		
+		$staff = $args[0];
+		
+		$q = Doctrine_Query::create()
+				->select('*')
+				->from('Staff s')
+				->where('s.id = ?', $staff)
+				->limit(1);
+				
+		$this->vars['user'] = $q->execute()->get(0);
 	}
 
 	public function create($args) // create a new staff member
 	{
 		$p = PermissionHandler::getInstance();
 		// do we have an error thing?
-		if (!$p->allowedto(PermissionHandler::PERM_CREATE_STAFF))
+		if (!$p->allowedto(PERM_CREATE_STAFF))
 		{
 			Utils::error("You don't have permission to edit staff members.");
 			return;
@@ -29,9 +59,16 @@ class StaffController extends Controller
 
 	public function delete($args) // delete a staff member
 	{
+		if(count($args) == 0)
+		{
+			$this->view = null;
+			Utils::redirect('staff/');
+			return;
+		}
+	
 		$p = PermissionHandler::getInstance();
 		// do we have an error thing?
-		if (!$p->allowedto(PermissionHandler::PERM_DELETE_STAFF))
+		if (!$p->allowedto(PERM_DELETE_STAFF))
 		{
 			Utils::error("You don't have permission to delete staff members.");
 			return;
@@ -40,13 +77,20 @@ class StaffController extends Controller
 
 	public function edit($args) // edit a staff member profile
 	{
+		if(count($args) == 0)
+		{
+			$this->view = null;
+			Utils::redirect('staff/');
+			return;
+		}
+	
 		$staff = $args[0];
 
 		$p = PermissionHandler::getInstance();
 		$session = SesMan::getInstance();
 		// do we have an error thing?
-		// PermissionHandler::PERM_EDIT_STAFF is different slightly, since they are always allowed to edit their own profile.
-		if ((!$p->allowedto(PermissionHandler::PERM_EDIT_STAFF)) && ($staff != $session['staffid']))
+		// PERM_EDIT_STAFF is different slightly, since they are always allowed to edit their own profile.
+		if ((!$p->allowedto(PERM_EDIT_STAFF)) && ($staff != $session['staffid']))
 		{
 			Utils::error("You don't have permission to edit other staff members.");
 			return;
@@ -67,7 +111,7 @@ class StaffController extends Controller
 			$q = Doctrine_Query::create()
 				->select('s.id, s.nickname, s.password')
 				->from('Staff s')
-				->where('s.nickname = ?',$_POST['nickname']);
+				->where('s.nickname = ?', $_POST['nickname']);
 
 			$accounts = $q->fetchArray();
 
