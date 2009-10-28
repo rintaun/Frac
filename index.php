@@ -6,6 +6,8 @@
  * See COPYING for license conditions.
  */
 
+define("FRAC_VERSION", "0.1-alpha");
+
 define("IN_FRAC_", true);
 define("IN_FWORK_", true);
 

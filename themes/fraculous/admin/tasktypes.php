@@ -1,3 +1,4 @@
+<span class="title">Task Types</span><br />
 <form method="post" action="<?php $this->eprint($this->basepath); ?>/admin/tasktypes">
 <table>
 	<tr>

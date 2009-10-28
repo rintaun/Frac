@@ -15,7 +15,7 @@ class AdminController extends Controller
 	
 	public function information($args)
 	{
-		
+		$this->vars["pagename"] = "Adminstration :: Information";
 	}
 	
 	public function tasktypes($args)
