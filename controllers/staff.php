@@ -48,7 +48,7 @@ class StaffController extends Controller
 		}
 		
 		// No postvars means there was no creation attempt. Do form stuff.
-		if(!isset($_POST['nickname'))
+		if(!isset($_POST['nickname']))
 		{
 			$permissions = array();
 			foreach(PermissionHandler as $key => $value)
@@ -84,7 +84,7 @@ class StaffController extends Controller
 			// Generate random password if we need to. Otherwise use the specified one.
 			if(empty($_POST['password']))
 			{
-				$possible = "0123456789abcdefghijklmnopqrstuvwxyz", $i = 0;  
+				$possible = "0123456789abcdefghijklmnopqrstuvwxyz"; $i = 0;  
 				while ($i < 6)
 				{ 
 					$char = substr($possible, mt_rand(0, strlen($possible) - 1), 1);
@@ -235,5 +235,4 @@ class StaffController extends Controller
 		Utils::redirect("staff/login");
 	}
 	
-}
 }
