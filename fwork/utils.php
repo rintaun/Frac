@@ -47,4 +47,15 @@ final class Utils
 	{
 		return Doctrine::getTable("Staff")->find($id)->nickname;
 	}
+	
+	/**
+	 * Creates an absolute URI.
+	 *
+	 * @param $path Path, usually controller/action/arguments, or even an array.
+	 * @return An absolute URI pointing to the given path.
+	 */
+	public static function createuri($path)
+	{
+		return self::basepath() . '/' . (is_array($path) ? implode("/", $path) : $path);
+	} 
 }
