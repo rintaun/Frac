@@ -15,6 +15,9 @@ $session = SesMan::getInstance();
 if ((!isset($session['staffid'])) && (($path[0] != "staff") || ($path[1] != "login")))
 {
 	// if they're not logged in, send them to login, PERIOD.
+	// But set their last page first.
+	$session['lastpage'] = 'staff/login';
+	
 	Utils::redirect("staff/login");
 	return; 
 }

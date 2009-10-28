@@ -67,7 +67,8 @@ final class Utils
 	public static function error($error)
 	{
 		$session = SesMan::getInstance();
-		$session["flash"] = $error;
-		self::redirect($session["lastpage"]);
+		$session['flash'] = $error;
+		
+		self::redirect($session['lastpage']);
 	} 
 }

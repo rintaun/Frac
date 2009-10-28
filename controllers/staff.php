@@ -109,16 +109,14 @@ class StaffController extends Controller
 			// by the way, this should never happen; nicknames are unique.
 			if (count($accounts) > 1)
 			{
-				// put in an error message or something
-				// "There seems to have been some kind of error. Please contact an administrator."
+				Utils::error('An error occurred while retrieving information from the database. Please contact an administrator.');
 				return;
 			}
 			// if there are 0 accounts listed, then the username was wrong; but don't tell them that.
 			// ambiguity ftw
 			else if (count($accounts) == 0)
 			{
-				// put in an error message or something
-				// "Invalid username and/or password. Please try again."
+				Utils::error('Invalid username and/or password. Please try again.');
 				return;
 			}
 			// if there's only 1 account listed, then check the password.
@@ -130,8 +128,7 @@ class StaffController extends Controller
 				// the password is wrong. give them an ambiguous error message.
 				if ($checkPass != $accounts[0]['password'])
 				{
-					// put in an error message or something
-					// "Invalid username and/or password. Please try again."
+					Utils::error('Invalid username and/or password. Please try again.');
 					return;
 				}
 
