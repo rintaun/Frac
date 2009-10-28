@@ -46,20 +46,25 @@ class AdminController extends Controller
 					break;
 				
 				case("delete"):
-					if(isset($_POST["tasktypes"]) && !empty($_POST["tasktypes"]))
-					{
-						$q = Doctrine_Query::create()->delete("TaskType");				
-						foreach($_POST["tasktypes"] as $task => $status)
+						if(isset($_POST["tasktypes"]) && !empty($_POST["tasktypes"]))
 						{
-							if($status == "on")
+							if(isset($_POST["confirmed"]) && !empty($_POST["confirmed"]))
 							{
-								$q->orWhere("id = ?", $task);
+								$q = Doctrine_Query::create()->delete("TaskType");				
+								foreach($_POST["tasktypes"] as $task => $status)
+								{
+									if($status == "on")
+									{
+										$q->orWhere("id = ?", $task);
+									}
+								}
+								$q->execute();
+							} else {
+								$this->vars["confirmdelete"] = true;
 							}
+						} else {
+							Utils::error("No task types selected to delete.");
 						}
-						$q->execute();
-					} else {
-						Utils::error("No task types selected to delete.");
-					}
 				
 				default:
 					// what is this i don't even
