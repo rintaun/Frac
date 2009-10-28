@@ -14,6 +14,11 @@
 	<?php $this->display("header.php"); ?>
 	<div id="content">
 		<div id="container">
+		<?php if(isset($this->flashmsg)): ?>
+		<div id="flashmsg">
+		<?php $this->eprint($this->flashmsg); ?>
+		</div>
+		<?php endif; ?>
 		<?php $this->display($this->view); ?>
 		</div>
 	</div>

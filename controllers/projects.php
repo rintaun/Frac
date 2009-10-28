@@ -45,7 +45,7 @@ class ProjectsController extends Controller
 		// do we have an error thing?
 		if (!$p->allowedto(PermissionHandler::PERM_CREATE_PROJECT))
 		{
-			$this->error("You don't have permission to create projects.");
+			Utils::error("You don't have permission to create projects.");
 			return;
 		}
 		print_r($_POST);

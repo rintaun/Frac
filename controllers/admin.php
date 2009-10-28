@@ -25,7 +25,7 @@ class AdminController extends Controller
 		$p = PermissionHandler::getInstance();
 		if (!$p->allowedto(PermissionHandler::PERM_MANAGE_TASKTYPES))
 		{
-			$this->error("You don't have permission to create task types.");
+			Utils::error("You don't have permission to create task types.");
 			return;
 		}
 		
@@ -34,7 +34,7 @@ class AdminController extends Controller
 			switch($_POST["action"])
 			{
 				case("create"):
-					if(isset($_POST["tasktype"]))
+					if(isset($_POST["tasktype"]) && !empty($_POST["tasktype"]))
 					{
 						$tasktype = new TaskType();
 						$tasktype->name = $_POST["tasktype"];
@@ -43,7 +43,7 @@ class AdminController extends Controller
 					break;
 				
 				case("delete"):
-					if(isset($_POST["tasktypes"]))
+					if(isset($_POST["tasktypes"]) && !empty($_POST["tasktypes"]))
 					{
 						$q = Doctrine_Query::create()->delete("TaskType");				
 						foreach($_POST["tasktypes"] as $task => $status)
