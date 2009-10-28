@@ -6,7 +6,7 @@
 <form method="post" action="<?php $this->eprint($this->basepath); ?>/admin/tasktypes">
 <table>
 	<tr>
-		<th><input type="checkbox" name="tasktypes" /><!-- this checkbox will select all checkboxes. when I figure out how. --></th>
+		<th><input type="checkbox" name="atasktypes" /><!-- this checkbox will select all checkboxes. when I figure out how. --></th>
 		<th>Name</th>
 	</tr>
 	<?php foreach($this->tasktypes as $t) { ?>
