@@ -87,6 +87,9 @@ class AnimeData
 		// first we pull the official title out of the thing.
 		$title = $doc->getElementsByTagName('Title')->item(0)->nodeValue;
 
+		// anidb doesn't like "-" for some reason...
+		$title = str_replace("-","",$title);
+
 		// ok, now we need to look it up on anidb... =_=
 		// if it redirects us to a project page, we'll get the description, but if it gives us a search result, then screw it.
 		$headers = get_headers("http://anidb.net/perl-bin/animedb.pl?show=animelist&adb.search=".urlencode($title)."&do.search=search",1);
@@ -135,6 +138,8 @@ class AnimeData
 		foreach ($times AS $ep => $entries)
 			foreach ($entries AS $entry)
 			{
+				// set our default timezone, temporarily, to Tokyo.
+				date_default_timezone_set("Asia/Tokyo");
 				$airtime = strtotime($entry['airtime']);
 				if ($airtime < $earliest) $earliest = $airtime;
 				if ($airtime < $curtime) { $aired++; break; }
@@ -161,6 +166,7 @@ class AnimeData
 		for ($i = 0; $i < $nodes->length; $i++)
 		{
 			$node = $nodes->item($i);
+			if (empty($node->getElementsByTagName('Count')->item(0)->nodeValue)) continue;
 			$times[$node->getElementsByTagName('Count')->item(0)->nodeValue][] = array(
 				'channel' => $node->getElementsByTagName('ChID')->item(0)->nodeValue,
 				'airtime' => $node->getElementsByTagName('StTime')->item(0)->nodeValue

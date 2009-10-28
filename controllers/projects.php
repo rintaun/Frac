@@ -36,7 +36,33 @@ class ProjectsController extends Controller
 	{
 		$name = Doctrine::getTable("Project")->find($args[0])->name;
 		
+		$this->vars["name"] = $name;
 		$this->vars["pagename"] = "Projects :: " . $name;
+
+		$q = Doctrine_Query::create()
+			->select('e.*, t.*')
+			->from('Episode e')
+			->leftJoin('e.Tasks t')
+			->where('e.project = '. $args[0]);
+
+		$episodes = $q->execute();
+		foreach ($episodes AS $cur_ep)
+		{
+			$active = 0;
+			$finished = 0;
+			foreach ($cur_ep->Tasks AS $cur_task)
+			{
+				if ($cur_task->active == true) $active++;
+				else if ($cur_task->finished == true) $finished++;
+			}
+			$this->vars['episodes'][] = array(
+				'episode' => $cur_ep->episode,
+				'airdate' => $cur_ep->airdate,
+				'active' => $active,
+				'finished' => $finished,
+				'open' => count($cur_ep->Tasks) - $finished
+			);
+		}
 	}
 
 	public function create($args) // create a new project
@@ -57,6 +83,8 @@ class ProjectsController extends Controller
 			// series.
 			// scratch that. we should confirm no matter what, but if they chose
 			// automatic lookup, do it here.
+			$this->vars['tid'] = 0;
+			$this->vars['search'] = array();
 			if (!isset($_POST['confirm']))
 			{
 				// implement automatic lookup
@@ -67,11 +95,14 @@ class ProjectsController extends Controller
 					// fill in the autolookup stuff...
 					// first we need to find the anime.
 					$search = AnimeData::search($_POST['name']);
-					$this->vars['tid'] = $search[0][0];
+					if (!isset($_POST['tid'])) $tidkey = 0;
+					else foreach ($search AS $key => $entry) if ($entry[0] == $_POST['tid']) $tidkey = $key;
+
+					$this->vars['tid'] = $search[$tidkey][0];
 					$this->vars['search'] = $search;
 					
-					$_POST['description'] = AnimeData::description($search[0][0]);
-					$epcount = AnimeData::epcount($search[0][0]);
+					$_POST['description'] = AnimeData::description($search[$tidkey][0]);
+					$epcount = AnimeData::epcount($search[$tidkey][0]);
 					$_POST['epsaired'] = $epcount['aired'];
 					$_POST['epstotal'] = $epcount['total'];
 					$_POST['airtime'] = $epcount['airtime'];
@@ -84,16 +115,34 @@ class ProjectsController extends Controller
 
 			// if they've already confirmed, then go ahead and create the project
 			$project = new Project();
-			
-			// blah blah blah
-
+			$project->name = $_POST['name'];
+			$project->shortname = $_POST['shortname'];
+			$project->description = $_POST['description'];
+			$project->episodes = $_POST['epstotal'];
+			if ($_POST['leader'] != "none")
+				$project->leader = $_POST['leader'];
 			$project->save();
 
 			// if the user has chosen to automatically add episodes, do so now
-			
+			if ($_POST['autoeps'] == "aired")
+				for ($i = 1; $i <= $_POST['epsaired']; $i++)
+				{
+					$episode = new Episode();
+					$episode->project = $project->id;
+					$episode->episode = $i;
+					$episode->save();
+				}
+			else if ($_POST['autoeps'] == "all")
+				for ($i = 1; $i <= $_POST['epstotal']; $i++)
+				{
+					$episode = new Episode();
+					$episode->project = $project->id;
+					$episode->episode = $i;
+					$episode->save();
+				}
 
-			// display a confirmation
-			redirect("projects/display/" . $project->id);
+			// and finally, send them to the project page.
+			Utils::redirect("projects/display/" . $project->id);
 			$this->view = null;
 			return;
 		}

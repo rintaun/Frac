@@ -1,13 +1,24 @@
-<form action="<?php echo $this->eprint($this->basepath); ?>/projects/create" method="post">
+<form action="<?php $this->eprint($this->frac->createuri('/projects/create')); ?>" method="post">
 	<fieldset>
 		<input type="hidden" name="go" value="go" />
-		<table>
+		<input type="hidden" name="name" value="<?php $this->eprint($this->confirm['name']); ?>" />
+		<input type="hidden" name="autolookup" value="<?php $this->eprint($this->confirm['autolookup']); ?>" />
+		<input type="hidden" name="shortname" value="<?php $this->eprint($this->confirm['shortname']); ?>" />
+		<input type="hidden" name="description" value="<?php $this->eprint($this->confirm['description']); ?>" />
+		<input type="hidden" name="epsaired" value="<?php $this->eprint($this->confirm['epsaired']); ?>" />
+		<input type="hidden" name="epstotal" value="<?php $this->eprint($this->confirm['epstotal']); ?>" />
+		<input type="hidden" name="autoeps" value="<?php $this->eprint($this->confirm['autoeps']); ?>" />
+		<input type="hidden" name="airtime" value="<?php $this->eprint($this->confirm['airtime']); ?>" />
+		<input type="hidden" name="autoupdate" value="<?php $this->eprint($this->confirm['autoupdate']); ?>" />
+		<input type="hidden" name="leader" value="<?php $this->eprint($this->confirm['leader']); ?>" />
+		<input type="hidden" name="template" value="<?php $this->eprint($this->confirm['template']); ?>" />
+		<table class="confirm">
 			<tr>
 				<td>Project Name:</td>
 				<td><?php $this->eprint($this->confirm['name']); ?></td>
 				<?php if (count($this->search) > 1): ?>
-				<td><select></select></td>
-				<?php endif;
+				<td><select name="tid"><?php print($this->frac->options($this->search, $this->tid)); ?></select><input type="submit" value="Retry" /></td>
+				<?php endif; ?>
 			</tr>
 			<tr>
 				<td>Short Name:</td>
@@ -38,7 +49,7 @@
 				<td><?php // implement this LOL ?>none</td>
 			</tr>
 			<tr>
-				<td><input type="submit" value="Create" /></td>
+				<td><input type="submit" name="confirm" value="Create" /></td>
 			</tr>
 		</table>
 	</fieldset>
