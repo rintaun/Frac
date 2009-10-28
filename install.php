@@ -123,18 +123,7 @@ function doWriteConfig()
 
 	foreach($configTmpl as $key => &$value)
 	{
-		if(!isset($_POST[$key]) || trim($_POST[$key]) === '')
-		{
-			if($value === null)
-			{
-				$errors[] = 'You left out one or more required fields.';
-				break;
-			}
-		}
-		else
-		{
-			$value = urldecode($_POST[$key]);
-		}
+		$value = urldecode($_POST[$key]);
 	}
 	
 	// First bad test. :\
@@ -166,7 +155,7 @@ function doWriteConfig()
 	// Dump to string.
 	$config = "<?php\n\nif(!defined('IN_FRAC_')) die('This file cannot be invoked directly.');\n\n\$config = ";
 	$config .= var_export($configArray, true);
-	$config .= "\n?>";
+	$config .= ";";
 	
 	$confFile = @fopen('config.php', 'w');
 	if(!$confFile)
@@ -285,5 +274,3 @@ function _printYesNo($name, $label, $description, $default = true)
 	echo '<input type="radio" name="' . $name . '" value="no" ' . (!$default ? 'checked="checked" ' : '') . '/> No';
 	echo ' ' . $description . "<br />\n";
 }
-
-?>

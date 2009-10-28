@@ -26,14 +26,15 @@ class StaffController extends Controller
 			return;
 		}
 		
-		$staff = $args[0];
-						
-		$this->vars['user'] = Doctrine_Query::create()
+		$user = Doctrine_Query::create()
 				->from('Staff')
-				->where('id = ?', $staff)
+				->where('id = ?', $args[0])
 				->limit(1)
 				->execute()
 				->get(0);
+		
+		$this->vars["pagename"] = "Staff :: " . $user["nickname"];
+		$this->vars['user'] = $user;
 	}
 
 	public function create($args) // create a new staff member
