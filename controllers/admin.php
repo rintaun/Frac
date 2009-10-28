@@ -62,21 +62,7 @@ class AdminController extends Controller
 			}
 		}
 		
-		$q = Doctrine_Query::create()
-			->from("TaskType");
-		$tasktypes = $q->execute();
-		
-		for ($i = 0; $i < count($tasktypes); $i++)
-		{
-			$tasktype = $tasktypes->get($i);
-			$arrTasktype = array(
-				"id" => $tasktype->id,
-				"name" => $tasktype->name
-			);
-			$result[$tasktype->id] = $arrTasktype;
-		}
-		
-		$this->vars["tasktypes"] = $result;
+		$this->vars["tasktypes"] = Doctrine_Query::create()->from("TaskType")->fetchArray();
 	}
 	
 	public function settings($args) // edit the settings

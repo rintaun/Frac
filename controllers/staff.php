@@ -10,20 +10,11 @@ class StaffController extends Controller
 {   
 	public function index($args) // list staff members
 	{
-		$q = Doctrine_Query::create()
-				->select('s.id, s.nickname, s.email')
-				->from('Staff s')
-				->orderby('s.id ASC');
-				
-		$staff = $q->execute();
-		$result = array();
-		for($i = 0; $i < count($staff); $i++)
-		{
-			$user = $staff->get($i);
-			$result[] = array($user->id, $user->nickname, $user->email);
-		}
-		
-		$this->vars['staff'] = $result;
+		$this->vars['staff'] = Doctrine_Query::create()
+				->select('id, nickname, email')
+				->from('Staff')
+				->orderby('id ASC')
+				->fetchArray();
 	}
 
 	public function display($args) // display a staff member profile
@@ -31,19 +22,18 @@ class StaffController extends Controller
 		if(count($args) == 0)
 		{
 			$this->view = null;
-			Utils::redirect('staff/');
+			Utils::redirect('staff');
 			return;
 		}
 		
 		$staff = $args[0];
-		
-		$q = Doctrine_Query::create()
-				->select('*')
-				->from('Staff s')
-				->where('s.id = ?', $staff)
-				->limit(1);
-				
-		$this->vars['user'] = $q->execute()->get(0);
+						
+		$this->vars['user'] = Doctrine_Query::create()
+				->from('Staff')
+				->where('id = ?', $staff)
+				->limit(1)
+				->execute()
+				->get(0);
 	}
 
 	public function create($args) // create a new staff member
