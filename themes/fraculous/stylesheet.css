@@ -84,7 +84,19 @@ body {
 	background: url(images/contentbg.png) no-repeat 50% 0%;
 }
 
-#flashmsg
+#flashmsgs
+{
+	width: 100%;
+	color: #2e3436;
+	font-weight: bold;
+	background-color: #8ae234;
+	border: #73d216 3px solid;
+	padding: 5px;
+	margin-bottom: 3px;
+	min-height: 20px;
+}
+
+#flashmsge
 {
 	width: 100%;
 	color: #eeeeec;

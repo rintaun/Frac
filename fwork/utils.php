@@ -64,11 +64,22 @@ final class Utils
 	 *
 	 * @param $error Error message to display.
 	 */
-	public static function error($error)
+	public static function error($message)
 	{
 		$session = SesMan::getInstance();
-		$session['flash'] = $error;
+		$session['flash'] = array("type" => "error", "message" => $message);
 		
 		self::redirect($session['lastpage']);
-	} 
+	}
+	
+	/**
+	 * Keikaku doori message.
+	 *
+	 * @param $error Error message to display.
+	 */
+	public static function success($message)
+	{
+		$session = SesMan::getInstance();
+		$session['flash'] = array("type" => "success", "message" => $message);
+	}
 }
