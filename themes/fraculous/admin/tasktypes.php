@@ -3,6 +3,20 @@
 	Task Types
 </span><br />
 
+<?php if(isset($this->confirmdelete)): ?>
+<form method="post" action="<?php $this->eprint($this->basepath); ?>/admin/tasktypes">
+<strong>Warning:</strong> Are you absolutely sure you want to do this? Doing so will have very far-reaching consequences, such as removing all tasks of the selected types, as well as templates and task trees.
+<?php foreach($_POST["tasktypes"] as $k => $v): ?>
+<input type="hidden" name="tasktypes[<?php print $k; ?>]" value="<?php print $v; ?>" />
+<?php endforeach; ?>
+<input type="hidden" name="action" value="delete" />
+<input type="hidden" name="confirmed" value="true" />
+<br />
+<input type="submit" value="Yes, I know what I'm doing" />
+<a href="<?php $this->eprint($this->basepath); ?>/admin/tasktypes">No, take me back</a>
+</form>
+<?php else: ?>
+
 <form method="post" action="<?php $this->eprint($this->basepath); ?>/admin/tasktypes">
 <table>
 	<tr>
@@ -25,3 +39,4 @@
 <input type="text" name="tasktype" />
 <input type="submit" value="Create Task Type" />
 </form>
+<?php endif; ?>
