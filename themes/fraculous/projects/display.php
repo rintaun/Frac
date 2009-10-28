@@ -8,12 +8,12 @@
 		<th>#</th>
 		<th>Air Date</th>
 		<th>Tasks (<abbr title="Active">A</abbr>/<abbr title="Open">O</abbr>/<abbr title="Complete">C</abbr>)</th>
-		<th>Expand</th>
 	</tr>
+	<?php foreach ($this->episodes AS $cur_ep): ?>
 	<tr class="listing">
-		<td>1</td>
-		<td>Months ago LOL!</td>
-		<td>2/10/1</td>
-		<td>+</td>
+		<td><?php $this->eprint($cur_ep['episode']); ?></td>
+		<td><?php $this->eprint((!empty($cur_ep['airdate'])) ? $cur_ep['airdate'] : "Unknown"); ?></td>
+		<td><?php $this->eprint($cur_ep['active'] . "/" . $cur_ep['open'] . "/" . $cur_ep['finished']); ?></td>
 	</tr>
+	<?php endforeach; ?>
 </table>

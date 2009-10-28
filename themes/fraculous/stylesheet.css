@@ -159,7 +159,9 @@ form { margin: 0; }
 	border-bottom: 1px solid #CCCCCC;
 	text-align: center;
 }
-
+.confirm tr:first-child { 
+	white-space: nowrap;
+}
 .user {
 	width: 250px;
 	height: 32px;

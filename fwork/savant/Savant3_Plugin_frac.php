@@ -39,7 +39,7 @@ class Savant3_Plugin_frac extends Savant3_Plugin
 	 *
 	 * @param $text The text to shorten
 	 * @param $len The maximal length.
-	 * @param $break The word delimeter when using SHORTEN_LONGER mode.
+	 * @param $break The word delimeter when using SHORTEN_LONGER and SHORTEN_SHORTER modes.
 	 * @param $post A string to append after the cut.
 	 * @param $mode The shortening mode to apply.
 	 */
@@ -58,6 +58,15 @@ class Savant3_Plugin_frac extends Savant3_Plugin
 			case SHORTEN_EXACT:
 				return substr($text,0,$len) . $post;
 		}
+	}
+
+	public function options($values, $selected="")
+	{
+		foreach ($values AS $entry)
+		{
+			$options[] = sprintf("<option value=\"%s\"%s>%s</option>", $entry[0], ($entry[0] == $selected) ? " selected=\"selected\"" : "", $entry[1]);
+		}
+		return implode("\n",$options);
 	}
 }
 ?>
