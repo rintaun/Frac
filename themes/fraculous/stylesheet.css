@@ -74,6 +74,7 @@ body {
 	margin-top: -20px;
 	padding: 5px 0px 0px 22px;
 }
+
 #content {
 	margin: 0 auto;
 	padding: 0;
@@ -82,6 +83,18 @@ body {
 	min-height: 400px;
 	background: url(images/contentbg.png) no-repeat 50% 0%;
 }
+
+#flashmsg
+{
+	width: 100%;
+	color: #eeeeec;
+	font-weight: bold;
+	background-color: #ef2929;
+	border: #cc0000 3px solid;
+	padding: 5px;
+	min-height: 20px;
+}
+
 #container {
 	padding: 55px 60px 0 60px; 
 }

@@ -34,7 +34,7 @@ final class Utils
 	 */
 	public static function redirect($path)
 	{
-		header("Location: " . self::basepath() . "/" . (is_array($path) ? implode("/", $path) : $path));
+		header("Location: " . self::createuri($path));
 	}
 
 	/**
@@ -57,5 +57,17 @@ final class Utils
 	public static function createuri($path)
 	{
 		return self::basepath() . '/' . (is_array($path) ? implode("/", $path) : $path);
+	} 
+	
+	/**
+	 * Display an error and return to the last page.
+	 *
+	 * @param $error Error message to display.
+	 */
+	public static function error($error)
+	{
+		$session = SesMan::getInstance();
+		$session["flash"] = $error;
+		self::redirect($session["lastpage"]);
 	} 
 }
