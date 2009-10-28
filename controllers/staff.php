@@ -33,18 +33,101 @@ class StaffController extends Controller
 				->execute()
 				->get(0);
 		
-		$this->vars["pagename"] = "Staff :: " . $user["nickname"];
+		$this->vars['pagename'] = 'Staff :: ' . $user['nickname'];
 		$this->vars['user'] = $user;
 	}
 
 	public function create($args) // create a new staff member
 	{
 		$p = PermissionHandler::getInstance();
-		// do we have an error thing?
+
 		if (!$p->allowedto(PermissionHandler::PERM_CREATE_STAFF))
 		{
 			Utils::error("You don't have permission to edit staff members.");
 			return;
+		}
+		
+		// No postvars means there was no creation attempt. Do form stuff.
+		if(!isset($_POST['nickname']))
+		{
+			$permissions = array();
+			foreach(PermissionHandler as $key => $value)
+			{
+				if(substr($key, 0, 4) === 'PERM')
+				{
+					$permissions[$key] = $value;
+				}
+			}
+			$this->vars['permissions'] = $permissions;
+		}
+		else
+		{
+			// Deal with missing variables and stuff.
+			if(empty($_POST['nickname']) || empty($_POST['email']))
+			{
+				Utils::error('You left out a required field. Please fill the form out again.');
+				return;
+			}
+			
+			// Validate permissions.
+			if(!is_array($_POST['perms']))
+			{
+				Utils::error('Internal error. Please resubmit the form.');
+				return;
+			}
+			$perm = 0;
+			foreach($_POST['perms'] as $value)
+			{
+				$perm &= (int) $value;
+			}
+			
+			// Generate random password if we need to. Otherwise use the specified one.
+			if(empty($_POST['password']))
+			{
+				$possible = "0123456789abcdefghijklmnopqrstuvwxyz"; $i = 0;  
+				while ($i < 6)
+				{ 
+					$char = substr($possible, mt_rand(0, strlen($possible) - 1), 1);
+					
+					if (!strstr($_POST['password'], $char))
+					{
+						$_POST['password'] .= $char;
+						$i++;
+					}
+				}
+			}
+			else if($_POST['password'] !== $_POST['password2'])
+			{
+				Utils::error('Entered passwords do not match.');
+				return;
+			}
+			
+			// Create new staff...lol.
+			$user = new Staff();
+			$user->nickname = $_POST['nickname'];
+			$user->password = hash('sha256', $_POST['password']);
+			$user->comment = $_POST['comment'];
+			$user->email = $_POST['email'];
+			$user->cell = $_POST['mobile'];
+			$user->auth = $perm;
+			
+			if(!$user->isValid())
+			{
+				Utils::error('Invalid form data entered. Please fill out the form again.');
+				return;
+			}
+			
+			try
+			{
+				$user->save();
+			}
+			catch(Doctrine_Exception $e)
+			{
+				Utils::error('A database error occurred: ' . $e->errorMessage());
+				return;
+			}
+			
+			// Do a success flash here.
 		}
 	}
 
@@ -58,7 +141,7 @@ class StaffController extends Controller
 		}
 	
 		$p = PermissionHandler::getInstance();
-		// do we have an error thing?
+
 		if (!$p->allowedto(PermissionHandler::PERM_DELETE_STAFF))
 		{
 			Utils::error("You don't have permission to delete staff members.");
@@ -79,7 +162,7 @@ class StaffController extends Controller
 
 		$p = PermissionHandler::getInstance();
 		$session = SesMan::getInstance();
-		// do we have an error thing?
+
 		// PERM_EDIT_STAFF is different slightly, since they are always allowed to edit their own profile.
 		if ((!$p->allowedto(PermissionHandler::PERM_EDIT_STAFF)) && ($staff != $session['staffid']))
 		{
@@ -151,4 +234,5 @@ class StaffController extends Controller
 		$this->view = null;
 		Utils::redirect("staff/login");
 	}
+	
 }
