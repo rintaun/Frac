@@ -6,7 +6,12 @@
 	<title>Frac :: <?php print($this->eprint($this->pagename)); ?></title>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 	<link rel="stylesheet" href="<?php print($this->eprint($this->themepath)); ?>/stylesheet.css" type="text/css" />
-	<script>themepath="<?php echo $this->eprint($this->themepath); ?>";basepath="<?php echo $this->eprint($this->basepath); ?>";</script>
+	<script type="text/javascript">
+	<!--
+		themepath="<?php echo $this->eprint($this->themepath); ?>";
+		basepath="<?php echo $this->eprint($this->basepath); ?>";
+	//-->
+	</script>
 	<script src="<?php echo $this->eprint($this->themepath); ?>/utils.js" type="text/javascript"></script>
 	<script src="<?php echo $this->eprint($this->themepath); ?>/fraculous.js" type="text/javascript"></script>
 </head>
