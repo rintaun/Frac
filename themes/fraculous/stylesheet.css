@@ -203,3 +203,7 @@ form { margin: 0; }
 	padding: 0;
 	margin: 0;
 }
+
+.right { float: right; }
+.small { font-size: 11px; }
+.bold { font-weight: bold; }

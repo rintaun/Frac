@@ -64,7 +64,7 @@ class AnimeData
 
 		for ($i = 0; $i < count($matches[0]); $i++)
 		{
-			$search = array($matches[1],$matches[2]);
+			$search[] = array($matches[1][$i],$matches[2][$i]);
 		}
 		return $search;
 	}
@@ -124,6 +124,23 @@ class AnimeData
 
 		// the longest one is probably the description ;p
 		return $pos[$dkey];
+	}
+	
+	public static function epcount($id)
+	{
+		$times = self::times($id);
+		$curtime = time();
+		$aired = 0;
+		$earliest = $curtime;
+		foreach ($times AS $ep => $entries)
+			foreach ($entries AS $entry)
+			{
+				$airtime = strtotime($entry['airtime']);
+				if ($airtime < $earliest) $earliest = $airtime;
+				if ($airtime < $curtime) { $aired++; break; }
+			}
+		$total = count($times);
+		return array('aired' => $aired, 'total' => $total, 'airtime' => date('D H:i:s +900', $earliest));
 	}
 	
 	public static function times($id)

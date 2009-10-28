@@ -48,8 +48,6 @@ class ProjectsController extends Controller
 			Utils::error("You don't have permission to create projects.");
 			return;
 		}
-		print_r($_POST);
-
 		
 		if (isset($_POST['go']))
 		{
@@ -62,7 +60,22 @@ class ProjectsController extends Controller
 			if (!isset($_POST['confirm']))
 			{
 				// implement automatic lookup
-
+				// if the user wants automatic lookup, do it.
+				if ($_POST['autolookup'] == "on")
+				{
+					require_once(dirname(__FILE__) . "/../plugins/animedata.php");
+					// fill in the autolookup stuff...
+					// first we need to find the anime.
+					$search = AnimeData::search($_POST['name']);
+					$this->vars['tid'] = $search[0][0];
+					$this->vars['search'] = $search;
+					
+					$_POST['description'] = AnimeData::description($search[0][0]);
+					$epcount = AnimeData::epcount($search[0][0]);
+					$_POST['epsaired'] = $epcount['aired'];
+					$_POST['epstotal'] = $epcount['total'];
+					$_POST['airtime'] = $epcount['airtime'];
+				}
 				$this->vars['confirm'] = $_POST; // LOL LAZY
 				// display a confirmation
 				$this->view = "confirm";

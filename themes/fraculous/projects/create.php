@@ -13,11 +13,11 @@
 			</tr>
 			<tr>
 				<td>Description:</td>
-				<td colspan="2"><textarea rows="5" cols="50"></textarea></td>
+				<td colspan="2"><textarea rows="5" cols="50" name="description"></textarea></td>
 			</tr>
 			<tr>
 				<td>Episodes:</td>
-				<td><input type="text" size="3" maxLength="3" value="Aired" /> / <input type="text" size="3" maxLength="3" value="Total" /></td>
+				<td><input type="text" size="3" maxLength="3" name="epsaired" value="Aired" /> / <input type="text" size="3" maxLength="3" name="epstotal" value="Total" /></td>
 				<td>
 					Auto-create:
 					<input type="radio" name="autoeps" value="aired" />Aired
