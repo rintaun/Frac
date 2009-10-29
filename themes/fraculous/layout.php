@@ -20,7 +20,7 @@
 	<div id="content">
 		<div id="container">
 		<?php if(isset($this->flashmsg)): ?>
-		<div id="flashmsg<?php $this->eprint($this->flashmsg["type"] == "error" ? "e" : $this->flashmsg["type"] == "warning") ? "w" : $this->flashmsg["type"] == "success") ? "s" : ""; ?>">
+		<div id="flashmsg<?php $this->eprint($this->flashmsg["type"] == "error" ? "e" : $this->flashmsg["type"] == "warning" ? "w" : $this->flashmsg["type"] == "success" ? "s" : ""); ?>">
 		<?php $this->eprint($this->flashmsg["message"]); ?>
 		</div>
 		<?php endif; ?>

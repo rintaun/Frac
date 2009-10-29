@@ -92,6 +92,10 @@ final class Fwork
 		$this->savant->error = $error; // disregard this I suck cock for production mode
 		$this->savant->pagename = "Error";
 		$this->savant->view = "error.php";
+		
+		// execute the hook if there is one (yes, even here)
+		if(file_exists(dirname(__FILE__) . "/../hooks/predisplay.php")) require_once(dirname(__FILE__) . "/../hooks/predisplay.php");
+		
 		$this->savant->display("layout.php");
 	}
 	
@@ -183,6 +187,10 @@ final class Fwork
 				$vars["pagename"] = isset($vars["pagename"]) ? $vars["pagename"] : ucfirst($controllerprovider);
 				$this->savant->assign($vars);
 				$this->savant->view = $controllerprovider . "/" . $action . ".php";
+				
+				// execute the hook if there is one
+				if(file_exists(dirname(__FILE__) . "/../hooks/predisplay.php")) require_once(dirname(__FILE__) . "/../hooks/predisplay.php");
+				
 				$this->savant->display("layout.php");
 			}
 		}

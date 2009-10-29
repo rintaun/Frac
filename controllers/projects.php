@@ -95,17 +95,22 @@ class ProjectsController extends Controller
 					// fill in the autolookup stuff...
 					// first we need to find the anime.
 					$search = AnimeData::search($_POST['name']);
-					if (!isset($_POST['tid'])) $tidkey = 0;
-					else foreach ($search AS $key => $entry) if ($entry[0] == $_POST['tid']) $tidkey = $key;
+					if($search)
+					{
+						if (!isset($_POST['tid'])) $tidkey = 0;
+						else foreach ($search AS $key => $entry) if ($entry[0] == $_POST['tid']) $tidkey = $key;
 
-					$this->vars['tid'] = $search[$tidkey][0];
-					$this->vars['search'] = $search;
+						$this->vars['tid'] = $search[$tidkey][0];
+						$this->vars['search'] = $search;
 					
-					$_POST['description'] = AnimeData::description($search[$tidkey][0]);
-					$epcount = AnimeData::epcount($search[$tidkey][0]);
-					$_POST['epsaired'] = $epcount['aired'];
-					$_POST['epstotal'] = $epcount['total'];
-					$_POST['airtime'] = $epcount['airtime'];
+						$_POST['description'] = AnimeData::description($search[$tidkey][0]);
+						$epcount = AnimeData::epcount($search[$tidkey][0]);
+						$_POST['epsaired'] = $epcount['aired'];
+						$_POST['epstotal'] = $epcount['total'];
+						$_POST['airtime'] = $epcount['airtime'];
+					} else {
+						Utils::warning("Cannot autofind anime.");
+					}
 				}
 				$this->vars['confirm'] = $_POST; // LOL LAZY
 				// display a confirmation
