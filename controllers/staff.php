@@ -43,7 +43,7 @@ class StaffController extends Controller
 
 		if (!$p->allowedto(PermissionHandler::PERM_CREATE_STAFF))
 		{
-			Utils::error("You don't have permission to edit staff members.");
+			Utils::error("You don't have permission to create staff members.");
 			return;
 		}
 		
@@ -136,10 +136,10 @@ EOS;
 			// Create new staff...lol.
 			$user = new Staff();
 			$user->nickname = $_POST['nickname'];
-			$user->password = hash('sha256', $_POST['nickname'] . $_POST['password']);
-			$user->comment = $_POST['comment'];
-			$user->email = $_POST['email'];
-			$user->cell = $_POST['mobile'];
+			$user->password = $_POST['password'];
+			$user->comment = trim($_POST['comment']);
+			$user->email = trim($_POST['email']);
+			$user->cell = trim($_POST['mobile']);
 			$user->auth = $perm;
 
 			if(!$user->isValid())
