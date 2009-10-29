@@ -15,4 +15,4 @@
 <?php endforeach; ?>
 </div>
 
-<span class="right small bold"><a href="<?php $this->eprint($this->frac->createuri('staff/create')); ?>">Create User</a></span>
+<span class="right small bold clear"><a href="<?php $this->eprint($this->frac->createuri('staff/create')); ?>">Create User</a></span>

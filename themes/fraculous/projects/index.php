@@ -20,5 +20,5 @@
 </div>
 <?php endforeach; ?>
 </div>
-
+<div class="clear"></div>
 <span class="right small bold"><a href="<?php $this->eprint($this->frac->createuri('projects/create')); ?>">Create Project</a></span>
