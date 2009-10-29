@@ -13,5 +13,6 @@
 	<p>Actions: <a href="<?php $this->eprint($this->frac->createuri('staff/edit/' . $member['id'])); ?>">Edit</a>, <a href="<?php $this->eprint($this->frac->createuri('staff/edit/' . $member['id'])); ?>">Delete</a></p>
 </div>
 <?php endforeach; ?>
+<div class="clear"></div>
 <span class="right small bold"><a href="<?php $this->eprint($this->frac->createuri('staff/create')); ?>">Create User</a></span>
 </div>
