@@ -73,6 +73,17 @@ final class Utils
 	}
 	
 	/**
+	 * Display an error and return to the last page.
+	 *
+	 * @param $error Error message to display.
+	 */
+	public static function warning($message)
+	{
+		$session = SesMan::getInstance();
+		$session['flash'] = array("type" => "warning", "message" => $message);
+	}
+	
+	/**
 	 * Keikaku doori message.
 	 *
 	 * @param $error Error message to display.

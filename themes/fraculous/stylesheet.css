@@ -83,7 +83,6 @@ body {
 	min-height: 400px;
 	background: url(images/contentbg.png) no-repeat 50% 0%;
 }
-
 #flashmsgs
 {
 	width: 100%;
@@ -91,6 +90,18 @@ body {
 	font-weight: bold;
 	background-color: #8ae234;
 	border: #73d216 3px solid;
+	padding: 5px;
+	margin-bottom: 3px;
+	min-height: 20px;
+}
+
+#flashmsgw
+{
+	width: 100%;
+	color: #2e3436;
+	font-weight: bold;
+	background-color: #fce94f;
+	border: #edd400 3px solid;
 	padding: 5px;
 	margin-bottom: 3px;
 	min-height: 20px;
