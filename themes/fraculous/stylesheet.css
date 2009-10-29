@@ -144,7 +144,10 @@ img { border: 0; }
 	cursor: pointer;
 }
 .project:hover { background-color: #EEEEEE; }
-.project a {	color: #000000; }
+.project a {
+	color: #000000;
+	clear: both;
+}
 .project .desc {
 	font-size: 12px;
 	font-weight: normal;
