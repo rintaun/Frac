@@ -51,11 +51,12 @@ class StaffController extends Controller
 		if(!isset($_POST['nickname']))
 		{
 			$permissions = array();
-			foreach(PermissionHandler::getInstance() as $key => $value)
+			$permissionReflector = new ReflectionClass('PermissionHandler');
+			foreach($permissionReflector->getConstants() as $key => $value)
 			{
 				if(substr($key, 0, 4) === 'PERM')
 				{
-					$permissions[$key] = $value;
+					$permissions[] = array(ucwords(strtolower(str_replace('_', ' ', substr($key, 4)))), $value);
 				}
 			}
 			$this->vars['permissions'] = $permissions;
@@ -70,17 +71,15 @@ class StaffController extends Controller
 			}
 			
 			// Validate permissions.
-			if(!is_array($_POST['perms']))
-			{
-				Utils::error('Internal error. Please resubmit the form.');
-				return;
-			}
 			$perm = 0;
-			foreach($_POST['perms'] as $value)
+			if(isset($_POST['perms']) && is_array($_POST['perms']))
 			{
-				$perm &= (int) $value;
+				foreach($_POST['perms'] as $value)
+				{
+					$perm &= (int) $value;
+				}
 			}
-			
+
 			// Generate random password if we need to. Otherwise use the specified one.
 			if(empty($_POST['password']))
 			{
