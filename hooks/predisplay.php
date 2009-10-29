@@ -16,3 +16,5 @@ if(isset($session['flash']) && $session['flash']['type'] == 'warning')
 	$this->savant->flashmsg = $session['flash'];
 	unset($session['flash']);
 }
+
+if(isset($session["redirected"])) unset($session["redirected"]);
