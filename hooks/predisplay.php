@@ -10,9 +10,11 @@
 
 $session = SesMan::getInstance();
 
-if(isset($session["flash"]))
+if(isset($session["flash"]) && !isset($session["redirected"]) && !$session["redirected"])
 {
 	$this->savant->flashmsg = $session["flash"];
 	// if we had a flash message, NOW WE DON'T
 	unset($session["flash"]);
 }
+
+if(isset($session["redirected"])) unset($session["redirected"]);

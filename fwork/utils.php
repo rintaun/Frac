@@ -34,6 +34,9 @@ final class Utils
 	 */
 	public static function redirect($path)
 	{
+		$session = SesMan::getInstance();
+		
+		$session["redirected"] = true;
 		header("Location: " . self::createuri($path));
 	}
 
