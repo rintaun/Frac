@@ -10,7 +10,7 @@
 		<img alt="" width="32" height="32" src="http://www.gravatar.com/avatar/<?php echo md5($member['email']); ?>?size=32" />
 		<?php $this->eprint($member['nickname']); ?>
 	</a>
-	<p>Actions: <a href="<?php $this->eprint($this->frac->createuri('staff/edit/' . $member['id'])); ?>">Edit</a>, <a href="<?php $this->eprint($this->frac->createuri('staff/edit/' . $member['id'])); ?>">Delete</a></p>
+	<p>Actions: <a href="<?php $this->eprint($this->frac->createuri('staff/edit/' . $member['id'])); ?>">Edit</a>, <a href="<?php $this->eprint($this->frac->createuri('staff/delete/' . $member['id'])); ?>">Delete</a></p>
 </div>
 <?php endforeach; ?>
 </div>

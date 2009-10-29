@@ -60,6 +60,38 @@ class StaffController extends Controller
 				}
 			}
 			$this->vars['permissions'] = $permissions;
+			
+			$this->vars['headextra'] = <<<EOS
+				<script type="text/javascript"><!--
+					var formblock;
+					var forminputs;
+
+					function prepare() {
+						formblock = document.getElementById('createform');
+						forminputs = formblock.getElementsByTagName('input');
+					}
+
+					function select_all(name, value) {
+						for (i = 0; i < forminputs.length; i++) {
+							if (forminputs[i].getAttribute('name') == name) {
+								if (value == '1') {
+									forminputs[i].checked = true;
+								} else {
+									forminputs[i].checked = false;
+								}
+							}
+						}
+					}
+
+					if (window.addEventListener) {
+						window.addEventListener("load", prepare, false);
+					} else if (window.attachEvent) {
+						window.attachEvent("onload", prepare)
+					} else if (document.getElementById) {
+						window.onload = prepare;
+					}
+				//--></script>
+EOS;
 		}
 		else
 		{
@@ -109,7 +141,7 @@ class StaffController extends Controller
 			$user->email = $_POST['email'];
 			$user->cell = $_POST['mobile'];
 			$user->auth = $perm;
-			
+
 			if(!$user->isValid())
 			{
 				Utils::error('Invalid form data entered. Please fill out the form again.');

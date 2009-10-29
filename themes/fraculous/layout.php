@@ -1,19 +1,19 @@
-<!DOCTYPE html
-        PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-	<title>Frac :: <?php print($this->eprint($this->pagename)); ?></title>
+	<title>Frac :: <?php $this->eprint($this->pagename); ?></title>
 	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-	<link rel="stylesheet" href="<?php print($this->eprint($this->themepath)); ?>/stylesheet.css" type="text/css" />
+	<link rel="stylesheet" href="<?php $this->eprint($this->themepath); ?>/stylesheet.css" type="text/css" />
 	<script type="text/javascript">
 	<!--
-		themepath="<?php echo $this->eprint($this->themepath); ?>";
-		basepath="<?php echo $this->eprint($this->basepath); ?>";
+		themepath="<?php $this->eprint($this->themepath); ?>";
+		basepath="<?php $this->eprint($this->basepath); ?>";
 	//-->
 	</script>
-	<script src="<?php echo $this->eprint($this->themepath); ?>/utils.js" type="text/javascript"></script>
-	<script src="<?php echo $this->eprint($this->themepath); ?>/fraculous.js" type="text/javascript"></script>
+	<script src="<?php $this->eprint($this->themepath); ?>/utils.js" type="text/javascript"></script>
+	<script src="<?php $this->eprint($this->themepath); ?>/fraculous.js" type="text/javascript"></script>
+<?php if(isset($this->headextra)) echo $this->headextra; ?>
 </head>
 <body>
 	<?php $this->display("header.php"); ?>

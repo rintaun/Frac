@@ -43,7 +43,7 @@ class Staff extends Doctrine_Record
 		);
 		
 		$this->hasColumn("password", "string", 64, array(
-				"regexp" => "/^[0-9a-f]{64}\$/i",
+				"regexp" => "/^[0-9a-f]{64}$/i",
 				"notnull" => true,
 				"fixed" => true
 			)
@@ -52,16 +52,18 @@ class Staff extends Doctrine_Record
 		$this->hasColumn("comment", "string", 1000);
 		
 		$this->hasColumn("email", "string", 255, array(
-				"regexp" => "/^[0-9a-f_-.+]+@[0-9a-z_-]+.[0-9a-z_-.]+\$/i"
+				'email' => array('check_mx' => false),
 			)
 		);
-		
+
 		$this->hasColumn("cell", "string", 32, array(
-				"regexp" => "/^[0-9]*\$/"
+				"regexp" => "/^[0-9]*$/"
 			)
 		);
 		
 		$this->hasColumn("auth", "integer", 10);
+		
+		$this->setAttribute(Doctrine::ATTR_VALIDATE, true);
 	}
 	
 	public function setUp()
