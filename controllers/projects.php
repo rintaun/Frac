@@ -132,7 +132,7 @@ class ProjectsController extends Controller
 					$episode->episode = $i;
 					$episode->save();
 				}
-			else if ($_POST['autoeps'] == "all")
+			else if ($_POST['autoeps'] == "total")
 				for ($i = 1; $i <= $_POST['epstotal']; $i++)
 				{
 					$episode = new Episode();

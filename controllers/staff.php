@@ -51,7 +51,7 @@ class StaffController extends Controller
 		if(!isset($_POST['nickname']))
 		{
 			$permissions = array();
-			foreach(PermissionHandler as $key => $value)
+			foreach(PermissionHandler::getInstance() as $key => $value)
 			{
 				if(substr($key, 0, 4) === 'PERM')
 				{
@@ -127,7 +127,9 @@ class StaffController extends Controller
 				return;
 			}
 			
-			// Do a success flash here.
+			// ALL ACCORDING TO KEIKAKU.
+			// NOTE: Keikaku means plan.
+			Utils::success('User successfully created.', 'staff');
 		}
 	}
 
@@ -136,7 +138,7 @@ class StaffController extends Controller
 		if(count($args) == 0)
 		{
 			$this->view = null;
-			Utils::redirect('staff/');
+			Utils::redirect('staff');
 			return;
 		}
 	
@@ -144,7 +146,7 @@ class StaffController extends Controller
 
 		if (!$p->allowedto(PermissionHandler::PERM_DELETE_STAFF))
 		{
-			Utils::error("You don't have permission to delete staff members.");
+			Utils::error('You don\'t have permission to delete staff members.');
 			return;
 		}
 	}
@@ -154,7 +156,7 @@ class StaffController extends Controller
 		if(count($args) == 0)
 		{
 			$this->view = null;
-			Utils::redirect('staff/');
+			Utils::redirect('staff');
 			return;
 		}
 	
@@ -166,7 +168,7 @@ class StaffController extends Controller
 		// PERM_EDIT_STAFF is different slightly, since they are always allowed to edit their own profile.
 		if ((!$p->allowedto(PermissionHandler::PERM_EDIT_STAFF)) && ($staff != $session['staffid']))
 		{
-			Utils::error("You don't have permission to edit other staff members.");
+			Utils::error('You don\'t have permission to edit other staff members.');
 			return;
 		}
 	}
@@ -207,7 +209,7 @@ class StaffController extends Controller
 			else if (count($accounts) == 1)
 			{
 				// get our password hash
-				$checkPass =  hash("sha256", $accounts[0]['nickname'] . $_POST['password']);
+				$checkPass =  hash('sha256', $accounts[0]['nickname'] . $_POST['password']);
 
 				// the password is wrong. give them an ambiguous error message.
 				if ($checkPass != $accounts[0]['password'])
@@ -220,7 +222,7 @@ class StaffController extends Controller
 
 				$this->session['staffid'] = $accounts[0]['id'];
 				// and make sure we display the correct view
-				Utils::redirect("index");
+				Utils::redirect('index');
 
 				// we probably want to redirect so that these postvars aren't sitting around...
 			}
@@ -232,7 +234,7 @@ class StaffController extends Controller
 		$session = SesMan::getInstance();
 		$session->flush();
 		$this->view = null;
-		Utils::redirect("staff/login");
+		Utils::redirect('staff/login');
 	}
 	
 }
