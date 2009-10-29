@@ -187,10 +187,7 @@ final class Fwork
 				$vars["pagename"] = isset($vars["pagename"]) ? $vars["pagename"] : ucfirst($controllerprovider);
 				$this->savant->assign($vars);
 				$this->savant->view = $controllerprovider . "/" . $action . ".php";
-				
-				// execute the hook if there is one
-				if(file_exists(dirname(__FILE__) . "/../hooks/predisplay.php")) require_once(dirname(__FILE__) . "/../hooks/predisplay.php");
-				
+
 				$this->savant->display("layout.php");
 			}
 		}

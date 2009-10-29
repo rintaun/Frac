@@ -22,6 +22,15 @@ if ((!isset($session['staffid'])) && (($path[0] != "staff") || ($path[1] != "log
 	return; 
 }
 
+if(isset($session['flash']))
+{
+	$this->savant->flashmsg = $session['flash'];
+	
+	// If we had a flash message, NOW WE DON'T
+	unset($session['flash']);
+}
+
+
 $this->savant->staffid = $session['staffid'];
 
 // they're logged in, so start the permissionhandler

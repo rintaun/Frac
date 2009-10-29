@@ -68,25 +68,27 @@ final class Utils
 	{
 		$session = SesMan::getInstance();
 		$session['flash'] = array('type' => 'error', 'message' => $message);
+
+		self::redirect($session['lastpage']);
+	}
+	
+	/**
+	 * Display a warning and return to the last page.
+	 *
+	 * @param $message Message to display.
+	 */
+	public static function warning($message)
+	{
+		$session = SesMan::getInstance();
+		$session['flash'] = array('type' => 'warning', 'message' => $message);
 		
 		self::redirect($session['lastpage']);
 	}
 	
 	/**
-	 * Display an error and return to the last page.
-	 *
-	 * @param $error Error message to display.
-	 */
-	public static function warning($message)
-	{
-		$session = SesMan::getInstance();
-		$session['flash'] = array("type" => "warning", "message" => $message);
-	}
-	
-	/**
 	 * Keikaku doori message.
 	 *
-	 * @param $error Error message to display.
+	 * @param $message Message to display.
 	 * @param $view The view to redirect to, e.g. the one that the message will be displayed on. Defaults to the last page.
 	 */
 	public static function success($message, $view = null)
