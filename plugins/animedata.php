@@ -176,4 +176,3 @@ class AnimeData
 	}
 }
 
-print_r(AnimeData::search("Letter Bee"));

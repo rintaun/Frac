@@ -14,9 +14,9 @@
 	<br />
 	<?php if (!empty($project['description'])): ?>
 	<p class="desc"><?php echo $this->eprint($this->frac->shorten($project['description'], 150)); ?></p>
-	<? else: ?>
+	<?php else: ?>
 	<p class="desc">No description.</p>
-	<? endif; ?>
+	<?php endif; ?>
 </div>
 <?php endforeach; ?>
 </div>
