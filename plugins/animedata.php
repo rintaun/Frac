@@ -126,7 +126,7 @@ class AnimeData
 		}
 
 		// the longest one is probably the description ;p
-		return $pos[$dkey];
+		return strip_tags($pos[$dkey]);
 	}
 	
 	public static function epcount($id)
@@ -175,3 +175,5 @@ class AnimeData
 		return $times;
 	}
 }
+
+print_r(AnimeData::search("Letter Bee"));

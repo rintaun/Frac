@@ -20,7 +20,7 @@
 				<td><input type="text" size="3" maxLength="3" name="epsaired" value="Aired" /> / <input type="text" size="3" maxLength="3" name="epstotal" value="Total" /></td>
 				<td>
 					Auto-create:
-					<input type="radio" name="autoeps" value="aired" />Aired
+					<input type="radio" name="autoeps" value="aired" checked="checked" />Aired
 					<input type="radio" name="autoeps" value="total" />All
 					<input type="radio" name="autoeps" value="none" />None
 				</td>

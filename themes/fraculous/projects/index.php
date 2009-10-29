@@ -12,7 +12,11 @@
 	<br />
 	<span class="eps">Episodes Tracking: <?php echo $this->eprint($project['trackedeps']); ?> / Total Episodes: <?php echo $this->eprint($project['totaleps']); ?></span>
 	<br />
+	<?php if (!empty($project['description'])): ?>
 	<p class="desc"><?php echo $this->eprint($this->frac->shorten($project['description'], 150)); ?></p>
+	<? else: ?>
+	<p class="desc">No description.</p>
+	<? endif; ?>
 </div>
 <?php endforeach; ?>
 </div>
