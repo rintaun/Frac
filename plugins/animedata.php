@@ -92,12 +92,19 @@ class AnimeData
 
 		// ok, now we need to look it up on anidb... =_=
 		// if it redirects us to a project page, we'll get the description, but if it gives us a search result, then screw it.
-		$headers = get_headers("http://anidb.net/perl-bin/animedb.pl?show=animelist&adb.search=".urlencode($title)."&do.search=search",1);
+		// ok, try a couple different searches...
+		$url = "http://anidb.net/perl-bin/animedb.pl?show=animelist&adb.search=".urlencode($title)."&do.search=search";
+		$headers = get_headers($url,1);
 		if (!isset($headers['Location']))
-			return false;
+		{
+			$url = "http://anidb.net/perl-bin/animedb.pl?show=animelist&adb.search=\"".urlencode($title)."\"&do.search=search";
+			$headers = get_headers($url,1);
+			if (!isset($headers['Location']))
+				return false;
+		}
 
 		// if it tries to redirect us, we can just get the same url and we'll get the right page
-		$result = self::httpget("http://anidb.net/perl-bin/animedb.pl?show=animelist&adb.search=".urlencode($title)."&do.search=search");
+		$result = self::httpget($url);
 		if ($result === false) return false;
 
 		// FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF anidb LOVES gzip apparently. SO MUCH THAT I CANT MAKE IT STOP
