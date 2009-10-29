@@ -136,7 +136,7 @@ EOS;
 			// Create new staff...lol.
 			$user = new Staff();
 			$user->nickname = $_POST['nickname'];
-			$user->password = hash('sha256', $_POST['password']);
+			$user->password = hash('sha256', $_POST['nickname'] . $_POST['password']);
 			$user->comment = $_POST['comment'];
 			$user->email = $_POST['email'];
 			$user->cell = $_POST['mobile'];
