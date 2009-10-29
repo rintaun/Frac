@@ -1,8 +1,8 @@
-<form action="<?php $this->eprint($this->frac->createuri('/projects/create')); ?>" method="post">
+<form action="<?php $this->eprint($this->frac->createuri('projects/create')); ?>" method="post">
 	<fieldset>
 		<input type="hidden" name="go" value="go" />
 		<input type="hidden" name="name" value="<?php $this->eprint($this->confirm['name']); ?>" />
-		<input type="hidden" name="autolookup" value="<?php echo (isset($this->confirm['autolookup'])) ? $this->eprint($this->confirm['autolookup']); : ""; ?>" />
+		<input type="hidden" name="autolookup" value="<?php echo (isset($this->confirm['autolookup'])) ? $this->eprint($this->confirm['autolookup']) : ""; ?>" />
 		<input type="hidden" name="shortname" value="<?php $this->eprint($this->confirm['shortname']); ?>" />
 		<input type="hidden" name="description" value="<?php $this->eprint($this->confirm['description']); ?>" />
 		<input type="hidden" name="epsaired" value="<?php $this->eprint($this->confirm['epsaired']); ?>" />
