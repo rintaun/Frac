@@ -1,4 +1,4 @@
-<form action="<?php $this->eprint($this->frac->createuri('/projects/create')); ?>" method="post">
+<form action="<?php $this->eprint($this->frac->createuri('projects/create')); ?>" method="post">
 	<fieldset>
 		<input type="hidden" name="go" value="go" />
 		<input type="hidden" name="name" value="<?php $this->eprint($this->confirm['name']); ?>" />
