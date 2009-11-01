@@ -10,31 +10,30 @@ class TaskTree extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
-		$this->setTableName("tasktrees");
-		
-		$this->hasColumn("task", "integer", 10, array(
-				"unsigned" => true,
-				"notnull" => true,
-				"primary" => true
+		$this->setTableName('tasktrees');
+
+		$this->hasColumn('parent', 'integer', null, array(
+				'unsigned' => true,
+				'primary' => true
 			)
 		);
-		$this->hasColumn("nexttask", "integer", 10, array(
-				"unsigned" => true,
-				"notnull" => true,
-				"primary" => true
+		$this->hasColumn('child', 'integer', null, array(
+				'unsigned' => true,
+				'primary' => true
 			)
 		);
 	}
+
 	public function setUp()
 	{
-		$this->hasOne("Task as Task", array(
-				"local" => "task",
-				"foreign" => "id"
+		$this->hasOne('Task as Parent', array(
+				'local' => 'parent',
+				'foreign' => 'id'
 			)
 		);
-		$this->hasOne("Task as NextTask", array(
-				"local" => "nexttask",
-				"foreign" => "id"
+		$this->hasOne('Task as Child', array(
+				'local' => 'child',
+				'foreign' => 'id'
 			)
 		);
 	}

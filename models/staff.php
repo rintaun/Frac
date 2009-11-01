@@ -6,7 +6,7 @@
  * See COPYING for license conditions.
  */
 
-if(!defined("IN_FRAC_")) die("This file cannot be invoked directly.");
+if(!defined('IN_FRAC_')) die('This file cannot be invoked directly.');
 
 /**
  * Model for a staffer.
@@ -26,61 +26,80 @@ class Staff extends Doctrine_Record
 	 */
 	public function setTableDefinition()
 	{
-		$this->setTableName("staff");
-		
-		$this->hasColumn("id", "integer", 10, array(
-				"primary" => true,
-				"autoincrement" => true,
-				"unsigned" => true,
-				"notnull" => true
+		$this->setTableName('staff');
+
+		$this->hasColumn('id', 'integer', null, array(
+				'primary' => true,
+				'autoincrement' => true,
+				'unsigned' => true
 			)
 		);
-		
-		$this->hasColumn("nickname", "string", 32, array(
-				"unique" => true,
-				"notnull" => true
+		$this->hasColumn('nickname', 'string', 32, array(
+				'unique' => true,
+				'notnull' => true
 			)
 		);
-		
-		$this->hasColumn("password", "string", 64, array(
-				"regexp" => "/^[0-9a-f]{64}$/i",
-				"notnull" => true,
-				"fixed" => true
+		$this->hasColumn('password', 'string', 64, array(
+				'regexp' => '/^[0-9a-f]{64}$/i',
+				'notnull' => true,
+				'fixed' => true
 			)
 		);		
-		
-		$this->hasColumn("comment", "string", 1000);
-		
-		$this->hasColumn("email", "string", 255, array(
+		$this->hasColumn('admin', 'boolean', null, array(
+				'default' => false,
+				'notnull' => true
+			)
+		);
+		$this->hasColumn('comment', 'clob');
+		$this->hasColumn('email', 'string', 320, array(
 				'email' => array('check_mx' => false),
 			)
 		);
-
-		$this->hasColumn("cell", "string", 32, array(
-				"regexp" => "/^[0-9]*$/"
+		$this->hasColumn('sms', 'string', 24, array(
+				'regexp' => '/^[0-9.-+()]*$/'
 			)
 		);
-		
-		$this->hasColumn("auth", "integer", 10);
-		
-		$this->setAttribute(Doctrine::ATTR_VALIDATE, true);
+		$this->hasColumn('role', 'integer', null, array(
+				'notnull' => true,
+				'unsigned' => true
+			)
+		);
+		$this->hasColumn('created', 'timestamp', null, array(
+				'notnull' => true
+			)
+		);
+		$this->hasColumn('lastip', 'string', 15);
+		$this->hasColumn('lastlogin', 'timestamp', null, array(
+				'notnull' => true
+			)
+		);
+		$this->hasColumn('lastaction', 'integer');
+		$this->hasColumn('theme', 'string');
 	}
 	
 	public function setUp()
 	{
-		$this->hasMany("Project as ProjectsLeading", array(
-				"local" => "id",
-				"foreign" => "leader"
+		$this->hasOne('Role as Role', array(
+				'local' => 'role',
+				'foreign' => 'id',
+		);
+		$this->hasOne('Log as LastAction', array(
+				'local' => 'lastaction',
+				'foreign' => 'id'
+		);
+		$this->hasMany('Project as Projects', array(
+				'local' => 'id',
+				'foreign' => 'leader'
 			)
 		);
-		$this->hasMany("Permissions as Permissions", array(
-				"local" => "id",
-				"foreign" => "staff"
+		$this->hasMany('Permissions as Permissions', array(
+				'local' => 'id',
+				'foreign' => 'staff'
 			)
 		);
-		$this->hasMany("Task as Tasks", array(
-				"local" => "id",
-				"foreign" => "staff"
+		$this->hasMany('Task as Tasks', array(
+				'local' => 'id',
+				'foreign' => 'staff'
 			)
 		);
 	}
@@ -92,9 +111,9 @@ class Staff extends Doctrine_Record
 	 */
 	public function setPassword($password)
 	{
-		// we can't use $this["id"] as a salt because it's not set yet when we're creating a new user.
+		// we can't use $this['id'] as a salt because it's not set yet when we're creating a new user.
 		// find a workaround?
-		//$this->_set("password", hash("sha256", $this["id"] . $this["nickname"] . $password));
-		$this->_set("password", hash("sha256", $this["nickname"] . $password));
+		//$this->_set('password', hash('sha256', $this['id'] . $this['nickname'] . $password));
+		$this->_set('password', hash('sha256', $this['nickname'] . $password));
 	}
 }

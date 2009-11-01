@@ -95,7 +95,7 @@ class ProjectsController extends Controller
 					// fill in the autolookup stuff...
 					// first we need to find the anime.
 					$search = AnimeData::search($_POST['name']);
-					if($search)
+					if ($search)
 					{
 						if (!isset($_POST['tid'])) $tidkey = 0;
 						else foreach ($search AS $key => $entry) if ($entry[0] == $_POST['tid']) $tidkey = $key;
@@ -103,13 +103,17 @@ class ProjectsController extends Controller
 						$this->vars['tid'] = $search[$tidkey][0];
 						$this->vars['search'] = $search;
 					
-						$_POST['description'] = AnimeData::description($search[$tidkey][0]);
+						$description = AnimeData::description($search[$tidkey][0]);
+						if ($description)
+							$_POST['description'] = $description;
+						else
+							Utils::warning("Could not find description.");
 						$epcount = AnimeData::epcount($search[$tidkey][0]);
 						$_POST['epsaired'] = $epcount['aired'];
 						$_POST['epstotal'] = $epcount['total'];
 						$_POST['airtime'] = $epcount['airtime'];
 					} else {
-						Utils::warning("Cannot autofind anime.");
+						Utils::warning("Could not find anime.");
 					}
 				}
 				$this->vars['confirm'] = $_POST; // LOL LAZY
@@ -128,6 +132,13 @@ class ProjectsController extends Controller
 				$project->leader = $_POST['leader'];
 			$project->save();
 
+
+			if (isset($_POST['tid']))
+			{
+				require_once(dirname(__FILE__) . "/../plugins/animedata.php");
+				$times = AnimeData::times($_POST['tid']);
+			}
+			
 			// if the user has chosen to automatically add episodes, do so now
 			if ($_POST['autoeps'] == "aired")
 				for ($i = 1; $i <= $_POST['epsaired']; $i++)
@@ -135,6 +146,8 @@ class ProjectsController extends Controller
 					$episode = new Episode();
 					$episode->project = $project->id;
 					$episode->episode = $i;
+					if (isset($times))
+						$episode->airdate = $times[$i][0]['airdate'];
 					$episode->save();
 				}
 			else if ($_POST['autoeps'] == "total")
@@ -143,6 +156,8 @@ class ProjectsController extends Controller
 					$episode = new Episode();
 					$episode->project = $project->id;
 					$episode->episode = $i;
+					if (isset($times))
+						$episode->airdate = $times[$i][0]['airdate'];
 					$episode->save();
 				}
 

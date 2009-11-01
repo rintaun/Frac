@@ -12,6 +12,9 @@
 		<input type="hidden" name="autoupdate" value="<?php $this->eprint($this->confirm['autoupdate']); ?>" />
 		<input type="hidden" name="leader" value="<?php $this->eprint($this->confirm['leader']); ?>" />
 		<input type="hidden" name="template" value="<?php $this->eprint($this->confirm['template']); ?>" />
+		<?php if (count($this->search) == 1): ?>
+		<input type="hidden" name="tid" value="<?php $this->eprint($this->tid); ?>" />
+		<?php endif; ?>
 		<table class="confirm">
 			<tr>
 				<td>Project Name:</td>
