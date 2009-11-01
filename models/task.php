@@ -35,6 +35,8 @@ class Task extends Doctrine_Record
 		);
 		$this->hasColumn("active", "boolean");
 		$this->hasColumn("finished", "boolean");
+
+                $this->setAttribute(Doctrine::ATTR_VALIDATE, true);
 	}
 	public function setUp()
 	{
@@ -54,17 +56,50 @@ class Task extends Doctrine_Record
 			)
 		);
 
-		$this->hasMany("Task as PrevTask", array(
+		$this->hasMany("Task as Parents", array(
 				"local" => "id",
 				"foreign" => "nexttask",
 				"RefClass" => "TaskTree"
 			)
 		);
-		$this->hasMany("Task as NextTask", array(
+		$this->hasMany("Task as Children", array(
 				"local" => "id",
 				"foreign" => "task",
 				"RefClass" => "TaskTree"
 			)
 		);
+	}
+	public function setActive($boolean)
+	{
+		// if it's false, just set it and be done.
+		if ($boolean == false)
+		{
+			$this->_set("active", false);
+			return;
+		}
+		// if it's true, then notify people.
+
+		// notifyPeople();
+	}
+
+	// this can probably be more efficient...
+	public function setFinished($boolean)
+	{
+		// if it's false, just set it and be done.
+		if ($boolean == false)
+		{
+			$this->_set("finished", false);
+			return;
+		}
+		// if it's true, then check and activate children.
+		foreach ($this->Children as $node)
+		{
+			$child = $node->nexttask;
+			foreach ($child->Parents AS $pnode)
+			{
+				if ($pnode->task->finished == false) continue 2;
+			}
+			$child->active = true;
+		}
 	}
 }
