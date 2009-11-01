@@ -102,9 +102,11 @@ final class PermissionHandler extends Singleton
 		if ((!is_numeric($id)) && (!is_int($id))) return null;
 
 		$q = Doctrine_Query::create()
-			->select('s.auth, p.project, p.auth')
+			->select('s.role, r.auth, p.project, p.role, r2.auth')
 			->from('Staff s')
 			->leftJoin('s.Permissions p')
+			->leftJoin('s.Role r')
+			->leftJoin('p.Role r2')
 			->where('s.id = ?', $id);
 
 		$p = $q->fetchArray();
@@ -113,11 +115,11 @@ final class PermissionHandler extends Singleton
 		if ((!is_array($p[0])) || (empty($p[0]))) return null;
 		
 		$this->id = $id;
-		$this->global = $p[0]['auth'];
+		$this->global = $p[0]['Role']['auth'];
 		foreach ($p[0]['Permissions'] as $row)
 		{
 			// staff id / project id combinations are uniqe, so each of these should only get set once.
-			$this->local[$row['project']] = $row['auth'];
+			$this->local[$row['project']] = $row['Role']['auth'];
 		}
 	}
 
