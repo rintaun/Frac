@@ -85,7 +85,7 @@ body {
 }
 #flashmsgs
 {
-	width: 100%;
+	width: 98%;
 	color: #2e3436;
 	font-weight: bold;
 	background-color: #8ae234;
@@ -97,7 +97,7 @@ body {
 
 #flashmsgw
 {
-	width: 100%;
+	width: 98%;
 	color: #2e3436;
 	font-weight: bold;
 	background-color: #fce94f;
@@ -109,7 +109,7 @@ body {
 
 #flashmsge
 {
-	width: 100%;
+	width: 98%;
 	color: #eeeeec;
 	font-weight: bold;
 	background-color: #ef2929;
