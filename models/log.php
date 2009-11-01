@@ -30,8 +30,9 @@ class Log extends Doctrine_Record
 	public function setUp()
 	{
 		$this->hasOne('Staff as Staff', array(
-			'local' => 'id',
-			'foreign' => 'lastaction'
+				'local' => 'id',
+				'foreign' => 'lastaction'
+			)
 		);
 	}
 }

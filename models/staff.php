@@ -81,11 +81,13 @@ class Staff extends Doctrine_Record
 	{
 		$this->hasOne('Role as Role', array(
 				'local' => 'role',
-				'foreign' => 'id',
+				'foreign' => 'id'
+			)
 		);
 		$this->hasOne('Log as LastAction', array(
 				'local' => 'lastaction',
 				'foreign' => 'id'
+			)
 		);
 		$this->hasMany('Project as Projects', array(
 				'local' => 'id',

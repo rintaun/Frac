@@ -35,7 +35,7 @@ class Episode extends Doctrine_Record
 			)
 		);
 
-		$this->unique('project', 'episode')
+		$this->unique('project', 'episode');
 	}
 
 	public function setUp()
