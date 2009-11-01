@@ -10,9 +10,9 @@ class Log extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
-		$this->setTableName('log');
+		$this->setTableName('logs');
 
-		$this->hasColumn('id', 'integer', 10, array(
+		$this->hasColumn('id', 'integer', null, array(
 				'primary' => true,
 				'unsigned' => true
 			)

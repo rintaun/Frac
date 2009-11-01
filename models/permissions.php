@@ -35,7 +35,8 @@ class Permissions extends Doctrine_Record
 			)
 		);
 		$this->hasColumn('role','integer', null, array(
-				'notnull' => true,
+				'unsigned' => true,
+				'notnull' => true
 			)
 		);
 	}

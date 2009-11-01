@@ -73,7 +73,10 @@ class Staff extends Doctrine_Record
 				'notnull' => true
 			)
 		);
-		$this->hasColumn('lastaction', 'integer');
+		$this->hasColumn('lastaction', 'integer', null, array(
+				'unsigned' => true
+			)
+		);
 		$this->hasColumn('theme', 'string');
 	}
 	

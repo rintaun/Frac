@@ -95,11 +95,11 @@ EOS;
 		$pdoDrivers[$driver] = $driver;
 	ksort($pdoDrivers);
 	_printDropDown('sqlDriver', 'Database Driver:', 'The driver to use when connecting to the database.', $pdoDrivers);
-	
+/* // NO SITE OPTIONS ANYMORE 
 	echo '<h3>Site Options</h3>';
 	_printYesNo('siteGzip', 'Use GZIP Compression:', 'Choosing "yes" here enables the option to use GZIP compression, decreasing bandwidth but increasing CPU usage. This is only used if the browser supports it.');
 	_printYesNo('siteGentime', 'Display Generation Time:', 'Choosing "yes" here will display generation time statistics as an HTML comment.');
-	
+*/
 	echo <<<EOS
 		<br />
 		<input type="submit" name="button" value="Generate Config" />
@@ -126,8 +126,8 @@ function doWriteConfig()
 							'sqlPrefix'		=>	'frac_',
 							'sqlDriver'		=>	null,
 							
-							'siteGzip'		=>	true,
-							'siteGentime'	=>	true,
+//							'siteGzip'		=>	true,
+//							'siteGentime'	=>	true,
 						);
 
 	foreach($configTmpl as $key => &$value)
@@ -143,9 +143,9 @@ function doWriteConfig()
 	$configArray = array(	'database'	=> array(	'dsn'		=> "{$configTmpl['sqlDriver']}://{$configTmpl['sqlUser']}:{$configTmpl['sqlPass']}@{$configTmpl['sqlHost']}/{$configTmpl['sqlDb']}",
 													'prefix'	=> $configTmpl['sqlPrefix']
 												),
-							'site'		=> array(	'gzip'		=> $configTmpl['siteGzip'],
-													'gentime'	=> $configTmpl['siteGentime']
-												)
+//							'site'		=> array(	'gzip'		=> $configTmpl['siteGzip'],
+//													'gentime'	=> $configTmpl['siteGentime']
+//												)
 						);
 		
 	
@@ -231,6 +231,85 @@ function doPopulateDatabase()
 	Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_TBLNAME_FORMAT, $config["database"]["prefix"] . "%s");
 	Doctrine::createTablesFromModels(dirname(__FILE__) . "/models");
 
+	// roles
+	$role_admin = new Role();
+	$role_admin->name = "Admin";
+	$role_admin->auth = 0xFFFFFFFF;
+	$role_admin->save();
+
+	$role_staff = new Role();
+	$role_staff->name = "Staff";
+	$role_staff->auth = 0x0;
+	$role_staff->save();
+
+	$role_guest = new Role();
+	$role_guest->name = "Guest";
+	$role_guest->auth = 0x0;
+	$role_guest->save();
+
+	// staff
+	$staff = new Staff();
+	$staff->nickname = "admin";
+	$staff->password = "admin";
+	$staff->Role = $role_admin;
+	$staff->admin = true;
+	$staff->comment = "Administrator";
+	$staff->save();
+
+	// task types
+	$tasktypes = array(
+		'Raw Cap',
+		'Translate',
+		'Time',
+		'Translation Check',
+		'Typeset',
+		'Edit',
+		'Encode',
+		'Quality Check',
+		'Karaoke',
+		'Miscellaneous',
+		'Translate Signs',
+		'Release',
+	);
+	foreach ($tasktypes AS $key => $name)
+	{
+		$tasktype = new TaskType();
+		$tasktype->name = $name;
+		$tasktype->save();
+		$tasktypes[$key] = $tasktype;
+	}
+
+	// template
+	$template = new Template();
+	$template->name = "Default";
+	$template->model =
+		$tasktypes[0]->id . "0->" . $tasktypes[1]->id . "0; " . 
+		$tasktypes[0]->id . "0->" . $tasktypes[10]->id . "0; " . 
+		$tasktypes[10]->id . "0->" . $tasktypes[4]->id . "0; " . 
+		$tasktypes[4]->id . "0->" .  $tasktypes[3]->id . "0; " . 
+		$tasktypes[1]->id . "0->" . $tasktypes[2]->id . "0; " . 
+		$tasktypes[1]->id . "0->" . $tasktypes[3]->id . "0; " . 
+		$tasktypes[3]->id . "0->" . $tasktypes[5]->id . "0; " . 
+		$tasktypes[5]->id . "0->" . $tasktypes[6]->id . "0; " . 
+		$tasktypes[6]->id . "0->" . $tasktypes[7]->id . "0; " . 
+		$tasktypes[7]->id . "0->" . $tasktypes[11]->id . "0; " . 
+		$tasktypes[2]->id . "0->" . $tasktypes[5]->id . "0; ";
+	$template->save();
+
+	// settings
+	$settings = array(
+		'gzip' => true,
+		'gentime' => true
+	);
+	foreach ($settings AS $name => $value)
+	{
+		$setting = new Setting();
+		$setting->name = $name;
+		$setting->value = $value;
+		$setting->save();
+		unset($setting);
+	}
+
 	echo <<<EOS
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
@@ -241,7 +320,7 @@ function doPopulateDatabase()
 </head>
 <body>
 	<h2>Frac Installer</h2>
-	<p>Table data populated successfully. You may now proceed to your <a href="./">Frac installation</a></p>
+	<p>Table data populated successfully. You may now proceed to your <a href="./">Frac installation</a>. The username and password are "admin".</p>
 </body>
 </html>
 EOS;

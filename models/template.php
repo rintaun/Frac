@@ -18,6 +18,10 @@ class Template extends Doctrine_Record
 				'primary' => true
 			)
 		);
+		$this->hasColumn('name', 'string', 32, array(
+				'notnull' => true
+			)
+		);
 		$this->hasColumn('model', 'clob', null, array(
 				'notnull' => true
 			)
