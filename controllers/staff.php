@@ -139,8 +139,8 @@ EOS;
 			$user->password = $_POST['password'];
 			$user->comment = trim($_POST['comment']);
 			$user->email = trim($_POST['email']);
-			$user->cell = trim($_POST['mobile']);
-			$user->auth = $perm;
+			$user->sms = trim($_POST['mobile']);
+			$user->role = 1;
 
 			if(!$user->isValid())
 			{
