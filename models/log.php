@@ -10,17 +10,28 @@ class Log extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
-		$this->setTableName('logs');
+		$this->setTableName('log');
+
 		$this->hasColumn('id', 'integer', 10, array(
 				'primary' => true,
 				'unsigned' => true
 			)
 		);
-		$this->hasColumn('time', 'timestamp');
-		$this->hasColumn('message', 'string', 10000);
+		$this->hasColumn('time', 'timestamp', null, array(
+				'notnull' => true
+			)
+		);
+		$this->hasColumn('message', 'clob', null, array(
+				'notnull' => true
+			)
+		);
 	}
 
 	public function setUp()
 	{
+		$this->hasOne('Staff as Staff', array(
+			'local' => 'id',
+			'foreign' => 'lastaction'
+		);
 	}
 }

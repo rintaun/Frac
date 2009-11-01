@@ -11,6 +11,15 @@ define("FRAC_VERSION", "0.1-alpha");
 define("IN_FRAC_", true);
 define("IN_FWORK_", true);
 
+// Verify PHP version.
+if(!defined('PHP_VERSION_ID'))
+{
+    $version = explode('.',PHP_VERSION);
+    define('PHP_VERSION_ID', ($version[0] * 10000 + $version[1] * 100 + $version[2]));
+}
+if(PHP_VERSION_ID < 50000)
+	die('Frac requires PHP 5.');
+
 // Perform some extension sanity checks.
 // Though if you don't have these, your PHP install is messed up.
 if(!function_exists('spl_autoload_register'))

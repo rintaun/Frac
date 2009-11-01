@@ -10,14 +10,30 @@ class Template extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
-	    $this->setTableName("templates");
-		
-		$this->hasColumn("id", "integer", 10, array(
-				"notnull" => true,
-				"unsigned" => true,
-				"primary" => true
+		$this->setTableName('templates');
+
+		$this->hasColumn('id', 'integer', null, array(
+				'notnull' => true,
+				'unsigned' => true,
+				'primary' => true
 			)
 		);
-		$this->hasColumn("model", "string", 10240);
+		$this->hasColumn('model', 'clob', null, array(
+				'notnull' => true
+			)
+		);
+		$this->hasColumn('created', 'timestamp', null, array(
+				'notnull' => true
+			)
+		);
+	}
+
+	public function setUp()
+	{
+		$this->hasMany('Project as Projects', array(
+				'local' => 'id',
+				'foreign' => 'template'
+			)
+		);
 	}
 }

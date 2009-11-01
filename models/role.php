@@ -6,11 +6,11 @@
  * See COPYING for license conditions.
  */
 
-class TaskType extends Doctrine_Record
+class Role extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
-		$this->setTableName('tasktypes');
+		$this->setTableName('roles');
 
 		$this->hasColumn('id', 'integer', null, array(
 				'unsigned' => true,
@@ -22,6 +22,10 @@ class TaskType extends Doctrine_Record
 				'notnull' => true
 			)
 		);
+		$this->hasColumn('auth', 'integer', null, array(
+				'notnull' => true
+			)
+		);
 		$this->hasColumn('created', 'timestamp', null, array(
 				'notnull' => true
 			)
@@ -30,9 +34,14 @@ class TaskType extends Doctrine_Record
 
 	public function setUp()
 	{
-		$this->hasMany('Task as Tasks', array(
+		$this->hasMany('Staff as Staff', array(
 				'local' => 'id',
-				'foreign' => 'tasktype'
+				'foreign' => 'role'
+			)
+		);
+		$this->hasMany('Permissions as Permissions', array(
+				'local' => 'id',
+				'foreign' => 'role'
 			)
 		);
 	}

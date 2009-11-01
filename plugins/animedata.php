@@ -179,7 +179,10 @@ class AnimeData
 				'airtime' => $node->getElementsByTagName('StTime')->item(0)->nodeValue
 			);			
 		}
-		return $times;
+		if (!empty($times))
+			return $times;
+		else
+			return false;
 	}
 }
 

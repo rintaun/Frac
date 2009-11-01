@@ -6,7 +6,7 @@
  * See COPYING for license conditions.
  */
 
-if(!defined("IN_FRAC_")) die("This file cannot be invoked directly.");
+if(!defined('IN_FRAC_')) die('This file cannot be invoked directly.');
 
 /**
  * Model for project-level permissions.
@@ -22,32 +22,39 @@ class Permissions extends Doctrine_Record
 	 */
 	public function setTableDefinition()
 	{
-		$this->setTableName("permissions");
+		$this->setTableName('permissions');
 		
-		$this->hasColumn("project", "integer", 10, array(
-				"notnull" => true,
-				"unsigned" => true
+		$this->hasColumn('project', 'integer', null, array(
+				'unsigned' => true,
+				'primary' => true
 			)
 		);
-		$this->hasColumn("staff", "integer", 10, array(
-				"notnull" => true,
-				"unsigned" => true
+		$this->hasColumn('staff', 'integer', null, array(
+				'unsigned' => true,
+				'primary' => true
 			)
 		);
-		$this->hasColumn("auth","integer");
-		$this->unique("project", "staff");
+		$this->hasColumn('role','integer', null, array(
+				'notnull' => true,
+			)
+		);
 	}
 
 	public function setUp()
 	{
-		$this->hasOne("Project as Project", array(
-				"local" => "project",
-				"foreign" => "id"
+		$this->hasOne('Project as Project', array(
+				'local' => 'project',
+				'foreign' => 'id'
 			)
 		);
-		$this->hasOne("Staff as Staff", array(
-				"local" => "staff",
-				"foreign" => "id"
+		$this->hasOne('Staff as Staff', array(
+				'local' => 'staff',
+				'foreign' => 'id'
+			)
+		);
+		$this->hasOne('Role as Role', array(
+				'local' => 'role',
+				'foreign' => 'id'
 			)
 		);
 	}
