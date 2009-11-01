@@ -12,10 +12,5 @@ $config = array(
 	"database" => array(
 		"dsn"       =>  "mysql://frac@localhost/frac", // DSN, in the format (driver)://(username):(password)@(hostname):(port)/(database)
 		"prefix"	=>  "frac_" // database prefix, i.e. frac_
-	),
-	
-	"site" => array(
-		"gzip"		=>	true, // enable gzip compression
-		"gentime"	=>	true // enable generation time shown as a comment at the end of the page
 	)
 );

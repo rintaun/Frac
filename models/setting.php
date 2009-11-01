@@ -1,6 +1,6 @@
 <?php
 
-class Settings extends Doctrine_Record
+class Setting extends Doctrine_Record
 {
 	public function setTableDefinition()
 	{
