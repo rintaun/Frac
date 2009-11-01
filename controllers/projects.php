@@ -130,6 +130,7 @@ class ProjectsController extends Controller
 			$project->episodes = $_POST['epstotal'];
 			if ($_POST['leader'] != "none")
 				$project->leader = $_POST['leader'];
+			$project->created = date("Y-m-d H:i:s");
 			$project->save();
 
 
@@ -140,26 +141,21 @@ class ProjectsController extends Controller
 			}
 			
 			// if the user has chosen to automatically add episodes, do so now
-			if ($_POST['autoeps'] == "aired")
-				for ($i = 1; $i <= $_POST['epsaired']; $i++)
-				{
-					$episode = new Episode();
-					$episode->project = $project->id;
-					$episode->episode = $i;
-					if (isset($times))
-						$episode->airdate = $times[$i][0]['airdate'];
-					$episode->save();
-				}
-			else if ($_POST['autoeps'] == "total")
-				for ($i = 1; $i <= $_POST['epstotal']; $i++)
-				{
-					$episode = new Episode();
-					$episode->project = $project->id;
-					$episode->episode = $i;
-					if (isset($times))
-						$episode->airdate = $times[$i][0]['airdate'];
-					$episode->save();
-				}
+			
+			if ($_POST['autoeps'] == "aired") $total = $_POST['epsaired'];
+			else if ($_POST['autoeps'] == "total") $total = $_POST['epstotal'];
+			else $total = 0;
+
+			for ($i = 1; $i <= $total; $i++)
+			{
+				$episode = new Episode();
+				$episode->project = $project->id;
+				$episode->episode = $i;
+				if (isset($times))
+					$episode->airdate = $times[$i][0]['airdate'];
+				$episode->created = date("Y-m-d H:i:s");
+				$episode->save();
+			}
 
 			// and finally, send them to the project page.
 			Utils::redirect("projects/display/" . $project->id);

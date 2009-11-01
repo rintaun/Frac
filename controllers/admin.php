@@ -38,6 +38,7 @@ class AdminController extends Controller
 					{
 						$tasktype = new TaskType();
 						$tasktype->name = $_POST["tasktype"];
+						$tasktype->created = date("Y-m-d H:i:s");
 						$tasktype->save();
 					} else {
 						Utils::error("No task type entered to create.");

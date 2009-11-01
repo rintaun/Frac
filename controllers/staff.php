@@ -141,6 +141,7 @@ EOS;
 			$user->email = trim($_POST['email']);
 			$user->sms = trim($_POST['mobile']);
 			$user->role = 1;
+			$user->created = date("Y-m-d H:i:s");
 
 			if(!$user->isValid())
 			{
