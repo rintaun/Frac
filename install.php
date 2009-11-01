@@ -231,20 +231,24 @@ function doPopulateDatabase()
 	Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_TBLNAME_FORMAT, $config["database"]["prefix"] . "%s");
 	Doctrine::createTablesFromModels(dirname(__FILE__) . "/models");
 
+	$time = date("Y-m-d H:i:s");
 	// roles
 	$role_admin = new Role();
 	$role_admin->name = "Admin";
 	$role_admin->auth = 0xFFFFFFFF;
+	$role_admin->created = $time;
 	$role_admin->save();
 
 	$role_staff = new Role();
 	$role_staff->name = "Staff";
-	$role_staff->auth = 0x0;
+	$role_staff->auth = 0x0007C700;
+	$role_staff->created = $time;
 	$role_staff->save();
 
 	$role_guest = new Role();
 	$role_guest->name = "Guest";
-	$role_guest->auth = 0x0;
+	$role_guest->auth = 0x00000000;
+	$role_guest->created = $time;
 	$role_guest->save();
 
 	// staff
@@ -254,6 +258,7 @@ function doPopulateDatabase()
 	$staff->Role = $role_admin;
 	$staff->admin = true;
 	$staff->comment = "Administrator";
+	$staff->created = $time;
 	$staff->save();
 
 	// task types
@@ -275,6 +280,7 @@ function doPopulateDatabase()
 	{
 		$tasktype = new TaskType();
 		$tasktype->name = $name;
+		$tasktype->created = $time;
 		$tasktype->save();
 		$tasktypes[$key] = $tasktype;
 	}
@@ -294,6 +300,7 @@ function doPopulateDatabase()
 		$tasktypes[6]->id . "0->" . $tasktypes[7]->id . "0; " . 
 		$tasktypes[7]->id . "0->" . $tasktypes[11]->id . "0; " . 
 		$tasktypes[2]->id . "0->" . $tasktypes[5]->id . "0; ";
+	$template->created = $time;
 	$template->save();
 
 	// settings
