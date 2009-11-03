@@ -4,6 +4,7 @@
 </span><br />
 
 <div class="boxcontainer">
+<?php if (count($this->projects) >= 1): ?>
 <?php foreach ($this->projects as $id => $project): ?>
 <div id="project_<?php echo $this->eprint($id); ?>" class="project">
 	<strong>
@@ -19,6 +20,9 @@
 	<?php endif; ?>
 </div>
 <?php endforeach; ?>
+<?php else: ?>
+<p><strong>You are not tracking any projects.</strong></p>
+<?php endif; ?>
 </div>
 <div class="clear"></div>
 <span class="right small bold"><a href="<?php $this->eprint($this->frac->createuri('projects/create')); ?>">Create Project</a></span>

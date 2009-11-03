@@ -49,7 +49,7 @@
 			</tr>
 			<tr>
 				<td>Ep. Template:</td>
-				<td><?php // implement this LOL ?>none</td>
+				<td><?php $this->eprint(($this->confirm['template'] != "non") ? $this->frac->idtotemplate($this->confirm['template']) : "none"); ?></td>
 			</tr>
 			<tr>
 				<td><input type="submit" name="confirm" value="Create" /></td>

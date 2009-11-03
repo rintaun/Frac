@@ -32,11 +32,11 @@
 			</tr>
 			<tr>
 				<td>Leader:</td>
-				<td><select name="leader"><option value="none">-- None --</option></select></td>
+				<td><select name="leader"><option value="none">-- None --</option><?php echo $this->frac->options($this->users); ?></select></td>
 			</tr>
 			<tr>
 				<td>Ep. Template:</td>
-				<td><select name="template"><option value="none">-- None --</option></select></td>
+				<td><select name="template"><option value="none">-- None --</option><?php echo $this->frac->options($this->templates); ?></select></td>
 			</tr>
 			<tr>
 				<td><input type="submit" value="Create" /></td>

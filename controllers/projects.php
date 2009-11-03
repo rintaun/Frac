@@ -17,6 +17,7 @@ class ProjectsController extends Controller
 			->leftJoin('p.Episodes e');
 		$projects = $q->execute();
 
+		$result = array();
 		for ($i = 0; $i < count($projects); $i++)
 		{
 			$project = $projects->get($i);
@@ -89,6 +90,7 @@ class ProjectsController extends Controller
 			{
 				// implement automatic lookup
 				// if the user wants automatic lookup, do it.
+				if (isset($_POST['autolookup']))
 				if ($_POST['autolookup'] == "on")
 				{
 					require_once(dirname(__FILE__) . "/../plugins/animedata.php");
@@ -130,6 +132,10 @@ class ProjectsController extends Controller
 			$project->episodes = $_POST['epstotal'];
 			if ($_POST['leader'] != "none")
 				$project->leader = $_POST['leader'];
+			if ($_POST['template'] != "none")
+				$project->template = $_POST['template'];
+			if (isset($_POST['tid']))
+				$project->syoboi_id = $_POST['tid'];
 			$project->created = date("Y-m-d H:i:s");
 			$project->save();
 
@@ -164,6 +170,22 @@ class ProjectsController extends Controller
 		}
 
 		// otherwise, i don't think we actually need to do anything... right?
+		// YEAH WE DO RETARD. ITS CALLED GIVE TEMPLATE SHIT.
+		$q = Doctrine_Query::create()
+			->select('s.id,s.nickname')
+			->from('Staff s');
+		$users = $q->fetchArray();
+		// make this easier to use.
+		foreach ($users as $row)
+			$this->vars['users'][] = array($row['id'], $row['nickname']);
+
+		$q = Doctrine_Query::create()
+			->select('t.id, t.name')
+			->from('Template t');
+		$templates = $q->fetchArray();
+		// make this easier to use.
+		foreach ($templates as $row)
+			$this->vars['templates'][] = array($row['id'], $row['name']);
 	}
 
 	public function delete($args) // delete a project

@@ -52,6 +52,17 @@ final class Utils
 	}
 	
 	/**
+	 * Get a template name from a template ID.
+	 * 
+	 * @param $id template ID.
+	 * @return The template name.
+	 */
+	public static function idtotemplate($id)
+	{
+		return Doctrine::getTable("Template")->find($id)->name;
+	}
+	
+	/**
 	 * Creates an absolute URI.
 	 *
 	 * @param $path Path, usually controller/action/arguments, or even an array.

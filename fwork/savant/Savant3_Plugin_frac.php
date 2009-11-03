@@ -24,6 +24,17 @@ class Savant3_Plugin_frac extends Savant3_Plugin
 	}
 	
 	/**
+	 * Call Utils::idtotemplate($id).
+	 *
+	 * @param $id Template ID.
+	 * @return The template name.
+	 */
+	public function idtotemplate($id)
+	{
+		return Utils::idtotemplate($id);
+	}
+	
+	/**
 	 * Call Utils::createuri($path).
 	 *
 	 * @param $path Path, usually controller/action/arguments, or even an array.
