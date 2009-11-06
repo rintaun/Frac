@@ -68,14 +68,14 @@ class Task extends Doctrine_Record
 		);
 		$this->hasMany('Task as Parents', array(
 				'local' => 'id',
-				'foreign' => 'nexttask',
-				'RefClass' => 'TaskTree'
+				'foreign' => 'child',
+				'refClass' => 'TaskTree'
 			)
 		);
 		$this->hasMany('Task as Children', array(
 				'local' => 'id',
-				'foreign' => 'task',
-				'RefClass' => 'TaskTree'
+				'foreign' => 'parent',
+				'refClass' => 'TaskTree'
 			)
 		);
 	}
@@ -87,8 +87,8 @@ class Task extends Doctrine_Record
 			$this->_set('active', false);
 			return;
 		}
-		// if it's true, then notify people.
-
+		// if it's true, then SET IT ACTIVE and notify people.
+		$this->_set('active', true);
 		// notifyPeople();
 	}
 

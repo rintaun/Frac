@@ -51,17 +51,19 @@ class ProjectsController extends Controller
 		{
 			$active = 0;
 			$finished = 0;
+			$standby = 0;
 			foreach ($cur_ep->Tasks AS $cur_task)
 			{
 				if ($cur_task->active == true) $active++;
 				else if ($cur_task->finished == true) $finished++;
+				else $standby++;
 			}
 			$this->vars['episodes'][] = array(
 				'episode' => $cur_ep->episode,
 				'airdate' => $cur_ep->airdate,
 				'active' => $active,
 				'finished' => $finished,
-				'open' => count($cur_ep->Tasks) - $finished
+				'standby' => $standby
 			);
 		}
 	}
@@ -133,7 +135,10 @@ class ProjectsController extends Controller
 			if ($_POST['leader'] != "none")
 				$project->leader = $_POST['leader'];
 			if ($_POST['template'] != "none")
+			{
 				$project->template = $_POST['template'];
+				$template = Doctrine::getTable('Template')->find(0);
+			}
 			if (isset($_POST['tid']))
 				$project->syoboi_id = $_POST['tid'];
 			$project->created = date("Y-m-d H:i:s");
@@ -158,9 +163,11 @@ class ProjectsController extends Controller
 				$episode->project = $project->id;
 				$episode->episode = $i;
 				if (isset($times))
-					$episode->airdate = $times[$i][0]['airdate'];
+					$episode->airdate = strtok($times[$i][0]['airtime'], " ");
 				$episode->created = date("Y-m-d H:i:s");
 				$episode->save();
+				if (isset($template))
+					$template->createTasks($episode->id);
 			}
 
 			// and finally, send them to the project page.

@@ -254,7 +254,7 @@ function doPopulateDatabase()
 	// staff
 	$staff = new Staff();
 	$staff->nickname = "admin";
-	$staff->password = "admin";
+	$staff->setPassword("admin");
 	$staff->Role = $role_admin;
 	$staff->admin = true;
 	$staff->comment = "Administrator";
@@ -289,17 +289,17 @@ function doPopulateDatabase()
 	$template = new Template();
 	$template->name = "Default";
 	$template->model =
-		$tasktypes[0]->id . "0->" . $tasktypes[1]->id . "0; " . 
-		$tasktypes[0]->id . "0->" . $tasktypes[10]->id . "0; " . 
-		$tasktypes[10]->id . "0->" . $tasktypes[4]->id . "0; " . 
-		$tasktypes[4]->id . "0->" .  $tasktypes[3]->id . "0; " . 
-		$tasktypes[1]->id . "0->" . $tasktypes[2]->id . "0; " . 
-		$tasktypes[1]->id . "0->" . $tasktypes[3]->id . "0; " . 
-		$tasktypes[3]->id . "0->" . $tasktypes[5]->id . "0; " . 
-		$tasktypes[5]->id . "0->" . $tasktypes[6]->id . "0; " . 
-		$tasktypes[6]->id . "0->" . $tasktypes[7]->id . "0; " . 
-		$tasktypes[7]->id . "0->" . $tasktypes[11]->id . "0; " . 
-		$tasktypes[2]->id . "0->" . $tasktypes[5]->id . "0; ";
+		$tasktypes[0]->id . ":0->" . $tasktypes[1]->id . ":0; " . 
+		$tasktypes[0]->id . ":0->" . $tasktypes[10]->id . ":0; " . 
+		$tasktypes[10]->id . ":0->" . $tasktypes[4]->id . ":0; " . 
+		$tasktypes[4]->id . ":0->" .  $tasktypes[3]->id . ":0; " . 
+		$tasktypes[1]->id . ":0->" . $tasktypes[2]->id . ":0; " . 
+		$tasktypes[1]->id . ":0->" . $tasktypes[3]->id . ":0; " . 
+		$tasktypes[3]->id . ":0->" . $tasktypes[5]->id . ":0; " . 
+		$tasktypes[5]->id . ":0->" . $tasktypes[6]->id . ":0; " . 
+		$tasktypes[6]->id . ":0->" . $tasktypes[7]->id . ":0; " . 
+		$tasktypes[7]->id . ":0->" . $tasktypes[11]->id . ":0; " . 
+		$tasktypes[2]->id . ":0->" . $tasktypes[5]->id . ":0; ";
 	$template->created = $time;
 	$template->save();
 

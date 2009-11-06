@@ -12,6 +12,13 @@ $session = SesMan::getInstance();
 
 // we don't want to redirect them if they're already at login...
 // ... is there some better way of checking for this? O_o
+// hold on, hold on. are we actually logged in or is it wrong?
+if (isset($session['staffid']))
+{
+	$user = Doctrine::getTable('Staff')->find($session['staffid']);
+	if ($user == null)
+		unset($session['staffid']);
+}
 if ((!isset($session['staffid'])) && (($path[0] != "staff") || ($path[1] != "login")))
 {
 	// if they're not logged in, send them to login, PERIOD.
