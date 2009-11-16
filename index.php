@@ -34,7 +34,6 @@ if(!file_exists("config.php"))
 	die("Unable to find config.php; if you have not run the installer, please <a href=\"install.php\">do so now</a>.");
 require_once("config.php");
 
-$time = array_sum(explode(" ", microtime()));
 $fwork = new Fwork($config);
 $fwork->serve(!empty($_GET["q"]) ? explode("/", $_GET["q"]) : array("index"));
 unset($fwork);

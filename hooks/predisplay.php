@@ -10,9 +10,9 @@
 
 $session = SesMan::getInstance();
 
-if(isset($session['flash']) && $session['flash']['type'] == 'warning')
+if(isset($session['flash']) && in_array($session['flash']['type'], array('success', 'warning')))
 {
-	// Warnings need to be shown on the same page.
+	// Warnings or success messages
 	$this->savant->flashmsg = $session['flash'];
 	unset($session['flash']);
 }

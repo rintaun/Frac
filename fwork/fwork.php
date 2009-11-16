@@ -36,6 +36,11 @@ final class Fwork
 	protected $savant;
 	
 	/**
+	 * Time when Frac started loading.
+	 */
+	protected $starttime;
+	
+	/**
 	 * Constructor for Fwork.
 	 * Prepares everything.
 	 *
@@ -43,6 +48,9 @@ final class Fwork
 	 */
 	public function __construct($config)
 	{
+		// when did the page start loading?
+		$this->starttime = array_sum(explode(" ", microtime()));
+		
 		// execute the hook if there is one
 		if(file_exists(dirname(__FILE__) . "/../hooks/preconstruct.php")) require_once(dirname(__FILE__) . "/../hooks/preconstruct.php");
 		
@@ -218,12 +226,13 @@ final class Fwork
 		// Get our settings
 		$settings = SettingsMan::getInstance();
 		
-		if(isset($settings["site.gentime"]) && $settings["site.gentime"])
-			printf("<!-- generated in %.2f seconds -->", array_sum(explode(" ", microtime())) - $time);
-			
-		ob_end_flush();
-		
 		// execute the hook if there is one
 		if(file_exists(dirname(__FILE__) . "/../hooks/postdestruct.php")) require_once(dirname(__FILE__) . "/../hooks/postdestruct.php");
+		
+		// when did the page stop loading?
+		if(isset($settings["site.gentime"]) && $settings["site.gentime"])
+			printf("<!-- generated in %.2f seconds -->", array_sum(explode(" ", microtime())) - $this->starttime);
+		
+		ob_end_flush();
 	}
 }

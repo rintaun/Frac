@@ -101,13 +101,10 @@ final class Utils
 	 * Keikaku doori message.
 	 *
 	 * @param $message Message to display.
-	 * @param $view The view to redirect to, e.g. the one that the message will be displayed on. Defaults to the last page.
 	 */
 	public static function success($message, $view = null)
 	{
 		$session = SesMan::getInstance();
 		$session['flash'] = array('type' => 'success', 'message' => $message);
-		
-		self::redirect(view === null ? $session['lastpage'] : $view);
 	}
 }

@@ -47,28 +47,25 @@ class AdminController extends Controller
 					break;
 				
 				case("delete"):
-						if(isset($_POST["tasktypes"]) && !empty($_POST["tasktypes"]))
+					if(isset($_POST["tasktypes"]) && !empty($_POST["tasktypes"]))
+					{
+						$q = Doctrine_Query::create()->delete("TaskType");				
+						foreach($_POST["tasktypes"] as $task => $status)
 						{
-							if(isset($_POST["confirmed"]) && !empty($_POST["confirmed"]))
+							if($status == "on")
 							{
-								$q = Doctrine_Query::create()->delete("TaskType");				
-								foreach($_POST["tasktypes"] as $task => $status)
-								{
-									if($status == "on")
-									{
-										$q->orWhere("id = ?", $task);
-									}
-								}
-								$q->execute();
-							} else {
-								$this->vars["confirmdelete"] = true;
+								$q->orWhere("id = ?", $task);
 							}
-						} else {
-							Utils::error("No task types selected to delete.");
 						}
+						$q->execute();
+						Utils::success("Task types successfully deleted.");
+					} else {
+						Utils::error("No task types selected to delete.");
+					}
+					break;
 				
 				default:
-					// what is this i don't even
+					// THIS SHOULD NOT HAPPEN! D:
 					break;
 			}
 		}
@@ -81,11 +78,26 @@ class AdminController extends Controller
 		$this->vars["pagename"] = "Administration :: Settings";
 		
 		$p = PermissionHandler::getInstance();
-		// do we have an error thing?
+		
 		if (!$p->allowedto(PermissionHandler::PERM_EDIT_SETTINGS))
 		{
 			Utils::error("You don't have permission to edit settings.");
 			return;
 		}
+		
+		if(isset($_POST) && !empty($_POST))
+		{
+			foreach($_POST as $k => $v)
+			{
+				Doctrine_Query::create()
+					->update("Setting")
+					->set("value", "?", $v)
+					->where("name = ?", str_replace("_", ".", $k))
+					->execute();
+			}
+			Utils::success("Settings saved.");
+		}
+		
+		$this->vars["settings"] = Doctrine_Query::create()->from("Setting")->fetchArray();
 	}
 }
