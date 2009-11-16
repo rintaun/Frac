@@ -305,8 +305,8 @@ function doPopulateDatabase()
 
 	// settings
 	$settings = array(
-		'gzip' => true,
-		'gentime' => true
+		'site.gzip' => true,
+		'site.gentime' => true
 	);
 	foreach ($settings AS $name => $value)
 	{
