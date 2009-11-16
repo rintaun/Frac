@@ -10,4 +10,3 @@
 
 require_once(dirname(__FILE__) . "/../fwork/permissionhandler.php");
 require_once(dirname(__FILE__) . "/../fwork/sesman.php");
-require_once(dirname(__FILE__) . "/../fwork/settingsman.php");

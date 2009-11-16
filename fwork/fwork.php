@@ -13,6 +13,7 @@ require_once(dirname(__FILE__) . "/controller.php");
 require_once(dirname(__FILE__) . "/singleton.php");
 require_once(dirname(__FILE__) . "/lib/Doctrine/Doctrine.php");
 require_once(dirname(__FILE__) . "/lib/Savant3/Savant3.php");
+require_once(dirname(__FILE__) . "/settingsman.php");
 if(file_exists(dirname(__FILE__) . "/../hooks/includes.php")) require_once(dirname(__FILE__) . "/../hooks/includes.php");
 
 spl_autoload_register(array("Doctrine", "autoload"));
@@ -45,12 +46,22 @@ final class Fwork
 		// execute the hook if there is one
 		if(file_exists(dirname(__FILE__) . "/../hooks/preconstruct.php")) require_once(dirname(__FILE__) . "/../hooks/preconstruct.php");
 		
-		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE, true);
-		Doctrine_Manager::getInstance()->setAttribute(Doctrine::ATTR_TBLNAME_FORMAT, $config["database"]["prefix"] . "%s");
+		$dm = Doctrine_Manager::getInstance();
+		
+		$dm->setAttribute(Doctrine::ATTR_AUTO_ACCESSOR_OVERRIDE, true);
+		$dm->setAttribute(Doctrine::ATTR_TBLNAME_FORMAT, $config["database"]["prefix"] . "%s");
 		Doctrine::loadModels(dirname(__FILE__) . "/../models");
 	    
 		// we should now connect to the database
 		Doctrine_Manager::connection($config["database"]["dsn"]);
+		
+		// Get our settings
+		$settings = SettingsMan::getInstance();
+		
+		if (isset($settings["site.gzip"]) && $settings["site.gzip"] && substr_count($_SERVER["HTTP_ACCEPT_ENCODING"], "gzip"))
+			ob_start("ob_gzhandler");
+		else
+			ob_start();
 		
 		// Create an instance of Savant3
 		$this->savant = new Savant3();
@@ -72,7 +83,7 @@ final class Fwork
 		$this->savant->frac = $this->savant->plugin("frac");
 		
 		// execute the hook if there is one
-		if(file_exists(dirname(__FILE__) . "/../hooks/preconstruct.php")) require_once(dirname(__FILE__) . "/../hooks/postconstruct.php");
+		if(file_exists(dirname(__FILE__) . "/../hooks/postconstruct.php")) require_once(dirname(__FILE__) . "/../hooks/postconstruct.php");
 	}
 	
 	/**
@@ -204,8 +215,13 @@ final class Fwork
 		// execute the hook if there is one
 		if(file_exists(dirname(__FILE__) . "/../hooks/predestruct.php")) require_once(dirname(__FILE__) . "/../hooks/predestruct.php");
 		
-		$dm = Doctrine_Manager::getInstance();
-		unset($dm);
+		// Get our settings
+		$settings = SettingsMan::getInstance();
+		
+		if(isset($settings["site.gentime"]) && $settings["site.gentime"])
+			printf("<!-- generated in %.2f seconds -->", array_sum(explode(" ", microtime())) - $time);
+			
+		ob_end_flush();
 		
 		// execute the hook if there is one
 		if(file_exists(dirname(__FILE__) . "/../hooks/postdestruct.php")) require_once(dirname(__FILE__) . "/../hooks/postdestruct.php");
