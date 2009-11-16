@@ -66,14 +66,14 @@ class Task extends Doctrine_Record
 				'foreign' => 'id'
 			)
 		);
-		$this->hasMany('Task as Parents', array(
-				'local' => 'id',
+		$this->hasMany('Task as Children', array(
+				'local' => 'parent',
 				'foreign' => 'child',
 				'refClass' => 'TaskTree'
 			)
 		);
-		$this->hasMany('Task as Children', array(
-				'local' => 'id',
+		$this->hasMany('Task as Parents', array(
+				'local' => 'child',
 				'foreign' => 'parent',
 				'refClass' => 'TaskTree'
 			)
