@@ -25,4 +25,4 @@
 <input type="text" name="tasktype" />
 <input type="submit" value="Create Task Type" />
 </form>
-<?php endif; ?>
+<?php // endif; ?>
